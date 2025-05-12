@@ -1,0 +1,14 @@
+{
+    "name": "fsmat-at",
+    "private": true,
+    "scripts": {
+        "format": "prettier --write ."
+    },
+    "workspaces": [
+        "packages/*"
+    ],
+    "packageManager": "yarn@4.4.1",
+    "devDependencies": {
+        "prettier": "^3.5.3"
+    }
+}
