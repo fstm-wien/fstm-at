@@ -65,7 +65,7 @@ export default function RootLayout({
                     </div>
                 </header>
                 <main className="grow mx-auto px-4 max-w-7xl">{children}</main>
-                <footer className="mt-4 px-20 h-20 flex flex-row items-center border-t border-background-emphest justify-between">
+                <footer className="mt-16 px-20 h-20 flex flex-row items-center border-t border-background-emphest justify-between">
                     <span className="text-sm text-gray-400">
                         &copy; {new Date().getFullYear()} Fachschaft Technische Mathematik
                     </span>

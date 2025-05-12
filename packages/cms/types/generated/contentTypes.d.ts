@@ -359,6 +359,7 @@ export interface ApiAboutAbout extends Struct.SingleTypeSchema {
 export interface ApiEventEvent extends Struct.CollectionTypeSchema {
     collectionName: "events";
     info: {
+        description: "";
         displayName: "Events";
         pluralName: "events";
         singularName: "event";
@@ -367,12 +368,16 @@ export interface ApiEventEvent extends Struct.CollectionTypeSchema {
         draftAndPublish: true;
     };
     attributes: {
+        content: Schema.Attribute.RichText;
         createdAt: Schema.Attribute.DateTime;
         createdBy: Schema.Attribute.Relation<"oneToOne", "admin::user"> & Schema.Attribute.Private;
+        end: Schema.Attribute.DateTime;
         locale: Schema.Attribute.String & Schema.Attribute.Private;
         localizations: Schema.Attribute.Relation<"oneToMany", "api::event.event"> & Schema.Attribute.Private;
-        Name: Schema.Attribute.String;
+        location: Schema.Attribute.String;
+        name: Schema.Attribute.String & Schema.Attribute.Required;
         publishedAt: Schema.Attribute.DateTime;
+        start: Schema.Attribute.DateTime;
         updatedAt: Schema.Attribute.DateTime;
         updatedBy: Schema.Attribute.Relation<"oneToOne", "admin::user"> & Schema.Attribute.Private;
     };

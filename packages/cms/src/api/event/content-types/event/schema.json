@@ -1,17 +1,31 @@
 {
-    "kind": "collectionType",
-    "collectionName": "events",
-    "info": {
-        "singularName": "event",
-        "pluralName": "events",
-        "displayName": "Events"
+  "kind": "collectionType",
+  "collectionName": "events",
+  "info": {
+    "singularName": "event",
+    "pluralName": "events",
+    "displayName": "Events",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true
     },
-    "options": {
-        "draftAndPublish": true
+    "content": {
+      "type": "richtext"
     },
-    "attributes": {
-        "Name": {
-            "type": "string"
-        }
+    "start": {
+      "type": "datetime"
+    },
+    "end": {
+      "type": "datetime"
+    },
+    "location": {
+      "type": "string"
     }
+  }
 }
