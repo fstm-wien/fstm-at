@@ -1,23 +1,23 @@
 {
-  "kind": "collectionType",
-  "collectionName": "journaldienste",
-  "info": {
-    "singularName": "journaldienst",
-    "pluralName": "journaldienste",
-    "displayName": "Journaldienst"
-  },
-  "options": {
-    "draftAndPublish": true
-  },
-  "attributes": {
-    "From": {
-      "type": "time"
+    "kind": "collectionType",
+    "collectionName": "journaldienste",
+    "info": {
+        "singularName": "journaldienst",
+        "pluralName": "journaldienste",
+        "displayName": "Journaldienst"
     },
-    "To": {
-      "type": "time"
+    "options": {
+        "draftAndPublish": true
     },
-    "Personen": {
-      "type": "string"
+    "attributes": {
+        "From": {
+            "type": "time"
+        },
+        "To": {
+            "type": "time"
+        },
+        "Personen": {
+            "type": "string"
+        }
     }
-  }
 }

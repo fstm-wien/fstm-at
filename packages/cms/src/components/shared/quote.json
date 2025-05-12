@@ -1,16 +1,16 @@
 {
-  "collectionName": "components_shared_quotes",
-  "info": {
-    "displayName": "Quote",
-    "icon": "indent"
-  },
-  "options": {},
-  "attributes": {
-    "title": {
-      "type": "string"
+    "collectionName": "components_shared_quotes",
+    "info": {
+        "displayName": "Quote",
+        "icon": "indent"
     },
-    "body": {
-      "type": "text"
+    "options": {},
+    "attributes": {
+        "title": {
+            "type": "string"
+        },
+        "body": {
+            "type": "text"
+        }
     }
-  }
 }
