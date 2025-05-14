@@ -2,6 +2,9 @@
     "name": "fsmat-at",
     "private": true,
     "scripts": {
+        "start": "concurrently \"yarn workspace cms start\" \"yarn workspace frontend start\"",
+        "dev": "concurrently \"yarn workspace cms dev\" \"yarn workspace frontend dev\"",
+        "build": "concurrently \"yarn workspace cms build\" \"yarn workspace frontend build\"",
         "format": "prettier --write ."
     },
     "workspaces": [
@@ -9,6 +12,7 @@
     ],
     "packageManager": "yarn@4.4.1",
     "devDependencies": {
+        "concurrently": "^9.1.2",
         "prettier": "^3.5.3"
     }
 }

@@ -1,5 +1,6 @@
+"use client";
+
 import { fetchAPI } from "@/utils/fetch-api";
-import clsx from "clsx";
 import Image from "next/image";
 import Link from "next/link";
 import { BiSolidDrink } from "react-icons/bi";
@@ -33,13 +34,26 @@ type EventReponse = {
 };
 
 export default async function Home() {
-    const response: EventReponse = await fetchAPI(`/events`, {
-        sort: "start:desc",
-        pagination: {
-            page: 1,
-            pageSize: 3,
+    const response: EventReponse = { data: null! };
+    // await fetchAPI(`/events`, {
+    //     sort: "start:desc",
+    //     pagination: {
+    //         page: 1,
+    //         pageSize: 3,
+    //     },
+    // });
+
+    response.data = [
+        {
+            documentId: "a",
+            start: new Date().toDateString(),
+            end: new Date().toDateString(),
+            name: "Spritzerstand",
+            id: 0,
+            location: "Zwischen Freihaus und Bib",
+            content: "",
         },
-    });
+    ];
 
     return (
         <>
@@ -52,7 +66,7 @@ export default async function Home() {
                         )}
                     ></div> */}
                     <Image
-                        className="relative drop-shadow-lg/30"
+                        className="relative drop-shadow-xl/10 drop-shadow-white"
                         src="/FSTM_cube.png"
                         width={128}
                         height={128}
@@ -68,38 +82,40 @@ export default async function Home() {
                     hendrerit sapien.
                 </p>
             </div>
-            <div className="mb-12">
-                <h3 className="mb-4 inline-flex items-center gap-2 text-xl text-gray-400">
-                    <FaCalendar />
-                    <span>Nächste Events</span>
-                </h3>
-                <div className="flex flex-col gap-2">
-                    {response.data.map((e) => (
-                        <Link
-                            key={e.documentId}
-                            href={`/events/` + e.documentId}
-                            className="py-3 px-4 flex flex-col gap-1 bg-background-emph border border-background-emphest rounded-lg"
-                        >
-                            <div className="flex flex-row items-center gap-3">
-                                <span className="font-semibold">{e.name}</span>
-                                {e.location && (
-                                    <span className="inline-flex flex-row gap-1 items-center text-sm text-gray-400">
-                                        <FaMapPin />
-                                        <span>{e.location}</span>
-                                    </span>
-                                )}
-                            </div>
-                            <div className="text-gray-300 inline-flex items-center gap-1 text-sm">
-                                <FaClock />
-                                <span>{e.start}</span>
-                            </div>
-                        </Link>
-                    ))}
+            {response.data && (
+                <div className="mb-12">
+                    <h3 className="mb-4 inline-flex items-center gap-2 text-xl text-gray-400">
+                        <FaCalendar />
+                        <span>Nächste Events</span>
+                    </h3>
+                    <div className="flex flex-col gap-2">
+                        {response.data.map((e) => (
+                            <Link
+                                key={e.documentId}
+                                href={`/events/` + e.documentId}
+                                className="py-3 px-4 flex flex-col gap-1 bg-background-emph border border-background-emphest rounded-lg"
+                            >
+                                <div className="flex flex-row items-center gap-3">
+                                    <span className="font-semibold">{e.name}</span>
+                                    {e.location && (
+                                        <span className="inline-flex flex-row gap-1 items-center text-sm text-gray-400">
+                                            <FaMapPin />
+                                            <span>{e.location}</span>
+                                        </span>
+                                    )}
+                                </div>
+                                <div className="text-gray-300 inline-flex items-center gap-1 text-sm">
+                                    <FaClock />
+                                    <span>{e.start}</span>
+                                </div>
+                            </Link>
+                        ))}
+                    </div>
+                    <p className="mt-4 text-gray-400 underline">
+                        <Link href="/events">Mehr Events ...</Link>
+                    </p>
                 </div>
-                <p className="mt-4 text-gray-400 underline">
-                    <Link href="/events">Mehr Events ...</Link>
-                </p>
-            </div>
+            )}
             <div className="mx-auto max-w-2xl grid grid-cols-2 gap-8">
                 {gridItems
                     .map(
