@@ -1,4 +1,5 @@
-// import { fetchAPI } from "@/utils/fetch-api";
+import { fetchAPI } from "@/utils/fetch-api";
+import clsx from "clsx";
 import Image from "next/image";
 import Link from "next/link";
 import { BiSolidDrink } from "react-icons/bi";
@@ -19,39 +20,18 @@ const gridItems: GridItem[] = [
     },
 ];
 
-type EventReponse = {
-    data: {
-        id: number;
-        documentId: string;
-        name: string;
-        content: string;
-        start: string;
-        end: string;
-        location: string;
-    }[];
-};
-
 export default async function Home() {
-    const response: EventReponse = { data: null! };
-    // await fetchAPI(`/events`, {
-    //     sort: "start:desc",
-    //     pagination: {
-    //         page: 1,
-    //         pageSize: 3,
-    //     },
-    // });
-
-    response.data = [
-        {
-            documentId: "a",
-            start: new Date().toDateString(),
-            end: new Date().toDateString(),
-            name: "Spritzerstand",
-            id: 0,
-            location: "Zwischen Freihaus und Bib",
-            content: "",
+    const response = await fetchAPI(`/events`, {
+        sort: "start:desc",
+        pagination: {
+            page: 1,
+            pageSize: 3,
         },
-    ];
+    });
+
+    if (!Array.isArray(response.data)) {
+        throw new Error();
+    }
 
     return (
         <>
@@ -73,7 +53,7 @@ export default async function Home() {
                             draggable={false}
                         />
                         <Image
-                            className="absolute top-0 scale-110 brightness-0 invert -z-5"
+                            className="absolute top-0 scale-110 brightness-0 invert -z-5 select-none"
                             src="/FSTM_cube.png"
                             width={140}
                             height={140}
@@ -95,7 +75,7 @@ export default async function Home() {
                 </div>
             </div>
             {response.data && (
-                <div className="mb-12">
+                <div className="mb-12 mx-8">
                     <h3 className="mb-4 inline-flex items-center gap-2 text-xl">
                         <FaCalendar />
                         <span>Nächste Events</span>
@@ -105,18 +85,18 @@ export default async function Home() {
                             <Link
                                 key={e.documentId}
                                 href={`/events/` + e.documentId}
-                                className="py-3 px-4 flex flex-col gap-1 bg-background-emph border border-background-emphest rounded-lg"
+                                className="py-3 px-4 flex flex-col gap-1 bg-background-emph hover:bg-background-emphest transition-colors border border-background-emphest rounded-lg"
                             >
                                 <div className="flex flex-row items-center gap-3">
                                     <span className="font-semibold">{e.name}</span>
                                     {e.location && (
-                                        <span className="inline-flex flex-row gap-1 items-center text-sm text-gray-400">
+                                        <span className="inline-flex flex-row gap-1 items-center text-sm text-gray-500 dark:text-gray-400">
                                             <FaMapPin />
                                             <span>{e.location}</span>
                                         </span>
                                     )}
                                 </div>
-                                <div className="text-gray-300 inline-flex items-center gap-1 text-sm">
+                                <div className="text-gray-400 dark:text-gray-500 inline-flex items-center gap-1 text-sm">
                                     <FaClock />
                                     <span>{e.start}</span>
                                 </div>
@@ -136,7 +116,10 @@ export default async function Home() {
                                 item,
                                 <div
                                     key={item.title}
-                                    className="py-6 px-6 flex flex-col items-center text-center bg-background-emph border border-background-emphest rounded-xl"
+                                    className={clsx(
+                                        "py-6 px-6 flex flex-col items-center text-center bg-background-emph border border-background-emphest rounded-xl transition-colors",
+                                        item.href && "hover:bg-background-emphest",
+                                    )}
                                 >
                                     <span className="mb-4 text-3xl">{item.icon}</span>
                                     <p className="mb-2 font-semibold text-lg">{item.title}</p>

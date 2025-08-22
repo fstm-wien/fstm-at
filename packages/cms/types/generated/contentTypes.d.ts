@@ -360,7 +360,7 @@ export interface ApiEventEvent extends Struct.CollectionTypeSchema {
     collectionName: "events";
     info: {
         description: "";
-        displayName: "Events";
+        displayName: "Event";
         pluralName: "events";
         singularName: "event";
     };
@@ -368,7 +368,7 @@ export interface ApiEventEvent extends Struct.CollectionTypeSchema {
         draftAndPublish: true;
     };
     attributes: {
-        content: Schema.Attribute.RichText;
+        content: Schema.Attribute.Blocks;
         createdAt: Schema.Attribute.DateTime;
         createdBy: Schema.Attribute.Relation<"oneToOne", "admin::user"> & Schema.Attribute.Private;
         end: Schema.Attribute.DateTime;
@@ -412,6 +412,7 @@ export interface ApiGlobalGlobal extends Struct.SingleTypeSchema {
 export interface ApiJournaldienstJournaldienst extends Struct.CollectionTypeSchema {
     collectionName: "journaldienste";
     info: {
+        description: "";
         displayName: "Journaldienst";
         pluralName: "journaldienste";
         singularName: "journaldienst";
@@ -422,13 +423,41 @@ export interface ApiJournaldienstJournaldienst extends Struct.CollectionTypeSche
     attributes: {
         createdAt: Schema.Attribute.DateTime;
         createdBy: Schema.Attribute.Relation<"oneToOne", "admin::user"> & Schema.Attribute.Private;
-        From: Schema.Attribute.Time;
+        end: Schema.Attribute.Time;
         locale: Schema.Attribute.String & Schema.Attribute.Private;
         localizations: Schema.Attribute.Relation<"oneToMany", "api::journaldienst.journaldienst"> &
             Schema.Attribute.Private;
-        Personen: Schema.Attribute.String;
+        people: Schema.Attribute.String;
         publishedAt: Schema.Attribute.DateTime;
-        To: Schema.Attribute.Time;
+        start: Schema.Attribute.Time;
+        updatedAt: Schema.Attribute.DateTime;
+        updatedBy: Schema.Attribute.Relation<"oneToOne", "admin::user"> & Schema.Attribute.Private;
+        weekday: Schema.Attribute.Enumeration<["Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag"]> &
+            Schema.Attribute.Required &
+            Schema.Attribute.DefaultTo<"Montag">;
+    };
+}
+
+export interface ApiSeiteSeite extends Struct.CollectionTypeSchema {
+    collectionName: "seiten";
+    info: {
+        description: "";
+        displayName: "Seite";
+        pluralName: "seiten";
+        singularName: "seite";
+    };
+    options: {
+        draftAndPublish: true;
+    };
+    attributes: {
+        content: Schema.Attribute.Blocks;
+        createdAt: Schema.Attribute.DateTime;
+        createdBy: Schema.Attribute.Relation<"oneToOne", "admin::user"> & Schema.Attribute.Private;
+        locale: Schema.Attribute.String & Schema.Attribute.Private;
+        localizations: Schema.Attribute.Relation<"oneToMany", "api::seite.seite"> & Schema.Attribute.Private;
+        publishedAt: Schema.Attribute.DateTime;
+        slug: Schema.Attribute.String & Schema.Attribute.Required & Schema.Attribute.Unique;
+        title: Schema.Attribute.String;
         updatedAt: Schema.Attribute.DateTime;
         updatedBy: Schema.Attribute.Relation<"oneToOne", "admin::user"> & Schema.Attribute.Private;
     };
@@ -850,6 +879,7 @@ declare module "@strapi/strapi" {
             "api::event.event": ApiEventEvent;
             "api::global.global": ApiGlobalGlobal;
             "api::journaldienst.journaldienst": ApiJournaldienstJournaldienst;
+            "api::seite.seite": ApiSeiteSeite;
             "plugin::content-releases.release": PluginContentReleasesRelease;
             "plugin::content-releases.release-action": PluginContentReleasesReleaseAction;
             "plugin::i18n.locale": PluginI18NLocale;

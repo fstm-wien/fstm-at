@@ -12,8 +12,16 @@ const navigation: { label: string; href: string }[] = [
         href: "/",
     },
     {
+        label: "Studieninformationen",
+        href: "/studieninformationen",
+    },
+    {
         label: "Fachschaft",
         href: "/fachschaft",
+    },
+    {
+        label: "Events",
+        href: "/events",
     },
     {
         label: "Kontakt",
@@ -25,19 +33,26 @@ export function Header() {
     const pathname = usePathname();
 
     return (
-        <header className="mt-2 mb-4 px-4 max-w-7xl mx-auto w-full">
+        <header className="mt-2 mb-4 px-4 max-w-6xl mx-auto w-full">
             <div className="px-8 h-16 grid grid-cols-3 items-center">
                 <div className="flex flex-row gap-4 items-center">
                     <div className="">
                         <Link href="/">
-                            <Image src="/FSTM_cube.png" width={46} height={46} alt="FSTM Logo" draggable={false} />
+                            <Image
+                                src="/FSTM_cube.png"
+                                width={46}
+                                height={46}
+                                alt="FSTM Logo"
+                                title="Fachschaft Technische Mathematik"
+                                draggable={false}
+                            />
                         </Link>
                     </div>
-                    {pathname !== "/" && (
-                        <h3 className="font-semibold text-[19px] tracking-wide font-heading">
-                            Fachschaft Technische Mathematik
+                    {/* {pathname !== "/" && (
+                        <h3 className="font-semibold text-[16px] tracking-wide font-heading leading-tight">
+                            Fachschaft <br /> Technische Mathematik
                         </h3>
-                    )}
+                    )} */}
                 </div>
                 <nav className="flex flex-row gap-4 justify-center">
                     {navigation.map((nav) => (

@@ -1,10 +1,13 @@
-// ./frontend/stc/app/[lang]/utils/fetch-api.tsx
 import qs from "qs";
 import { getStrapiURL } from "./api";
+import { StrapiAPIResponse, StrapiObject } from "@/types/strapi";
 
-export async function fetchAPI(path: string, urlParamsObject = {}, options = {}) {
+export async function fetchAPI<T extends StrapiObject>(
+    path: string,
+    urlParamsObject = {},
+    options = {},
+): Promise<StrapiAPIResponse<T>> {
     try {
-        // Merge default and user options
         const mergedOptions = {
             next: { revalidate: 60 },
             headers: {
@@ -14,14 +17,15 @@ export async function fetchAPI(path: string, urlParamsObject = {}, options = {})
             ...options,
         };
 
-        // Build request URL
-        const queryString = qs.stringify(urlParamsObject);
+        const queryString = qs.stringify(urlParamsObject, { encodeValuesOnly: true });
         const requestUrl = `${getStrapiURL(`/api${path}${queryString ? `?${queryString}` : ""}`)}`;
 
-        // Trigger API call
+        console.log(requestUrl);
+
         const response = await fetch(requestUrl, mergedOptions);
         const data = await response.json();
-        return data;
+
+        return data as StrapiAPIResponse<T>;
     } catch (error) {
         console.error(error);
         throw new Error(`Please check if your server is running and you set all the required tokens.`);

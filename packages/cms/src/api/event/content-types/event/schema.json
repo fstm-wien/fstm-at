@@ -4,7 +4,7 @@
   "info": {
     "singularName": "event",
     "pluralName": "events",
-    "displayName": "Events",
+    "displayName": "Event",
     "description": ""
   },
   "options": {
@@ -15,9 +15,6 @@
       "type": "string",
       "required": true
     },
-    "content": {
-      "type": "richtext"
-    },
     "start": {
       "type": "datetime"
     },
@@ -26,6 +23,9 @@
     },
     "location": {
       "type": "string"
+    },
+    "content": {
+      "type": "blocks"
     }
   }
 }
