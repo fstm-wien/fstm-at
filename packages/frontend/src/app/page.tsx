@@ -1,6 +1,4 @@
-"use client";
-
-import { fetchAPI } from "@/utils/fetch-api";
+// import { fetchAPI } from "@/utils/fetch-api";
 import Image from "next/image";
 import Link from "next/link";
 import { BiSolidDrink } from "react-icons/bi";
@@ -57,34 +55,48 @@ export default async function Home() {
 
     return (
         <>
-            <div className="mx-auto max-w-2xl flex flex-col items-center">
-                <div className="relative mt-8 mb-4">
+            <div className="mt-12 mb-18 mx-auto max-w-4xl flex flex-row-reverse gap-2 items-center">
+                <div className="mx-4 flex shrink-0 flex-col justify-center">
                     {/* <div
                         className={clsx(
                             "absolute w-[256px] h-[128px] top-8 left-1/2 -translate-x-1/2",
                             "bg-radial from-orange-300/30 from-10% to-40% to-transparent",
                         )}
                     ></div> */}
-                    <Image
-                        className="relative drop-shadow-xl/10 drop-shadow-white"
-                        src="/FSTM_cube.png"
-                        width={128}
-                        height={128}
-                        alt="FSTM Cube"
-                        draggable={false}
-                    />
+                    <div className="relative">
+                        <Image
+                            className=""
+                            src="/FSTM_cube.png"
+                            width={140}
+                            height={140}
+                            alt="FSTM Cube"
+                            draggable={false}
+                        />
+                        <Image
+                            className="absolute top-0 scale-110 brightness-0 invert -z-5"
+                            src="/FSTM_cube.png"
+                            width={140}
+                            height={140}
+                            alt="FSTM Cube"
+                            draggable={false}
+                        />
+                    </div>
                 </div>
-                <p className="mb-2 text-4xl font-medium text-gray-300">Willkommen bei der</p>
-                <h1 className="mb-8 text-4xl font-bold text-orange-400">Fachschaft Technische Mathematik</h1>
-                <p className="mb-12 text-center">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam metus dolor, porta nec lectus a,
-                    tempus interdum lorem. Nunc iaculis nunc sed est dapibus suscipit. Fusce vitae euismod ante, sed
-                    hendrerit sapien.
-                </p>
+                <div className="flex flex-col">
+                    <div className="font-heading">
+                        <p className="mb-1 text-3xl font-medium">Willkommen bei der</p>
+                        <h1 className="mb-5 text-5xl font-bold text-orange-400">Fachschaft Technische Mathematik</h1>
+                    </div>
+                    <p className="">
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam metus dolor, porta nec lectus a,
+                        tempus interdum lorem. Nunc iaculis nunc sed est dapibus suscipit. Fusce vitae euismod ante, sed
+                        hendrerit sapien.
+                    </p>
+                </div>
             </div>
             {response.data && (
                 <div className="mb-12">
-                    <h3 className="mb-4 inline-flex items-center gap-2 text-xl text-gray-400">
+                    <h3 className="mb-4 inline-flex items-center gap-2 text-xl">
                         <FaCalendar />
                         <span>Nächste Events</span>
                     </h3>

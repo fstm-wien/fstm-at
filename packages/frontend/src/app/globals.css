@@ -1,10 +1,12 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 :root {
-    --background: #101828;
-    --background-emph: #182332;
-    --background-emphest: #364153;
-    --foreground: #111827;
+    --background: var(--color-gray-50);
+    --background-emph: var(--color-gray-100);
+    --background-emphest: var(--color-gray-200);
+    --foreground: var(--color-gray-950);
 }
 
 @theme inline {
@@ -15,15 +17,14 @@
 
     --font-sans: var(--font-geist-sans);
     --font-mono: var(--font-geist-mono);
+    --font-heading: var(--font-pt-sans);
 }
 
-@media (prefers-color-scheme: dark) {
-    :root {
-        --background: #101828;
-        --background-emph: #182332;
-        --background-emphest: #364153;
-        --foreground: #ededed;
-    }
+.dark {
+    --background: var(--color-gray-900);
+    --background-emph: var(--color-gray-800);
+    --background-emphest: var(--color-gray-700);
+    --foreground: var(--color-gray-100);
 }
 
 body {
