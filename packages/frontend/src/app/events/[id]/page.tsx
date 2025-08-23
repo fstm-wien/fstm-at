@@ -1,3 +1,4 @@
+export const dynamic = "force-dynamic";
 export const fetchCache = "force-no-store";
 
 import { Event, Seite } from "@/types/strapi";
@@ -7,9 +8,9 @@ import { notFound } from "next/navigation";
 
 export default async function EventPage({ params }: { params: Promise<{ id: string }> }) {
     const { id } = await params;
-    const response = await fetchAPI<Seite>(`/events/${id}`);
+    const response = await fetchAPI<Event>(`/events/${id}`);
 
-    const foundEvent: Event | null = !Array.isArray(response.data) ? (response.data as Event) : null;
+    const foundEvent: Event | null = !Array.isArray(response.data) ? response.data : null;
     if (!foundEvent) {
         return notFound();
     }

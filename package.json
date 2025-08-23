@@ -3,13 +3,13 @@
     "private": true,
     "scripts": {
         "frontend:dev": "yarn workspace frontend dev",
-        "frontend:build": "yarn workspace frontend ",
-        "frontend:start": "yarn workspace frontend ",
-        "cms:dev": "yarn workspace dev ",
-        "cms:build": "yarn workspace dev ",
-        "cms:start": "yarn workspace dev ",
-        "dev": "concurrently \"yarn workspace cms dev\" \"yarn workspace frontend dev\"",
-        "build": "yarn cms:build && concurrently \"yarn cms:start && yarn frontend:build\"",
+        "frontend:build": "yarn workspace frontend build",
+        "frontend:start": "yarn workspace frontend start",
+        "cms:dev": "yarn workspace cms dev",
+        "cms:build": "yarn workspace cms build",
+        "cms:start": "yarn workspace cms start",
+        "dev": "concurrently \"yarn cms:dev\" \"yarn frontend:dev\"",
+        "build": "concurrently \"yarn cms:build\" \"yarn frontend:build\"",
         "start": "concurrently \"yarn cms:start\" \"yarn frontend:start\"",
         "format": "prettier --write ."
     },
@@ -19,6 +19,7 @@
     "packageManager": "yarn@4.4.1",
     "devDependencies": {
         "concurrently": "^9.1.2",
+        "pm2": "^6.0.8",
         "prettier": "^3.5.3"
     }
 }
