@@ -1,3 +1,5 @@
+export const dynamic = "force-dynamic";
+
 import { Header } from "@/components/header";
 import { ThemeProvider } from "@/components/theme";
 import { SiteProvider } from "@/types/site-context";
