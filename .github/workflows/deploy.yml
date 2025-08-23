@@ -1,0 +1,35 @@
+name: Deploy
+
+on:
+    push:
+        branches:
+            - main
+        paths:
+            - ".github/workflows/deploy.yml"
+            - "packages/**"
+            - "package.json"
+    workflow_dispatch:
+
+jobs:
+    deploy:
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v4
+
+            - name: Extract and restart backend process
+              uses: appleboy/ssh-action@v1.0.3
+              with:
+                  host: ${{ secrets.DROPLET_HOST }}
+                  username: ${{ secrets.DROPLET_USER }}
+                  key: ${{ secrets.DROPLET_KEY }}
+                  script: |
+                      cd /var/www/fsmat
+
+                      pm2 stop ecosystem.config.js
+
+                      git pull
+                      yarn install --immutable
+
+                      pm2 start ecosystem.config.js

@@ -28,6 +28,12 @@ export async function fetchAPI<T extends StrapiObject>(
         return data as StrapiAPIResponse<T>;
     } catch (error) {
         console.error(error);
+        return {
+            data: [],
+            error,
+            meta: {},
+        };
+
         throw new Error(`Please check if your server is running and you set all the required tokens.`);
     }
 }
