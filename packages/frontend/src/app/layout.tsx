@@ -35,7 +35,8 @@ export default async function RootLayout({
             <SiteProvider
                 value={{
                     title: "FSTM",
-                    headerNavigation: Array.isArray(response.data) ? response.data[0].items : undefined,
+                    headerNavigation:
+                        Array.isArray(response.data) && response.data.length > 0 ? response.data[0].items : undefined,
                 }}
             >
                 <ThemeProvider>

@@ -27,6 +27,12 @@ export async function fetchAPI<T extends StrapiObject>(
     } catch (error) {
         console.error(error);
 
+        return {
+            data: [],
+            meta: {},
+            error,
+        };
+
         throw new Error(`Please check if your server is running and you set all the required tokens.`);
     }
 }
