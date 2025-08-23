@@ -79,7 +79,7 @@ export default async function Home() {
                 </div>
             </div>
             {response.data && (
-                <div className="mb-12 mx-8">
+                <div className="mb-12 lg:mx-8">
                     <h3 className="mb-4 inline-flex items-center gap-2 text-xl">
                         <FaCalendar />
                         <span>Nächste Events</span>

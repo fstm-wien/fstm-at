@@ -17,8 +17,10 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
 
     return (
         <>
-            <h1 className="mt-6 mb-4 text-4xl">{foundPage.title}</h1>
-            <BlocksRenderer content={foundPage.content}></BlocksRenderer>
+            <h1 className="font-bold mt-6 text-4xl">{foundPage.title}</h1>
+            <article className="mt-6 prose dark:prose-invert">
+                <BlocksRenderer content={foundPage.content}></BlocksRenderer>
+            </article>
         </>
     );
 }

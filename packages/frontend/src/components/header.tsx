@@ -1,33 +1,23 @@
 "use client";
 
+import { SiteContext } from "@/types/site-context";
+import { getStrapiURL } from "@/utils/api";
+import clsx from "clsx";
 import { motion } from "motion/react";
 import Image from "next/image";
-import clsx from "clsx";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { ThemeToggle } from "./theme";
+import { useContext, useState } from "react";
 import { IoMenu } from "react-icons/io5";
-import { fetchAPI } from "@/utils/fetch-api";
-import { Navbar } from "@/types/strapi";
-import { useEffect, useState } from "react";
-import { RxCross1 } from "react-icons/rx";
 import { MdLogin } from "react-icons/md";
-import { getStrapiURL } from "@/utils/api";
+import { RxCross1 } from "react-icons/rx";
+import { ThemeToggle } from "./theme";
 
 export function Header() {
-    const [navbar, setNavbar] = useState<Navbar | undefined>(undefined);
+    const siteContext = useContext(SiteContext);
     const pathname = usePathname();
 
     const [showSidebar, setShowSidebar] = useState(false);
-
-    useEffect(() => {
-        (async function () {
-            const response = await fetchAPI<Navbar>(`/navbars`, { "filters[location][$eq]": "header", populate: "*" });
-            if (Array.isArray(response.data)) {
-                setNavbar(response.data[0] as Navbar);
-            }
-        })();
-    }, []);
 
     return (
         <header className="mt-2 mb-4 px-4 max-w-6xl mx-auto w-full">
@@ -52,9 +42,8 @@ export function Header() {
                     )} */}
                 </div>
                 <nav className="flex flex-row gap-4 justify-center">
-                    {navbar &&
-                        navbar.items &&
-                        navbar.items.map((nav) => (
+                    {siteContext?.headerNavigation &&
+                        siteContext.headerNavigation.map((nav) => (
                             <span key={nav.href}>
                                 <Link
                                     href={nav.href}
@@ -120,9 +109,8 @@ export function Header() {
                             <RxCross1 />
                         </div>
                         <nav className="mt-6 flex flex-col items-end gap-4">
-                            {navbar &&
-                                navbar.items &&
-                                navbar.items.map((nav) => (
+                            {siteContext?.headerNavigation &&
+                                siteContext.headerNavigation.map((nav) => (
                                     <span key={nav.href}>
                                         <Link
                                             href={nav.href}

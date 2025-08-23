@@ -4,6 +4,7 @@ import { AnimatePresence } from "motion/react";
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { FaMoon, FaSun } from "react-icons/fa";
 import { motion } from "motion/react";
+import clsx from "clsx";
 
 export type Theme = "light" | "dark";
 
@@ -49,6 +50,8 @@ export function useTheme() {
 export function ThemeToggle() {
     const { theme, toggleTheme } = useTheme();
 
+    const isDark = theme === "dark";
+
     return (
         <div onClick={toggleTheme} className="block text-xl cursor-pointer p-2">
             <AnimatePresence mode="wait" initial={false}>
@@ -58,8 +61,9 @@ export function ThemeToggle() {
                     animate={{ scale: 1 }}
                     exit={{ scale: 0 }}
                     transition={{ duration: 0.1 }}
+                    className={clsx(isDark ? "text-yellow-200" : "text-yellow-500")}
                 >
-                    {theme === "light" ? <FaMoon /> : <FaSun />}
+                    {!isDark ? <FaMoon /> : <FaSun />}
                 </motion.div>
             </AnimatePresence>
         </div>
