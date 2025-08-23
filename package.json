@@ -2,9 +2,15 @@
     "name": "fsmat-at",
     "private": true,
     "scripts": {
-        "start": "concurrently \"yarn workspace cms start\" \"yarn workspace frontend start\"",
+        "frontend:dev": "yarn workspace frontend dev",
+        "frontend:build": "yarn workspace frontend ",
+        "frontend:start": "yarn workspace frontend ",
+        "cms:dev": "yarn workspace dev ",
+        "cms:build": "yarn workspace dev ",
+        "cms:start": "yarn workspace dev ",
         "dev": "concurrently \"yarn workspace cms dev\" \"yarn workspace frontend dev\"",
-        "build": "concurrently \"yarn workspace cms build\" \"yarn workspace frontend build\"",
+        "build": "yarn cms:build && concurrently \"yarn cms:start && yarn frontend:build\"",
+        "start": "concurrently \"yarn cms:start\" \"yarn frontend:start\"",
         "format": "prettier --write ."
     },
     "workspaces": [

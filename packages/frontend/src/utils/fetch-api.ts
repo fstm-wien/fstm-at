@@ -20,19 +20,12 @@ export async function fetchAPI<T extends StrapiObject>(
         const queryString = qs.stringify(urlParamsObject, { encodeValuesOnly: true });
         const requestUrl = `${getStrapiURL(`/api${path}${queryString ? `?${queryString}` : ""}`)}`;
 
-        console.log(requestUrl);
-
         const response = await fetch(requestUrl, mergedOptions);
         const data = await response.json();
 
         return data as StrapiAPIResponse<T>;
     } catch (error) {
         console.error(error);
-        return {
-            data: [],
-            error,
-            meta: {},
-        };
 
         throw new Error(`Please check if your server is running and you set all the required tokens.`);
     }

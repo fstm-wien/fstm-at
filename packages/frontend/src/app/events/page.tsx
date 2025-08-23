@@ -1,5 +1,7 @@
 "use client";
 
+export const fetchCache = "force-no-store";
+
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
@@ -8,13 +10,13 @@ import { Event } from "@/types/strapi";
 import { fetchAPI } from "@/utils/fetch-api";
 import { useRouter } from "next/navigation";
 
-export default function CalendarPage() {
+export default function EventsPage() {
     const [events, setEvents] = useState<Event[]>([]);
     const router = useRouter();
 
     useEffect(() => {
         (async function () {
-            const response = await fetchAPI("/events", {});
+            const response = await fetchAPI<Event>("/events", {});
             if (Array.isArray(response.data)) {
                 setEvents(response.data);
             }

@@ -1,3 +1,6 @@
+export const fetchCache = "force-no-store";
+
+import { Event } from "@/types/strapi";
 import { fetchAPI } from "@/utils/fetch-api";
 import clsx from "clsx";
 import Image from "next/image";
@@ -21,7 +24,7 @@ const gridItems: GridItem[] = [
 ];
 
 export default async function Home() {
-    const response = await fetchAPI(`/events`, {
+    const response = await fetchAPI<Event>(`/events`, {
         sort: "start:desc",
         pagination: {
             page: 1,
@@ -35,7 +38,7 @@ export default async function Home() {
 
     return (
         <>
-            <div className="mt-12 mb-18 mx-auto max-w-4xl flex flex-row-reverse gap-2 items-center">
+            <div className="lg:mt-12 mb-18 mx-auto max-w-4xl flex flex-col lg:flex-row-reverse gap-2 items-center">
                 <div className="mx-4 flex shrink-0 flex-col justify-center">
                     {/* <div
                         className={clsx(
@@ -43,7 +46,7 @@ export default async function Home() {
                             "bg-radial from-orange-300/30 from-10% to-40% to-transparent",
                         )}
                     ></div> */}
-                    <div className="relative">
+                    <div className="relative w-[96px] lg:w-auto">
                         <Image
                             className=""
                             src="/FSTM_cube.png"
@@ -108,7 +111,7 @@ export default async function Home() {
                     </p>
                 </div>
             )}
-            <div className="mx-auto max-w-2xl grid grid-cols-2 gap-8">
+            <div className="mx-auto max-w-2xl grid lg:grid-cols-2 gap-2 lg:gap-8">
                 {gridItems
                     .map(
                         (item) =>

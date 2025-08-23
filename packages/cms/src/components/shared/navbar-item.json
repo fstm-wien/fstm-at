@@ -1,0 +1,16 @@
+{
+  "collectionName": "components_shared_navbar_items",
+  "info": {
+    "displayName": "NavbarItem",
+    "icon": "code"
+  },
+  "options": {},
+  "attributes": {
+    "label": {
+      "type": "string"
+    },
+    "href": {
+      "type": "string"
+    }
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "kind": "collectionType",
+  "collectionName": "navbars",
+  "info": {
+    "singularName": "navbar",
+    "pluralName": "navbars",
+    "displayName": "Navbar",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "location": {
+      "type": "string"
+    },
+    "items": {
+      "displayName": "NavbarItem",
+      "type": "component",
+      "repeatable": true,
+      "component": "shared.navbar-item"
+    }
+  }
+}

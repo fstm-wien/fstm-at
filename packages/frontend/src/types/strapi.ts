@@ -1,7 +1,7 @@
 import { BlocksContent } from "@strapi/blocks-react-renderer";
 
 export interface StrapiAPIResponse<T extends StrapiObject> {
-    data: T | T[] | unknown;
+    data: T | T[];
     meta: unknown;
     error: unknown;
 }
@@ -30,4 +30,13 @@ export interface Journaldienst extends StrapiObject {
     start: string;
     end: string;
     people: string;
+}
+
+export interface Navbar extends StrapiObject {
+    location: string;
+    items: {
+        id: number;
+        label: string;
+        href: string;
+    }[];
 }

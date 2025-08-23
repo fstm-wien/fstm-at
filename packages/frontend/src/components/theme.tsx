@@ -1,7 +1,9 @@
 "use client";
 
+import { AnimatePresence } from "motion/react";
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { FaMoon, FaSun } from "react-icons/fa";
+import { motion } from "motion/react";
 
 export type Theme = "light" | "dark";
 
@@ -49,12 +51,17 @@ export function ThemeToggle() {
 
     return (
         <div onClick={toggleTheme} className="block text-xl cursor-pointer p-2">
-            {
-                {
-                    light: <FaMoon />,
-                    dark: <FaSun />,
-                }[theme]
-            }
+            <AnimatePresence mode="wait" initial={false}>
+                <motion.div
+                    key={theme}
+                    initial={{ scale: 0 }}
+                    animate={{ scale: 1 }}
+                    exit={{ scale: 0 }}
+                    transition={{ duration: 0.1 }}
+                >
+                    {theme === "light" ? <FaMoon /> : <FaSun />}
+                </motion.div>
+            </AnimatePresence>
         </div>
     );
 }

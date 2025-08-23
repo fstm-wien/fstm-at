@@ -11,6 +11,18 @@ export interface SharedMedia extends Struct.ComponentSchema {
     };
 }
 
+export interface SharedNavbarItem extends Struct.ComponentSchema {
+    collectionName: "components_shared_navbar_items";
+    info: {
+        displayName: "NavbarItem";
+        icon: "code";
+    };
+    attributes: {
+        href: Schema.Attribute.String;
+        label: Schema.Attribute.String;
+    };
+}
+
 export interface SharedQuote extends Struct.ComponentSchema {
     collectionName: "components_shared_quotes";
     info: {
@@ -66,6 +78,7 @@ declare module "@strapi/strapi" {
     export module Public {
         export interface ComponentSchemas {
             "shared.media": SharedMedia;
+            "shared.navbar-item": SharedNavbarItem;
             "shared.quote": SharedQuote;
             "shared.rich-text": SharedRichText;
             "shared.seo": SharedSeo;

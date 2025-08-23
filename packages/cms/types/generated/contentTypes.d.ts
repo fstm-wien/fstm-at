@@ -438,6 +438,30 @@ export interface ApiJournaldienstJournaldienst extends Struct.CollectionTypeSche
     };
 }
 
+export interface ApiNavbarNavbar extends Struct.CollectionTypeSchema {
+    collectionName: "navbars";
+    info: {
+        description: "";
+        displayName: "Navbar";
+        pluralName: "navbars";
+        singularName: "navbar";
+    };
+    options: {
+        draftAndPublish: true;
+    };
+    attributes: {
+        createdAt: Schema.Attribute.DateTime;
+        createdBy: Schema.Attribute.Relation<"oneToOne", "admin::user"> & Schema.Attribute.Private;
+        items: Schema.Attribute.Component<"shared.navbar-item", true>;
+        locale: Schema.Attribute.String & Schema.Attribute.Private;
+        localizations: Schema.Attribute.Relation<"oneToMany", "api::navbar.navbar"> & Schema.Attribute.Private;
+        location: Schema.Attribute.String;
+        publishedAt: Schema.Attribute.DateTime;
+        updatedAt: Schema.Attribute.DateTime;
+        updatedBy: Schema.Attribute.Relation<"oneToOne", "admin::user"> & Schema.Attribute.Private;
+    };
+}
+
 export interface ApiSeiteSeite extends Struct.CollectionTypeSchema {
     collectionName: "seiten";
     info: {
@@ -879,6 +903,7 @@ declare module "@strapi/strapi" {
             "api::event.event": ApiEventEvent;
             "api::global.global": ApiGlobalGlobal;
             "api::journaldienst.journaldienst": ApiJournaldienstJournaldienst;
+            "api::navbar.navbar": ApiNavbarNavbar;
             "api::seite.seite": ApiSeiteSeite;
             "plugin::content-releases.release": PluginContentReleasesRelease;
             "plugin::content-releases.release-action": PluginContentReleasesReleaseAction;
