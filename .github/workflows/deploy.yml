@@ -31,5 +31,6 @@ jobs:
 
                       git pull
                       yarn install --immutable
+                      yarn build
 
                       pm2 start ecosystem.config.js
