@@ -52,6 +52,7 @@ async function main() {
         const strapiProc = spawn("yarn", ["cms:start"], {
             stdio: "inherit",
             shell: true,
+            detached: true,
         });
 
         // Ensure Strapi is killed on exit
@@ -66,7 +67,7 @@ async function main() {
         await run("yarn", ["frontend:build"]);
 
         console.log("🛑 Stopping Strapi...");
-        strapiProc.kill("SIGINT");
+        process.kill(-strapiProc.pid, "SIGINT");
 
         console.log("✅ Done!");
     } catch (err) {
