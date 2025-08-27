@@ -1,6 +1,7 @@
-import qs from "qs";
-import { getStrapiURL } from "./api";
 import { StrapiAPIResponse, StrapiObject } from "@/types/strapi";
+import qs from "qs";
+
+import { getStrapiURL } from "./api";
 
 export async function fetchAPI<T extends StrapiObject>(
     path: string,

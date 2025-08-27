@@ -1,8 +1,8 @@
 "use client";
 
-import timeGridPlugin from "@fullcalendar/timegrid";
-import FullCalendar from "@fullcalendar/react";
 import { Event } from "@/types/strapi";
+import FullCalendar from "@fullcalendar/react";
+import timeGridPlugin from "@fullcalendar/timegrid";
 import { useRouter } from "next/navigation";
 
 export function EventCalendar({ events }: { events: Event[] }) {

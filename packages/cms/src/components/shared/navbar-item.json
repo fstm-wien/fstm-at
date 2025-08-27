@@ -1,16 +1,16 @@
 {
-  "collectionName": "components_shared_navbar_items",
-  "info": {
-    "displayName": "NavbarItem",
-    "icon": "code"
-  },
-  "options": {},
-  "attributes": {
-    "label": {
-      "type": "string"
+    "collectionName": "components_shared_navbar_items",
+    "info": {
+        "displayName": "NavbarItem",
+        "icon": "code"
     },
-    "href": {
-      "type": "string"
+    "options": {},
+    "attributes": {
+        "label": {
+            "type": "string"
+        },
+        "href": {
+            "type": "string"
+        }
     }
-  }
 }

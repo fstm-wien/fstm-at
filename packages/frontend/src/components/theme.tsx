@@ -1,10 +1,10 @@
 "use client";
 
+import clsx from "clsx";
 import { AnimatePresence } from "motion/react";
+import { motion } from "motion/react";
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { FaMoon, FaSun } from "react-icons/fa";
-import { motion } from "motion/react";
-import clsx from "clsx";
 
 export type Theme = "light" | "dark";
 

@@ -1,17 +1,17 @@
-export const dynamic = "force-dynamic";
-export const fetchCache = "force-no-store";
-
 import { Event } from "@/types/strapi";
 import { fetchAPI } from "@/utils/fetch-api";
+import { generateMetaTitle } from "@/utils/meta";
 import clsx from "clsx";
-import "moment/locale/de";
 import moment from "moment";
+import "moment/locale/de";
+import { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { BiSolidDrink } from "react-icons/bi";
 import { FaBookOpen, FaCalendar, FaClock, FaMapPin } from "react-icons/fa";
-import { Metadata } from "next";
-import { generateMetaTitle } from "@/utils/meta";
+
+export const dynamic = "force-dynamic";
+export const fetchCache = "force-no-store";
 
 type GridItem = { icon: React.ReactNode; title: string; content: string; href?: string };
 const gridItems: GridItem[] = [

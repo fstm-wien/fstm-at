@@ -1,11 +1,11 @@
-export const dynamic = "force-dynamic";
-export const fetchCache = "force-no-store";
-
 import { EventCalendar } from "@/components/event-calendar";
 import { Event } from "@/types/strapi";
 import { fetchAPI } from "@/utils/fetch-api";
 import { generateMetaTitle } from "@/utils/meta";
 import { Metadata } from "next";
+
+export const dynamic = "force-dynamic";
+export const fetchCache = "force-no-store";
 
 export const metadata: Metadata = {
     title: generateMetaTitle("Events"),

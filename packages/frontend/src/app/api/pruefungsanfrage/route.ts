@@ -1,7 +1,7 @@
-import { NextRequest } from "next/server";
 import sgMail from "@sendgrid/mail";
-import moment from "moment";
 import { XMLParser } from "fast-xml-parser";
+import moment from "moment";
+import { NextRequest } from "next/server";
 
 export async function POST(request: NextRequest) {
     const body = await request.json();

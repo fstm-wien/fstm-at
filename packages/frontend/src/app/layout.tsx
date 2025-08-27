@@ -1,16 +1,17 @@
-export const dynamic = "force-dynamic";
-
+import { BackToTop } from "@/components/back-to-top";
 import { Header } from "@/components/header";
 import { ThemeProvider } from "@/components/theme";
 import { SiteProvider } from "@/types/site-context";
 import { Navbar } from "@/types/strapi";
 import { fetchAPI } from "@/utils/fetch-api";
+import { generateMetaTitle } from "@/utils/meta";
 import clsx from "clsx";
 import type { Metadata } from "next";
 import { Geist, PT_Sans } from "next/font/google";
+
 import "./globals.css";
-import { generateMetaTitle } from "@/utils/meta";
-import { BackToTop } from "@/components/back-to-top";
+
+export const dynamic = "force-dynamic";
 
 const geist = Geist({
     variable: "--font-geist-sans",

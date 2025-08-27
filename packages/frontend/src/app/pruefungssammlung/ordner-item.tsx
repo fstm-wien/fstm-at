@@ -5,7 +5,7 @@ import { NextcloudFileInformation } from "@/utils/nextcloud";
 import clsx from "clsx";
 import { AnimatePresence, motion } from "motion/react";
 import { useCallback, useState } from "react";
-import { FaCopy, FaCross, FaDownload, FaLink, FaTimes } from "react-icons/fa";
+import { FaLink, FaTimes } from "react-icons/fa";
 import { IoMail } from "react-icons/io5";
 
 export function OrdnerItem({ info }: { info: NextcloudFileInformation }) {

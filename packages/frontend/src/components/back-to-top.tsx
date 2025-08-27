@@ -1,18 +1,18 @@
 "use client";
 
+import { AnimatePresence, motion } from "motion/react";
 import { useEffect, useState } from "react";
 import { FaArrowUp } from "react-icons/fa";
-import { AnimatePresence, motion } from "motion/react";
 
 export function BackToTop() {
     const [scrollTop, setScrollTop] = useState(0);
     const [windowHeight, setWindowHeight] = useState(1080);
 
     useEffect(() => {
-        window.addEventListener("scroll", (e) => {
+        window.addEventListener("scroll", () => {
             setScrollTop(window.scrollY);
         });
-        window.addEventListener("resize", (e) => {
+        window.addEventListener("resize", () => {
             setWindowHeight(window.innerHeight);
         });
 

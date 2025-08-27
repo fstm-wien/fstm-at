@@ -9,15 +9,12 @@ export function SideNavigation({ navbar }: { navbar: Navbar }) {
     const pathname = usePathname();
 
     return (
-        <nav className="flex flex-col gap-1">
+        <nav className="flex flex-col gap-1 shrink-0">
             {navbar.items.map((item) => (
                 <div key={item.id}>
                     <Link
                         href={item.href}
-                        className={clsx(
-                            "text-sm",
-                            pathname.startsWith(item.href) ? "text-orange-500" : "text-gray-400",
-                        )}
+                        className={clsx("text-sm", pathname === item.href ? "text-orange-500" : "text-gray-400")}
                     >
                         {item.label}
                     </Link>

@@ -1,18 +1,18 @@
-export const dynamic = "force-dynamic";
-export const fetchCache = "force-no-store";
-
-import { Event, Seite } from "@/types/strapi";
+import { Event } from "@/types/strapi";
 import { fetchAPI } from "@/utils/fetch-api";
 import { generateMetaTitle } from "@/utils/meta";
 import { BlocksRenderer } from "@strapi/blocks-react-renderer";
-import { Metadata, ResolvingMetadata } from "next";
+import { Metadata } from "next";
 import { notFound } from "next/navigation";
+
+export const dynamic = "force-dynamic";
+export const fetchCache = "force-no-store";
 
 type Props = {
     params: Promise<{ id: string }>;
 };
 
-export async function generateMetadata({ params }: Props, parent: ResolvingMetadata): Promise<Metadata> {
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
     const { id } = await params;
     const response = await fetchAPI<Event>(`/events/${id}`);
     const foundEvent: Event | null = !Array.isArray(response.data) ? response.data : null;

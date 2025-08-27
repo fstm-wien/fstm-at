@@ -1,38 +1,32 @@
 {
-  "kind": "collectionType",
-  "collectionName": "journaldienste",
-  "info": {
-    "singularName": "journaldienst",
-    "pluralName": "journaldienste",
-    "displayName": "Journaldienst",
-    "description": ""
-  },
-  "options": {
-    "draftAndPublish": true
-  },
-  "attributes": {
-    "weekday": {
-      "type": "enumeration",
-      "enum": [
-        "Montag",
-        "Dienstag",
-        "Mittwoch",
-        "Donnerstag",
-        "Freitag"
-      ],
-      "default": "Montag",
-      "required": true
+    "kind": "collectionType",
+    "collectionName": "journaldienste",
+    "info": {
+        "singularName": "journaldienst",
+        "pluralName": "journaldienste",
+        "displayName": "Journaldienst",
+        "description": ""
     },
-    "start": {
-      "type": "time"
+    "options": {
+        "draftAndPublish": true
     },
-    "end": {
-      "type": "time"
-    },
-    "people": {
-      "type": "string",
-      "regex": "(\\w+,?)+",
-      "required": false
+    "attributes": {
+        "weekday": {
+            "type": "enumeration",
+            "enum": ["Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag"],
+            "default": "Montag",
+            "required": true
+        },
+        "start": {
+            "type": "time"
+        },
+        "end": {
+            "type": "time"
+        },
+        "people": {
+            "type": "string",
+            "regex": "(\\w+,?)+",
+            "required": false
+        }
     }
-  }
 }

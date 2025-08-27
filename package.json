@@ -9,15 +9,17 @@
         "cms:build": "yarn workspace cms build",
         "cms:start": "yarn workspace cms start",
         "dev": "concurrently \"yarn cms:dev\" \"yarn frontend:dev\"",
-        "build": "concurrently \"yarn cms:build\" \"yarn frontend:build\"",
+        "build": "node ./scripts/build.js",
         "start": "concurrently \"yarn cms:start\" \"yarn frontend:start\"",
-        "format": "prettier --write ."
+        "format": "prettier --write .",
+        "lint": "yarn workspace frontend lint"
     },
     "workspaces": [
         "packages/*"
     ],
     "packageManager": "yarn@4.4.1",
     "devDependencies": {
+        "@trivago/prettier-plugin-sort-imports": "^5.2.2",
         "concurrently": "^9.1.2",
         "pm2": "^6.0.8",
         "prettier": "^3.5.3"

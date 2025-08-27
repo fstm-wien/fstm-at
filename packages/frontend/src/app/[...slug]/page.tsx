@@ -1,20 +1,20 @@
-export const dynamic = "force-dynamic";
-export const fetchCache = "force-no-store";
-
 import { Seite } from "@/types/strapi";
 import { fetchAPI } from "@/utils/fetch-api";
-import { BlocksRenderer } from "@strapi/blocks-react-renderer";
-import Link from "next/link";
-import { notFound } from "next/navigation";
-import { SideNavigation } from "./side-navigation";
-import { Metadata, ResolvingMetadata } from "next";
 import { generateMetaTitle } from "@/utils/meta";
+import { BlocksRenderer } from "@strapi/blocks-react-renderer";
+import { Metadata } from "next";
+import { notFound } from "next/navigation";
+
+import { SideNavigation } from "./side-navigation";
+
+export const dynamic = "force-dynamic";
+export const fetchCache = "force-no-store";
 
 type Props = {
     params: Promise<{ slug: string[] }>;
 };
 
-export async function generateMetadata({ params }: Props, parent: ResolvingMetadata): Promise<Metadata> {
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
     const { slug } = await params;
     const response = await fetchAPI<Seite>(`/seiten`, {
         "filters[slug][$eq]": slug.join("/"),
@@ -44,7 +44,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
 
     return (
         <>
-            <div className="flex flex-col lg:flex-row gap-4">
+            <div className="flex flex-col lg:flex-row gap-4 lg:gap-6">
                 {foundPage.navbar && foundPage.navbar.items && (
                     <aside className="lg:w-48 lg:pt-6">
                         <SideNavigation navbar={foundPage.navbar} />

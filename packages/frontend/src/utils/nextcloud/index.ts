@@ -30,7 +30,7 @@ export async function findFiles(): Promise<NextcloudFileInformation[]> {
     for (const obj of json["d:multistatus"]["d:response"].slice(1)) {
         const href = obj["d:href"] as string;
         try {
-            const props = obj["d:propstat"].find((p: Record<string, any>) => p["d:status"] === "HTTP/1.1 200 OK")[
+            const props = obj["d:propstat"].find((p: Record<string, unknown>) => p["d:status"] === "HTTP/1.1 200 OK")[
                 "d:prop"
             ];
 
@@ -46,7 +46,7 @@ export async function findFiles(): Promise<NextcloudFileInformation[]> {
                 name,
                 size,
             });
-        } catch (e) {
+        } catch {
             continue;
         }
     }

@@ -1,12 +1,13 @@
-export const dynamic = "force-dynamic";
-export const fetchCache = "force-no-store";
-
+import { generateMetaTitle } from "@/utils/meta";
 import { findFiles } from "@/utils/nextcloud";
+import { Metadata } from "next";
 import { FaLink } from "react-icons/fa";
 import { IoMail } from "react-icons/io5";
+
 import { OrdnerItem } from "./ordner-item";
-import { Metadata } from "next";
-import { generateMetaTitle } from "@/utils/meta";
+
+export const dynamic = "force-dynamic";
+export const fetchCache = "force-no-store";
 
 export const metadata: Metadata = {
     title: generateMetaTitle("Prüfungssammlung"),
