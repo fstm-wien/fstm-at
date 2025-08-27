@@ -5,7 +5,7 @@ import { NextcloudFileInformation } from "@/utils/nextcloud";
 import clsx from "clsx";
 import { AnimatePresence, motion } from "motion/react";
 import { useCallback, useState } from "react";
-import { FaCross, FaDownload, FaTimes } from "react-icons/fa";
+import { FaCopy, FaCross, FaDownload, FaLink, FaTimes } from "react-icons/fa";
 import { IoMail } from "react-icons/io5";
 
 export function OrdnerItem({ info }: { info: NextcloudFileInformation }) {
@@ -27,6 +27,7 @@ export function OrdnerItem({ info }: { info: NextcloudFileInformation }) {
     };
 
     const sendMail = () => {
+        setIsSending(true);
         fetch("/api/pruefungsanfrage", {
             method: "POST",
             body: JSON.stringify({ name: info.name, email }),
@@ -36,11 +37,6 @@ export function OrdnerItem({ info }: { info: NextcloudFileInformation }) {
                 setShowModal(false);
             }
         });
-        setIsSending(true);
-
-        setTimeout(() => {
-            setIsSending(false);
-        }, 1000);
     };
 
     return (
@@ -49,27 +45,25 @@ export function OrdnerItem({ info }: { info: NextcloudFileInformation }) {
                 key={info.name}
                 className="px-2 py-2 flex flex-row gap-3 items-center bg-background hover:bg-background-emph"
             >
-                <div className="flex flex-row gap-3 items-end">
-                    <p>{info.name}</p>
-                    <p className="text-xs pb-0.5 text-gray-400">{humanFileSize(info.size)}</p>
-                </div>
-                <div className="ml-auto mr-0 flex flex-row gap-2">
+                <p>{info.name}</p>
+                <p className="ml-auto shrink-0 text-xs text-gray-400">{humanFileSize(info.size)}</p>
+                <div className="mr-0 flex flex-row gap-2">
                     <div className="p-1 cursor-pointer opacity-30 hover:opacity-100" onClick={() => setShowModal(true)}>
-                        <FaDownload />
+                        <FaLink />
                     </div>
                 </div>
             </div>
             <AnimatePresence>
                 {showModal && (
                     <motion.div
-                        className="fixed top-0 left-0 right-0 bottom-0"
+                        className="fixed top-0 left-0 right-0 bottom-0 z-20"
                         initial={{ background: "rgb(0, 0, 0, 0)" }}
-                        animate={{ background: "rgb(0, 0, 0, 0.4)" }}
+                        animate={{ background: "rgb(0, 0, 0, 0.6)" }}
                         exit={{ background: "rgb(0, 0, 0, 0)" }}
                         onClick={() => setShowModal(false)}
                     >
                         <motion.div
-                            className="fixed p-6 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-background w-lg rounded-md flex flex-col gap-3"
+                            className="fixed p-6 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-background w-[95%] max-w-lg rounded-md flex flex-col gap-3"
                             initial={{ scale: 0.9, opacity: 0 }}
                             animate={{ scale: 1, opacity: 1 }}
                             exit={{ scale: 0.9, opacity: 0 }}

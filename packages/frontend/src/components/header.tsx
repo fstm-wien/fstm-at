@@ -61,7 +61,7 @@ export function Header() {
                 </nav>
                 <span className="flex flex-row gap-1 items-center ml-auto mr-0">
                     <ThemeToggle />
-                    <Link className="p-2 text-xl" href={getStrapiURL()}>
+                    <Link className="p-2 text-xl" href={getStrapiURL()} target="_blank">
                         <MdLogin />
                     </Link>
                 </span>
@@ -95,7 +95,7 @@ export function Header() {
                 <motion.div
                     className={clsx(
                         "absolute z-5 top-0 left-0 w-full h-full transition-colors",
-                        showSidebar ? "bg-black/70" : "bg-black/0",
+                        showSidebar ? "bg-black/60" : "bg-black/0",
                     )}
                     onClick={() => setShowSidebar(false)}
                 ></motion.div>

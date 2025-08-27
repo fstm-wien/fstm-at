@@ -4,6 +4,8 @@ export const fetchCache = "force-no-store";
 import { Event } from "@/types/strapi";
 import { fetchAPI } from "@/utils/fetch-api";
 import clsx from "clsx";
+import "moment/locale/de";
+import moment from "moment";
 import Image from "next/image";
 import Link from "next/link";
 import { BiSolidDrink } from "react-icons/bi";
@@ -102,7 +104,7 @@ export default async function Home() {
                                 </div>
                                 <div className="text-gray-400 dark:text-gray-500 inline-flex items-center gap-1 text-sm">
                                     <FaClock />
-                                    <span>{e.start}</span>
+                                    <span>{moment(e.start).locale("de").format("Do MMMM YYYY, HH:mm:ss")}</span>
                                 </div>
                             </Link>
                         ))}
