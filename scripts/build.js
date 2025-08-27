@@ -28,6 +28,7 @@ async function main() {
         stop(strapiProc);
 
         console.log("✅ Done!");
+        process.exit(0);
     } catch (err) {
         console.error("❌ Build failed:", err.message);
         if (strapiProc) stop(strapiProc);
