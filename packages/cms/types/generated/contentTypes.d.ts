@@ -457,6 +457,7 @@ export interface ApiNavbarNavbar extends Struct.CollectionTypeSchema {
         localizations: Schema.Attribute.Relation<"oneToMany", "api::navbar.navbar"> & Schema.Attribute.Private;
         location: Schema.Attribute.String;
         publishedAt: Schema.Attribute.DateTime;
+        seiten: Schema.Attribute.Relation<"oneToMany", "api::seite.seite">;
         updatedAt: Schema.Attribute.DateTime;
         updatedBy: Schema.Attribute.Relation<"oneToOne", "admin::user"> & Schema.Attribute.Private;
     };
@@ -479,6 +480,7 @@ export interface ApiSeiteSeite extends Struct.CollectionTypeSchema {
         createdBy: Schema.Attribute.Relation<"oneToOne", "admin::user"> & Schema.Attribute.Private;
         locale: Schema.Attribute.String & Schema.Attribute.Private;
         localizations: Schema.Attribute.Relation<"oneToMany", "api::seite.seite"> & Schema.Attribute.Private;
+        navbar: Schema.Attribute.Relation<"manyToOne", "api::navbar.navbar">;
         publishedAt: Schema.Attribute.DateTime;
         slug: Schema.Attribute.String & Schema.Attribute.Required & Schema.Attribute.Unique;
         title: Schema.Attribute.String;

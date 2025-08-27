@@ -3,8 +3,23 @@ export const fetchCache = "force-no-store";
 
 import { Event, Seite } from "@/types/strapi";
 import { fetchAPI } from "@/utils/fetch-api";
+import { generateMetaTitle } from "@/utils/meta";
 import { BlocksRenderer } from "@strapi/blocks-react-renderer";
+import { Metadata, ResolvingMetadata } from "next";
 import { notFound } from "next/navigation";
+
+type Props = {
+    params: Promise<{ id: string }>;
+};
+
+export async function generateMetadata({ params }: Props, parent: ResolvingMetadata): Promise<Metadata> {
+    const { id } = await params;
+    const response = await fetchAPI<Event>(`/events/${id}`);
+    const foundEvent: Event | null = !Array.isArray(response.data) ? response.data : null;
+    return {
+        title: generateMetaTitle("Events", ...(foundEvent ? [foundEvent.name] : [])),
+    };
+}
 
 export default async function EventPage({ params }: { params: Promise<{ id: string }> }) {
     const { id } = await params;

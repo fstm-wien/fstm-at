@@ -16,6 +16,7 @@ export interface Seite extends StrapiObject {
     title: string;
     slug: string;
     content: BlocksContent;
+    navbar?: Navbar;
 }
 
 export interface Event extends StrapiObject {

@@ -9,6 +9,8 @@ import clsx from "clsx";
 import type { Metadata } from "next";
 import { Geist, PT_Sans } from "next/font/google";
 import "./globals.css";
+import { generateMetaTitle } from "@/utils/meta";
+import { BackToTop } from "@/components/back-to-top";
 
 const geist = Geist({
     variable: "--font-geist-sans",
@@ -22,7 +24,7 @@ const ptSans = PT_Sans({
 });
 
 export const metadata: Metadata = {
-    title: "FSTM: Startseite",
+    title: generateMetaTitle(),
 };
 
 export default async function RootLayout({
@@ -30,7 +32,7 @@ export default async function RootLayout({
 }: Readonly<{
     children: React.ReactNode;
 }>) {
-    const response = await fetchAPI<Navbar>(`/navbars`, { "filters[location][$eq]": "header", populate: "*" });
+    const response = await fetchAPI<Navbar>(`/navbars`, { "filters[location][$eq]": "header", populate: ["items"] });
 
     return (
         <html lang="en">
@@ -56,6 +58,7 @@ export default async function RootLayout({
                             </span>
                             <span></span>
                         </footer>
+                        <BackToTop />
                     </body>
                 </ThemeProvider>
             </SiteProvider>

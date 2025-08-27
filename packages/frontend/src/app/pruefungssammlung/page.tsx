@@ -1,12 +1,16 @@
 export const dynamic = "force-dynamic";
 export const fetchCache = "force-no-store";
 
-import { humanFileSize } from "@/utils/human-file-size";
 import { findFiles } from "@/utils/nextcloud";
-import { FaDownload } from "react-icons/fa6";
-import { OrdnerItem } from "./ordner-item";
 import { FaLink } from "react-icons/fa";
 import { IoMail } from "react-icons/io5";
+import { OrdnerItem } from "./ordner-item";
+import { Metadata } from "next";
+import { generateMetaTitle } from "@/utils/meta";
+
+export const metadata: Metadata = {
+    title: generateMetaTitle("Prüfungssammlung"),
+};
 
 export default async function Pruefungssammlung() {
     const files = await findFiles();

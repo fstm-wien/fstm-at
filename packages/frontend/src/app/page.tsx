@@ -10,6 +10,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { BiSolidDrink } from "react-icons/bi";
 import { FaBookOpen, FaCalendar, FaClock, FaMapPin } from "react-icons/fa";
+import { Metadata } from "next";
+import { generateMetaTitle } from "@/utils/meta";
 
 type GridItem = { icon: React.ReactNode; title: string; content: string; href?: string };
 const gridItems: GridItem[] = [
@@ -25,6 +27,10 @@ const gridItems: GridItem[] = [
         content: "Spritzer geht immer!",
     },
 ];
+
+export const metadata: Metadata = {
+    title: generateMetaTitle("Home"),
+};
 
 export default async function Home() {
     const response = await fetchAPI<Event>(`/events`, {

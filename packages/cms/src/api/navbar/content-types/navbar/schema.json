@@ -19,6 +19,12 @@
       "type": "component",
       "repeatable": true,
       "component": "shared.navbar-item"
+    },
+    "seiten": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::seite.seite",
+      "mappedBy": "navbar"
     }
   }
 }

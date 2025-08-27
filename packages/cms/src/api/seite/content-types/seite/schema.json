@@ -21,6 +21,12 @@
       "type": "string",
       "required": true,
       "unique": true
+    },
+    "navbar": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::navbar.navbar",
+      "inversedBy": "seiten"
     }
   }
 }

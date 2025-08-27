@@ -1,46 +1,31 @@
-"use client";
-
 export const dynamic = "force-dynamic";
 export const fetchCache = "force-no-store";
 
-import FullCalendar from "@fullcalendar/react";
-import dayGridPlugin from "@fullcalendar/daygrid";
-import timeGridPlugin from "@fullcalendar/timegrid";
-import { useEffect, useState } from "react";
+import { EventCalendar } from "@/components/event-calendar";
 import { Event } from "@/types/strapi";
 import { fetchAPI } from "@/utils/fetch-api";
-import { useRouter } from "next/navigation";
+import { generateMetaTitle } from "@/utils/meta";
+import { Metadata } from "next";
 
-export default function EventsPage() {
-    const [events, setEvents] = useState<Event[]>([]);
-    const router = useRouter();
+export const metadata: Metadata = {
+    title: generateMetaTitle("Events"),
+};
 
-    useEffect(() => {
-        (async function () {
-            const response = await fetchAPI<Event>("/events", {});
-            if (Array.isArray(response.data)) {
-                setEvents(response.data);
-            }
-        })();
-    }, []);
+export default async function EventsPage() {
+    const response = await fetchAPI<Event>(`/events`, {
+        sort: "start:desc",
+    });
+
+    if (!Array.isArray(response.data)) {
+        throw new Error();
+    }
+
+    const events = response.data;
 
     return (
         <>
-            {/* <pre className="over">
-                <code>{JSON.stringify(events, null, 2)}</code>
-            </pre> */}
             <div className="mt-4 px-16">
-                <FullCalendar
-                    plugins={[timeGridPlugin]}
-                    initialView="timeGridWeek"
-                    events={events.map((e) => ({
-                        id: e.documentId,
-                        title: e.name,
-                        start: e.start,
-                        end: e.end,
-                    }))}
-                    eventClick={(info) => router.push(`/events/${info.event._def.publicId}`)}
-                />
+                <EventCalendar events={events} />
             </div>
         </>
     );
