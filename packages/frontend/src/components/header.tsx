@@ -26,14 +26,25 @@ export function Header() {
                 <div className="flex flex-row gap-4 items-center">
                     <div className="">
                         <Link href="/">
-                            <Image
-                                src="/FSTM_cube.png"
-                                width={46}
-                                height={46}
-                                alt="FSTM Logo"
-                                title="Fachschaft Technische Mathematik"
-                                draggable={false}
-                            />
+                            <div className="relative w-[46px]">
+                                <Image
+                                    src="/FSTM_cube.png"
+                                    width={46}
+                                    height={46}
+                                    alt="FSTM Logo"
+                                    title="Fachschaft Technische Mathematik"
+                                    draggable={false}
+                                />
+                                <Image
+                                    className="absolute top-0 scale-110 brightness-0 invert -z-5 select-none"
+                                    src="/FSTM_cube.png"
+                                    width={46}
+                                    height={46}
+                                    alt="FSTM Logo"
+                                    title="Fachschaft Technische Mathematik"
+                                    draggable={false}
+                                />
+                            </div>
                         </Link>
                     </div>
                     {/* {pathname !== "/" && (

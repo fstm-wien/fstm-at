@@ -5,9 +5,6 @@ const { run, stop, waitForStrapi } = require("./_util");
 async function main() {
     let strapiProc;
     try {
-        console.log("📦 Building Strapi...");
-        await run("yarn", ["cms:build"]);
-
         console.log("🚀 Starting Strapi...");
         const strapiProc = spawn("yarn", ["cms:start"], {
             stdio: "inherit",
@@ -20,18 +17,12 @@ async function main() {
 
         console.log("⏳ Waiting for Strapi to be ready...");
         await waitForStrapi();
+        await run("yarn", ["frontend:start"]);
 
-        console.log("📦 Building Next.js frontend...");
-        await run("yarn", ["frontend:build"]);
-
-        console.log("🛑 Stopping Strapi...");
         stop(strapiProc);
-
-        console.log("✅ Done!");
     } catch (err) {
-        console.error("❌ Build failed:", err.message);
         if (strapiProc) stop(strapiProc);
-        process.exit(1); // ❗️ fail the pipeline
+        process.exit(1);
     }
 }
 

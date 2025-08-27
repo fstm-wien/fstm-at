@@ -1,4 +1,5 @@
 import { BackToTop } from "@/components/back-to-top";
+import { Footer } from "@/components/footer";
 import { Header } from "@/components/header";
 import { ThemeProvider } from "@/components/theme";
 import { SiteProvider } from "@/types/site-context";
@@ -53,12 +54,8 @@ export default async function RootLayout({
                     >
                         <Header />
                         <main className="flex flex-col grow mx-auto px-4 max-w-5xl w-full">{children}</main>
-                        <footer className="mt-16 px-6 lg:px-20 h-14 lg:h-20 flex flex-row items-center border-t border-background-emphest justify-between">
-                            <span className="text-sm text-gray-400">
-                                &copy; {new Date().getFullYear()} Fachschaft Technische Mathematik
-                            </span>
-                            <span></span>
-                        </footer>
+                        <Footer />
+
                         <BackToTop />
                     </body>
                 </ThemeProvider>
