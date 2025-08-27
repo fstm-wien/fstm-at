@@ -12,6 +12,7 @@ async function main() {
         const strapiProc = spawn("yarn", ["cms:start"], {
             stdio: "inherit",
             shell: true,
+            detached: process.platform !== "win32",
         });
 
         process.on("SIGINT", () => strapiProc.kill("SIGINT"));
@@ -28,7 +29,6 @@ async function main() {
         stop(strapiProc);
 
         console.log("✅ Done!");
-        process.exit(0);
     } catch (err) {
         console.error("❌ Build failed:", err.message);
         if (strapiProc) stop(strapiProc);

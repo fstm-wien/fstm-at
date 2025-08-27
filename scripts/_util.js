@@ -27,6 +27,7 @@ module.exports.run = function (command, args = [], options = {}) {
         const proc = spawn(command, args, {
             stdio: "inherit",
             shell: true,
+            detached: process.platform !== "win32",
             ...options,
         });
         proc.on("close", (code) => {
