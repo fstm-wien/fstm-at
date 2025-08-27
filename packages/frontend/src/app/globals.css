@@ -20,7 +20,7 @@
     --color-foreground: var(--foreground);
 
     --font-sans: var(--font-pt-sans);
-    --font-mono: var(--font-geist-mono);
+    --font-mono: var(--font-geist-mono), monospace;
     --font-heading: var(--font-pt-sans);
 }
 
