@@ -8,7 +8,7 @@ import { fetchAPI } from "@/utils/fetch-api";
 import { generateMetaTitle } from "@/utils/meta";
 import clsx from "clsx";
 import type { Metadata } from "next";
-import { Geist, PT_Sans } from "next/font/google";
+import { Geist, Geist_Mono, PT_Sans } from "next/font/google";
 
 import "./globals.css";
 
@@ -16,6 +16,11 @@ export const dynamic = "force-dynamic";
 
 const geist = Geist({
     variable: "--font-geist-sans",
+    subsets: ["latin"],
+});
+
+const geistMono = Geist_Mono({
+    variable: "--font-geist-mono",
     subsets: ["latin"],
 });
 
@@ -48,7 +53,7 @@ export default async function RootLayout({
                 <ThemeProvider>
                     <body
                         className={clsx(
-                            ...[geist, ptSans].map((f) => f.variable),
+                            ...[geist, geistMono, ptSans].map((f) => f.variable),
                             `antialiased flex flex-col min-h-dvh`,
                         )}
                     >

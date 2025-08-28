@@ -27,9 +27,7 @@ export default async function Pruefungssammlung() {
                         Klickt auf das <FaLink className="inline-block" />
                         -Symbol.
                     </li>
-                    <li>
-                        Tragt eure Studenten-Email ein (im Format <code>eXXXXXXXX@student.tuwien.ac.at</code>).
-                    </li>
+                    <li>Tragt eure Matrikelnummer (8-stellig) ein.</li>
                     <li>
                         Klickt auf das <IoMail className="inline-block" />
                         -Symbol um einen Link zum Prüfungsordner zu erhalten.

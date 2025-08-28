@@ -24,34 +24,26 @@ export function Header() {
         <header className="mt-2 mb-4 px-4 max-w-6xl mx-auto w-full">
             <div className="hidden lg:grid px-8 h-16 grid-cols-3 items-center">
                 <div className="flex flex-row gap-4 items-center">
-                    <div className="">
-                        <Link href="/">
-                            <div className="relative w-[46px]">
-                                <Image
-                                    src="/FSTM_cube.png"
-                                    width={46}
-                                    height={46}
-                                    alt="FSTM Logo"
-                                    title="Fachschaft Technische Mathematik"
-                                    draggable={false}
-                                />
-                                <Image
-                                    className="absolute top-0 scale-110 brightness-0 invert -z-5 select-none"
-                                    src="/FSTM_cube.png"
-                                    width={46}
-                                    height={46}
-                                    alt="FSTM Logo"
-                                    title="Fachschaft Technische Mathematik"
-                                    draggable={false}
-                                />
-                            </div>
-                        </Link>
-                    </div>
-                    {/* {pathname !== "/" && (
-                        <h3 className="font-semibold text-[16px] tracking-wide font-heading leading-tight">
-                            Fachschaft <br /> Technische Mathematik
-                        </h3>
-                    )} */}
+                    <Link href="/">
+                        <div className="relative w-[46px]">
+                            <Image
+                                src="/FSTM_cube.png"
+                                width={46}
+                                height={46}
+                                alt="FSTM Logo"
+                                title="Fachschaft Technische Mathematik"
+                                draggable={false}
+                            />
+                            <Image
+                                className="absolute top-0 scale-110 brightness-0 invert -z-5 select-none"
+                                src="/FSTM_cube.png"
+                                width={46}
+                                height={46}
+                                alt=""
+                                draggable={false}
+                            />
+                        </div>
+                    </Link>
                 </div>
                 <nav className="flex flex-row gap-4 justify-center">
                     {siteContext?.headerNavigation &&
@@ -78,17 +70,28 @@ export function Header() {
                     </Link>
                 </span>
             </div>
+
             <div className="flex flex-row lg:hidden justify-between items-center">
                 <div className="">
                     <Link href="/">
-                        <Image
-                            src="/FSTM_cube.png"
-                            width={40}
-                            height={40}
-                            alt="FSTM Logo"
-                            title="Fachschaft Technische Mathematik"
-                            draggable={false}
-                        />
+                        <div className="relative w-[46px]">
+                            <Image
+                                src="/FSTM_cube.png"
+                                width={40}
+                                height={40}
+                                alt="FSTM Logo"
+                                title="Fachschaft Technische Mathematik"
+                                draggable={false}
+                            />
+                            <Image
+                                className="absolute top-0 scale-110 brightness-0 invert -z-5 select-none"
+                                src="/FSTM_cube.png"
+                                width={40}
+                                height={40}
+                                alt=""
+                                draggable={false}
+                            />
+                        </div>
                     </Link>
                 </div>
                 <div className="">

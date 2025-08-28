@@ -4,40 +4,51 @@ import { humanFileSize } from "@/utils/human-file-size";
 import { NextcloudFileInformation } from "@/utils/nextcloud";
 import clsx from "clsx";
 import { AnimatePresence, motion } from "motion/react";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { FaLink, FaTimes } from "react-icons/fa";
 import { IoMail } from "react-icons/io5";
 
 export function OrdnerItem({ info }: { info: NextcloudFileInformation }) {
     const [showModal, setShowModal] = useState(false);
-    const [email, setEmail] = useState("");
-    const [modalHasFormatError, setModalHasFormatError] = useState(false);
+    const [regNr, setRegNr] = useState("");
+    const [modalHasFormatError, setModalHasFormatError] = useState(true);
     const [isSending, setIsSending] = useState(false);
 
-    const validateEmail = useCallback(() => {
-        setModalHasFormatError(!email.endsWith("@student.tuwien.ac.at"));
-    }, [email]);
-    const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setEmail(e.target.value);
+    const handleRegNrChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const value = e.target.value;
+        if (/^\d{0,8}$/.test(value)) {
+            setRegNr(e.target.value);
+            setModalHasFormatError(e.target.value.length !== 8);
+        }
     };
-    const handleEmailKeydown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    const handleRegNrKeydown = (e: React.KeyboardEvent<HTMLInputElement>) => {
         if (e.key === "Enter") {
-            sendMail();
+            handleSendMail();
         }
     };
 
-    const sendMail = () => {
+    const handleSendMail = useCallback(() => {
+        if (modalHasFormatError) {
+            return;
+        }
+
         setIsSending(true);
         fetch("/api/pruefungsanfrage", {
             method: "POST",
-            body: JSON.stringify({ name: info.name, email }),
+            body: JSON.stringify({ name: info.name, regNr }),
         }).then((res) => {
             setIsSending(false);
             if (res.ok) {
                 setShowModal(false);
             }
         });
-    };
+    }, [info.name, regNr, modalHasFormatError]);
+
+    useEffect(() => {
+        if (!showModal) {
+            setRegNr("");
+        }
+    }, [showModal]);
 
     return (
         <>
@@ -76,38 +87,42 @@ export function OrdnerItem({ info }: { info: NextcloudFileInformation }) {
                                 <FaTimes />
                             </div>
                             <h1 className="text-2xl">Prüfungsordner anfragen</h1>
-                            <p className="mb-2">
-                                Bitte gib deine Studenten-Email-Adresse ein. <br className="mt-1" />
-                                Wir schicken dir Zugriff den Prüfungsordner <b>{info.name}</b> als Link per Mail!
-                            </p>
+                            <div>
+                                <p className="mb-1">
+                                    Wir schicken dir den Zugriff den Prüfungsordner <b>{info.name}</b> als Link per
+                                    Mail! Dieser ist dann 14 Tage gültig.
+                                </p>
+                                <p className="mb-1">Bitte gib dazu deine Matrikelnummer ein.</p>
+                            </div>
                             <div className="mb-2">
-                                <div className="flex flex-row gap-2 mb-3">
+                                <div className="flex flex-row gap-1 mb-3 items-center">
+                                    <p className="font-mono text-gray-400 select-none">e</p>
                                     <input
-                                        className="grow font-mono py-1 px-2 rounded-md bg-background-emph hover:bg-background-emphest"
-                                        placeholder="eXXXXXXXX@student.tuwien.ac.at"
-                                        type="email"
-                                        value={email}
-                                        onChange={handleEmailChange}
-                                        onBlur={validateEmail}
-                                        onKeyDown={handleEmailKeydown}
+                                        className="font-mono py-1 px-2 w-24 rounded-md bg-background-emph hover:bg-background-emphest"
+                                        placeholder="XXXXXXXX"
+                                        value={regNr}
+                                        onChange={handleRegNrChange}
+                                        onKeyDown={handleRegNrKeydown}
                                     />
+                                    <p className="font-mono text-gray-400 select-none mr-3">@student.tuwien.ac.at</p>
                                     <div
                                         className={clsx(
-                                            "py-1 px-2 flex text-white rounded-md transition-colors",
+                                            "ml-auto py-1 px-2 self-stretch flex text-white rounded-md transition-colors",
                                             isSending || !showModal || modalHasFormatError
                                                 ? "cursor-progress bg-background-emphest"
                                                 : "cursor-pointer bg-orange-600 hover:bg-orange-700",
                                         )}
-                                        onClick={() => sendMail()}
+                                        onClick={handleSendMail}
                                     >
                                         <IoMail className="m-auto" />
                                     </div>
                                 </div>
                                 {modalHasFormatError && (
-                                    <p className="text-sm text-red-500">
-                                        Die Email sollte im Format <code>eXXXXXXXX@student.tuwien.ac.at</code> sein.
-                                    </p>
+                                    <p className="text-sm text-red-500">Die Matrikelnummer sollte 8-stellig sein.</p>
                                 )}
+                                <p className="mt-3 py-2 px-3 bg-yellow-400/20 text-yellow-700 rounded-lg text-sm">
+                                    Bitte warte nach der Anfrage ein paar Minuten und prüfe auch deinen Spam-Ordner.
+                                </p>
                             </div>
                         </motion.div>
                     </motion.div>
