@@ -104,7 +104,11 @@ export function OrdnerItem({ info }: { info: NextcloudFileInformation }) {
                                         onChange={handleRegNrChange}
                                         onKeyDown={handleRegNrKeydown}
                                     />
-                                    <p className="font-mono text-gray-400 select-none mr-3">@student.tuwien.ac.at</p>
+                                    <p className="font-mono text-gray-400 select-none mr-3">
+                                        <span>@student</span>
+                                        <span className="hidden lg:inline">.tuwien.ac.at</span>
+                                        <span className="inline lg:hidden">.tu...</span>
+                                    </p>
                                     <div
                                         className={clsx(
                                             "ml-auto py-1 px-2 self-stretch flex text-white rounded-md transition-colors",
