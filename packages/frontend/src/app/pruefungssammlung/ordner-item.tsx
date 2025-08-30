@@ -1,6 +1,6 @@
 "use client";
 
-import { humanFileSize } from "@/utils/human-file-size";
+import { humanFileSize } from "@/lib/util/human-file-size";
 import { NextcloudFileInformation } from "@/utils/nextcloud";
 import clsx from "clsx";
 import { AnimatePresence, motion } from "motion/react";

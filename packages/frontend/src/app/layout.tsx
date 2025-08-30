@@ -1,11 +1,11 @@
 import { BackToTop } from "@/components/back-to-top";
-import { Footer } from "@/components/footer";
-import { Header } from "@/components/header";
+import { Footer } from "@/components/layout/footer";
+import { Header } from "@/components/layout/header";
 import { ThemeProvider } from "@/components/theme";
+import { generateMetaTitle } from "@/lib/util/meta";
 import { SiteProvider } from "@/types/site-context";
 import { Navbar } from "@/types/strapi";
 import { fetchAPI } from "@/utils/fetch-api";
-import { generateMetaTitle } from "@/utils/meta";
 import clsx from "clsx";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono, PT_Sans } from "next/font/google";

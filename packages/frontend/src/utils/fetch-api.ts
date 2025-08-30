@@ -10,9 +10,9 @@ export async function fetchAPI<T extends StrapiObject>(
 ): Promise<StrapiAPIResponse<T>> {
     try {
         const mergedOptions = {
-            next: { revalidate: 60 },
             headers: {
                 "Content-Type": "application/json",
+                Accept: "application/json",
                 Authorization: `Bearer ${process.env.NEXT_PUBLIC_STRAPI_API_TOKEN}`,
             },
             ...options,

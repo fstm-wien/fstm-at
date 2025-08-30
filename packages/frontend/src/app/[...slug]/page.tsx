@@ -1,6 +1,6 @@
+import { generateMetaTitle } from "@/lib/util/meta";
 import { Seite } from "@/types/strapi";
 import { fetchAPI } from "@/utils/fetch-api";
-import { generateMetaTitle } from "@/utils/meta";
 import { BlocksRenderer } from "@strapi/blocks-react-renderer";
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
