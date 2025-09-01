@@ -1,6 +1,7 @@
+import { PageHeading } from "@/components/page-heading";
+import { generateMetaTitle } from "@/lib/util/meta";
 import { Event } from "@/types/strapi";
 import { fetchAPI } from "@/utils/fetch-api";
-import { generateMetaTitle } from "@/utils/meta";
 import { BlocksRenderer } from "@strapi/blocks-react-renderer";
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
@@ -32,7 +33,7 @@ export default async function EventPage({ params }: { params: Promise<{ id: stri
 
     return (
         <>
-            <h1 className="mt-6 mb-4 text-4xl">{foundEvent.name}</h1>
+            <PageHeading>{foundEvent.name}</PageHeading>
             {foundEvent.content && <BlocksRenderer content={foundEvent.content} />}
         </>
     );

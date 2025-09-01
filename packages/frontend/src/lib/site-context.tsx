@@ -1,11 +1,11 @@
 "use client";
 
+import { Navbar } from "@/types/strapi";
 import { createContext } from "react";
-
-import { Navbar } from "./strapi";
 
 export interface SiteData {
     title: string;
+    description?: string;
 
     headerNavigation?: Navbar["items"];
 }

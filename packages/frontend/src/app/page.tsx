@@ -1,6 +1,6 @@
+import { generateMetaTitle } from "@/lib/util/meta";
 import { Event } from "@/types/strapi";
 import { fetchAPI } from "@/utils/fetch-api";
-import { generateMetaTitle } from "@/utils/meta";
 import clsx from "clsx";
 import moment from "moment";
 import "moment/locale/de";

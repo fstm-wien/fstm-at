@@ -21,7 +21,7 @@ const socialIcons: {
 
 export function Footer() {
     return (
-        <footer className="mt-16 px-6 lg:px-20 h-14 lg:h-20 flex flex-row items-center border-t border-background-emphest justify-between">
+        <footer className="mt-16 px-6 lg:px-20 py-4 lg:py-6 flex flex-row items-center border-t border-background-emphest justify-between">
             <span className="text-sm text-gray-400">
                 &copy; {new Date().getFullYear()} Fachschaft Technische Mathematik
             </span>

@@ -1,7 +1,7 @@
 import { EventCalendar } from "@/components/event-calendar";
+import { generateMetaTitle } from "@/lib/util/meta";
 import { Event } from "@/types/strapi";
 import { fetchAPI } from "@/utils/fetch-api";
-import { generateMetaTitle } from "@/utils/meta";
 import { Metadata } from "next";
 
 export const dynamic = "force-dynamic";

@@ -1,6 +1,6 @@
+import { generateMetaTitle } from "@/lib/util/meta";
 import { Seite } from "@/types/strapi";
 import { fetchAPI } from "@/utils/fetch-api";
-import { generateMetaTitle } from "@/utils/meta";
 import { BlocksRenderer } from "@strapi/blocks-react-renderer";
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
@@ -50,7 +50,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
                         <SideNavigation navbar={foundPage.navbar} />
                     </aside>
                 )}
-                <div>
+                <div className="hyphens-auto break-words">
                     <h1 className="font-bold mt-2 lg:mt-6 mb-8 text-4xl">{foundPage.title}</h1>
                     <article className="prose dark:prose-invert !max-w-full">
                         <BlocksRenderer content={foundPage.content}></BlocksRenderer>

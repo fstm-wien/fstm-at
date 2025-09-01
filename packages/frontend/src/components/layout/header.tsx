@@ -1,6 +1,6 @@
 "use client";
 
-import { SiteContext } from "@/types/site-context";
+import { SiteContext } from "@/lib/site-context";
 import { getStrapiURL } from "@/utils/api";
 import clsx from "clsx";
 import { motion } from "motion/react";
@@ -12,7 +12,7 @@ import { IoMenu } from "react-icons/io5";
 import { MdLogin } from "react-icons/md";
 import { RxCross1 } from "react-icons/rx";
 
-import { ThemeToggle } from "./theme";
+import { ThemeToggle } from "../theme";
 
 export function Header() {
     const siteContext = useContext(SiteContext);
@@ -148,7 +148,7 @@ export function Header() {
                         </nav>
                         <div className="flex flex-row gap-1 mt-auto ml-auto mr-0 mb-0">
                             <ThemeToggle />
-                            <Link className="p-2 text-xl" href={getStrapiURL()}>
+                            <Link className="p-2 text-xl" href={getStrapiURL()} target="_blank">
                                 <MdLogin />
                             </Link>
                         </div>

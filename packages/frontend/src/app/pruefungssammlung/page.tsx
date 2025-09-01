@@ -1,4 +1,4 @@
-import { generateMetaTitle } from "@/utils/meta";
+import { generateMetaTitle } from "@/lib/util/meta";
 import { findFiles } from "@/utils/nextcloud";
 import { Metadata } from "next";
 import { FaLink } from "react-icons/fa";

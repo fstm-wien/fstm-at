@@ -1,11 +1,11 @@
 import { BackToTop } from "@/components/back-to-top";
-import { Footer } from "@/components/footer";
-import { Header } from "@/components/header";
+import { Footer } from "@/components/layout/footer";
+import { Header } from "@/components/layout/header";
 import { ThemeProvider } from "@/components/theme";
-import { SiteProvider } from "@/types/site-context";
+import { SiteProvider } from "@/lib/site-context";
+import { generateMetaTitle } from "@/lib/util/meta";
 import { Navbar } from "@/types/strapi";
 import { fetchAPI } from "@/utils/fetch-api";
-import { generateMetaTitle } from "@/utils/meta";
 import clsx from "clsx";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono, PT_Sans } from "next/font/google";
@@ -42,7 +42,7 @@ export default async function RootLayout({
     const response = await fetchAPI<Navbar>(`/navbars`, { "filters[location][$eq]": "header", populate: ["items"] });
 
     return (
-        <html lang="en">
+        <html lang="de">
             <SiteProvider
                 value={{
                     title: "FSTM",
