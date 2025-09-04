@@ -1,9 +1,8 @@
+import { LocalDatetime } from "@/components/local-datetime";
 import { generateMetaTitle } from "@/lib/util/meta";
 import { Event } from "@/types/strapi";
 import { fetchAPI } from "@/utils/fetch-api";
 import clsx from "clsx";
-import moment from "moment";
-import "moment/locale/de";
 import { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
@@ -108,9 +107,9 @@ export default async function Home() {
                                         </span>
                                     )}
                                 </div>
-                                <div className="text-gray-400 dark:text-gray-500 inline-flex items-center gap-1 text-sm">
+                                <div className="text-gray-400 dark:text-gray-500 inline-flex items-center gap-2 text-sm">
                                     <FaClock />
-                                    <span>{moment(e.start).locale("de").format("Do MMMM YYYY, HH:mm:ss")}</span>
+                                    <LocalDatetime datetime={e.start} format="LLLL" />
                                 </div>
                             </Link>
                         ))}

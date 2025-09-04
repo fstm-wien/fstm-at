@@ -89,7 +89,7 @@ export function OrdnerItem({ info }: { info: NextcloudFileInformation }) {
                             <h1 className="text-2xl">Prüfungsordner anfragen</h1>
                             <div>
                                 <p className="mb-1">
-                                    Wir schicken dir den Zugriff den Prüfungsordner <b>{info.name}</b> als Link per
+                                    Wir schicken dir den Zugriff auf den Prüfungsordner <b>{info.name}</b> als Link per
                                     Mail! Dieser ist dann 14 Tage gültig.
                                 </p>
                                 <p className="mb-1">Bitte gib dazu deine Matrikelnummer ein.</p>
@@ -98,7 +98,7 @@ export function OrdnerItem({ info }: { info: NextcloudFileInformation }) {
                                 <div className="flex flex-row gap-1 mb-3 items-center">
                                     <p className="font-mono text-gray-400 select-none">e</p>
                                     <input
-                                        className="font-mono py-1 px-2 w-24 rounded-md bg-background-emph hover:bg-background-emphest"
+                                        className="font-mono py-1 px-2 w-24 rounded-md border-1 border-gray-400"
                                         placeholder="XXXXXXXX"
                                         value={regNr}
                                         onChange={handleRegNrChange}

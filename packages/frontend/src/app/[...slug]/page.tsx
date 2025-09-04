@@ -1,3 +1,4 @@
+import { PageHeading } from "@/components/page-heading";
 import { generateMetaTitle } from "@/lib/util/meta";
 import { Seite } from "@/types/strapi";
 import { fetchAPI } from "@/utils/fetch-api";
@@ -46,12 +47,12 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
         <>
             <div className="flex flex-col lg:flex-row gap-4 lg:gap-6">
                 {foundPage.navbar && foundPage.navbar.items && (
-                    <aside className="lg:w-48 lg:pt-6">
+                    <aside className="lg:w-48 lg:pt-6 shrink-0">
                         <SideNavigation navbar={foundPage.navbar} />
                     </aside>
                 )}
                 <div className="hyphens-auto break-words">
-                    <h1 className="font-bold mt-2 lg:mt-6 mb-8 text-4xl">{foundPage.title}</h1>
+                    <PageHeading>{foundPage.title}</PageHeading>
                     <article className="prose dark:prose-invert !max-w-full">
                         <BlocksRenderer content={foundPage.content}></BlocksRenderer>
                     </article>

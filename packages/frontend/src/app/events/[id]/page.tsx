@@ -33,8 +33,12 @@ export default async function EventPage({ params }: { params: Promise<{ id: stri
 
     return (
         <>
-            <PageHeading>{foundEvent.name}</PageHeading>
-            {foundEvent.content && <BlocksRenderer content={foundEvent.content} />}
+            <div className="hyphens-auto break-words">
+                <PageHeading>{foundEvent.name}</PageHeading>
+                <article className="prose dark:prose-invert !max-w-full">
+                    <BlocksRenderer content={foundEvent.content}></BlocksRenderer>
+                </article>
+            </div>
         </>
     );
 }
