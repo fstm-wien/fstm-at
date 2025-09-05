@@ -1,7 +1,7 @@
 "use client";
 
 import { SiteContext } from "@/lib/site-context";
-import { getStrapiURL } from "@/utils/api";
+import { getStrapiURL } from "@/lib/strapi/api";
 import clsx from "clsx";
 import { motion } from "motion/react";
 import Image from "next/image";
@@ -27,7 +27,7 @@ export function Header() {
                     <Link href="/">
                         <div className="relative w-[46px]">
                             <Image
-                                src="/FSTM_cube.png"
+                                src="/images/FSTM_Cube.png"
                                 width={46}
                                 height={46}
                                 alt="FSTM Logo"
@@ -36,7 +36,7 @@ export function Header() {
                             />
                             <Image
                                 className="absolute top-0 scale-110 brightness-0 invert -z-5 select-none"
-                                src="/FSTM_cube.png"
+                                src="/images/FSTM_Cube.png"
                                 width={46}
                                 height={46}
                                 alt=""
@@ -76,7 +76,7 @@ export function Header() {
                     <Link href="/">
                         <div className="relative w-[46px]">
                             <Image
-                                src="/FSTM_cube.png"
+                                src="/images/FSTM_Cube.png"
                                 width={40}
                                 height={40}
                                 alt="FSTM Logo"
@@ -85,7 +85,7 @@ export function Header() {
                             />
                             <Image
                                 className="absolute top-0 scale-110 brightness-0 invert -z-5 select-none"
-                                src="/FSTM_cube.png"
+                                src="/images/FSTM_Cube.png"
                                 width={40}
                                 height={40}
                                 alt=""

@@ -1,6 +1,6 @@
 "use client";
 
-import { Navbar } from "@/types/strapi";
+import { Navbar } from "@/lib/strapi/entities";
 import clsx from "clsx";
 import Link from "next/link";
 import { usePathname } from "next/navigation";

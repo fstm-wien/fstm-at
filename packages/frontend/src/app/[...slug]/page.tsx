@@ -1,7 +1,6 @@
 import { PageHeading } from "@/components/page-heading";
+import { getPageBySlug } from "@/lib/strapi/api";
 import { generateMetaTitle } from "@/lib/util/meta";
-import { Seite } from "@/types/strapi";
-import { fetchAPI } from "@/utils/fetch-api";
 import { BlocksRenderer } from "@strapi/blocks-react-renderer";
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
@@ -17,11 +16,8 @@ type Props = {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
     const { slug } = await params;
-    const response = await fetchAPI<Seite>(`/seiten`, {
-        "filters[slug][$eq]": slug.join("/"),
-    });
-
-    const foundPage: Seite | null = Array.isArray(response.data) && response.data.length > 0 ? response.data[0] : null;
+    const pageResponse = await getPageBySlug(slug.join("/"));
+    const foundPage = pageResponse.data;
     return {
         title: generateMetaTitle(foundPage ? foundPage.title : "404"),
     };
@@ -29,16 +25,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function BlogPostPage({ params }: { params: Promise<{ slug: string[] }> }) {
     const { slug } = await params;
-    const response = await fetchAPI<Seite>(`/seiten`, {
-        "filters[slug][$eq]": slug.join("/"),
-        populate: {
-            navbar: {
-                populate: ["items"],
-            },
-        },
-    });
-
-    const foundPage: Seite | null = Array.isArray(response.data) && response.data.length > 0 ? response.data[0] : null;
+    const pageResponse = await getPageBySlug(slug.join("/"));
+    const foundPage = pageResponse.data;
     if (!foundPage) {
         return notFound();
     }
@@ -54,7 +42,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
                 <div className="hyphens-auto break-words">
                     <PageHeading>{foundPage.title}</PageHeading>
                     <article className="prose dark:prose-invert !max-w-full">
-                        <BlocksRenderer content={foundPage.content}></BlocksRenderer>
+                        {foundPage.content && <BlocksRenderer content={foundPage.content}></BlocksRenderer>}
                     </article>
                 </div>
             </div>

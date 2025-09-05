@@ -1,7 +1,7 @@
 "use client";
 
+import { NextcloudFileInformation } from "@/lib/nextcloud/api";
 import { humanFileSize } from "@/lib/util/human-file-size";
-import { NextcloudFileInformation } from "@/utils/nextcloud";
 import clsx from "clsx";
 import { AnimatePresence, motion } from "motion/react";
 import { useCallback, useEffect, useState } from "react";
@@ -16,9 +16,9 @@ export function OrdnerItem({ info }: { info: NextcloudFileInformation }) {
 
     const handleRegNrChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const value = e.target.value;
-        if (/^\d{0,8}$/.test(value)) {
+        if (value.length === 0 || (Number.isInteger(parseInt(value)) && value.length <= 8)) {
             setRegNr(e.target.value);
-            setModalHasFormatError(e.target.value.length !== 8);
+            setModalHasFormatError(![7, 8].includes(e.target.value.length));
         }
     };
     const handleRegNrKeydown = (e: React.KeyboardEvent<HTMLInputElement>) => {

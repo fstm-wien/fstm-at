@@ -3,9 +3,9 @@ import { Footer } from "@/components/layout/footer";
 import { Header } from "@/components/layout/header";
 import { ThemeProvider } from "@/components/theme";
 import { SiteProvider } from "@/lib/site-context";
+import { fetchAPISingle, fetchAPISingleFromCollection } from "@/lib/strapi/api";
+import { GlobalMetadata, Navbar } from "@/lib/strapi/entities";
 import { generateMetaTitle } from "@/lib/util/meta";
-import { Navbar } from "@/types/strapi";
-import { fetchAPI } from "@/utils/fetch-api";
 import clsx from "clsx";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono, PT_Sans } from "next/font/google";
@@ -30,24 +30,30 @@ const ptSans = PT_Sans({
     weight: ["400", "700"],
 });
 
-export const metadata: Metadata = {
-    title: generateMetaTitle(),
-};
+export async function generateMetadata(): Promise<Metadata> {
+    const eventResponse = await fetchAPISingle<GlobalMetadata>(`/global`);
+    return {
+        title: generateMetaTitle(),
+        description: eventResponse.data?.metaDescription,
+    };
+}
 
 export default async function RootLayout({
     children,
 }: Readonly<{
     children: React.ReactNode;
 }>) {
-    const response = await fetchAPI<Navbar>(`/navbars`, { "filters[location][$eq]": "header", populate: ["items"] });
+    const response = await fetchAPISingleFromCollection<Navbar>(`/navbars`, {
+        "filters[location][$eq]": "header",
+        populate: ["items"],
+    });
 
     return (
         <html lang="de">
             <SiteProvider
                 value={{
                     title: "FSTM",
-                    headerNavigation:
-                        Array.isArray(response.data) && response.data.length > 0 ? response.data[0].items : undefined,
+                    headerNavigation: response.data?.items,
                 }}
             >
                 <ThemeProvider>

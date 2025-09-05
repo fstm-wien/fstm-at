@@ -1,5 +1,6 @@
+import { PageHeading } from "@/components/page-heading";
+import { findExamFiles } from "@/lib/nextcloud/api";
 import { generateMetaTitle } from "@/lib/util/meta";
-import { findFiles } from "@/utils/nextcloud";
 import { Metadata } from "next";
 import { FaLink } from "react-icons/fa";
 import { IoMail } from "react-icons/io5";
@@ -14,20 +15,20 @@ export const metadata: Metadata = {
 };
 
 export default async function Pruefungssammlung() {
-    const files = await findFiles();
+    const files = await findExamFiles();
 
     return (
         <>
-            <h1 className="mb-4 text-3xl font-bold">Prüfungssammlung</h1>
-            <div className="flex flex-col gap-2 mb-4">
-                <p>Um euch die Altprüfungen ansehen zu können:</p>
+            <PageHeading>Prüfungssammlung</PageHeading>
+            <div className="flex flex-col gap-2 mb-6">
+                <h3 className="text-lg font-semibold">Um euch die Altprüfungen ansehen zu können:</h3>
                 <ol className="flex flex-col gap-1 list-decimal pl-5">
                     <li>Sucht euch die entsprechende Prüfung in der untenstehenden Liste.</li>
                     <li>
                         Klickt auf das <FaLink className="inline-block" />
                         -Symbol.
                     </li>
-                    <li>Tragt eure Matrikelnummer (8-stellig) ein.</li>
+                    <li>Tragt eure Matrikelnummer (7- oder 8-stellig) ein.</li>
                     <li>
                         Klickt auf das <IoMail className="inline-block" />
                         -Symbol um einen Link zum Prüfungsordner zu erhalten.
@@ -41,7 +42,7 @@ export default async function Pruefungssammlung() {
                     gratis!
                 </p>
             </div>
-            <p className="mb-2">Aktuell haben wir (digital) Prüfungen zu:</p>
+            <h3 className="mb-2 text-lg font-semibold">Aktuell haben wir (digital) Prüfungen zu:</h3>
             <div className="flex flex-col divide-y divide-background-emphest">
                 {files.map((f) => (
                     <OrdnerItem key={f.name} info={f} />

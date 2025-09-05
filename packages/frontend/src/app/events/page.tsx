@@ -1,7 +1,10 @@
 import { EventCalendar } from "@/components/event-calendar";
+import { EventList } from "@/components/event-list";
+import { PageHeading } from "@/components/page-heading";
+import { fetchAPICollection } from "@/lib/strapi/api";
+import { Event } from "@/lib/strapi/entities";
 import { generateMetaTitle } from "@/lib/util/meta";
-import { Event } from "@/types/strapi";
-import { fetchAPI } from "@/utils/fetch-api";
+import moment from "moment";
 import { Metadata } from "next";
 
 export const dynamic = "force-dynamic";
@@ -12,7 +15,7 @@ export const metadata: Metadata = {
 };
 
 export default async function EventsPage() {
-    const response = await fetchAPI<Event>(`/events`, {
+    const response = await fetchAPICollection<Event>(`/events`, {
         sort: "start:desc",
     });
 
@@ -21,11 +24,24 @@ export default async function EventsPage() {
     }
 
     const events = response.data;
+    const nextEvents = events.filter((e) => moment(e.end).isAfter());
+    const pastEvents = events.filter((e) => moment(e.end).isBefore());
 
     return (
         <>
-            <div className="mt-4 px-16">
+            <PageHeading>Events</PageHeading>
+            <div className="mx-auto w-full mb-10">
                 <EventCalendar events={events} />
+            </div>
+            <div className="flex flex-col gap-8">
+                <div>
+                    <h3 className="mb-4 text-2xl font-semibold">Nächste Events</h3>
+                    <EventList events={nextEvents} />
+                </div>
+                <div className="opacity-50">
+                    <h3 className="mb-4 text-2xl font-semibold">Vergangene Events</h3>
+                    <EventList events={pastEvents} />
+                </div>
             </div>
         </>
     );

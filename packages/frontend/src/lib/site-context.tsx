@@ -1,7 +1,8 @@
 "use client";
 
-import { Navbar } from "@/types/strapi";
 import { createContext } from "react";
+
+import { Navbar } from "./strapi/entities";
 
 export interface SiteData {
     title: string;

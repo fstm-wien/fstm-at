@@ -9,8 +9,12 @@
     --background-emphest: var(--color-gray-200);
     --foreground: var(--color-gray-950);
 
+    --fc-button-bg-color: var(--color-orange-400);
+    --fc-button-hover-bg-color: var(--color-orange-500);
+    --fc-button-active-bg-color: var(--color-orange-500);
+
     --fc-event-bg-color: var(--color-orange-400);
-    --fc-event-border-color: var(--color-orange-600);
+    --fc-event-border-color: transparent;
 }
 
 @theme inline {
@@ -29,6 +33,9 @@
     --background-emph: var(--color-gray-800);
     --background-emphest: var(--color-gray-700);
     --foreground: var(--color-gray-100);
+
+    --fc-border-color: var(--color-gray-700);
+    --fc-page-bg-color: var(--color-gray-800);
 }
 
 body {
@@ -42,5 +49,32 @@ body {
 }
 
 .fc-event {
-    cursor: pointer;
+    @apply cursor-pointer hyphens-auto break-words;
+    @apply hover:bg-orange-500;
+}
+
+.fc-button-primary {
+    @apply !border-none;
+    @apply !shadow-none;
+    @apply focus:ring-2 focus:ring-orange-600;
+}
+
+.fc-timegrid-axis {
+    @apply text-xs;
+}
+
+.fc-timegrid-slot-label {
+    @apply text-xs;
+}
+
+.fc-toolbar-title {
+    @apply not-lg:!text-2xl;
+}
+
+.fc-header-toolbar *:last-of-type button {
+    @apply not-lg:!text-sm;
+}
+
+.fc-direction-ltr .fc-toolbar > * > :not(:first-child) {
+    @apply not-lg:!ml-2;
 }

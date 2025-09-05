@@ -24,7 +24,7 @@ export function BackToTop() {
         <AnimatePresence>
             {scrollTop > windowHeight / 2 && (
                 <motion.div
-                    className="fixed flex bottom-4 right-4 size-10 bg-background border border-background-emphest rounded-lg shadow-lg"
+                    className="fixed flex bottom-4 right-4 size-10 bg-background border border-background-emphest rounded-sm shadow-lg hover:bg-background-emph cursor-pointer"
                     onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
                     initial={{ scale: 0.8, opacity: 0 }}
                     animate={{ scale: 1, opacity: 1 }}

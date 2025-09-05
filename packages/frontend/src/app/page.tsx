@@ -1,13 +1,14 @@
-import { LocalDatetime } from "@/components/local-datetime";
+import { EventListItem } from "@/components/event-list";
+import { fetchAPICollection, fetchAPISingle } from "@/lib/strapi/api";
+import { About, Event } from "@/lib/strapi/entities";
 import { generateMetaTitle } from "@/lib/util/meta";
-import { Event } from "@/types/strapi";
-import { fetchAPI } from "@/utils/fetch-api";
 import clsx from "clsx";
+import moment from "moment";
 import { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import { BiSolidDrink } from "react-icons/bi";
-import { FaBookOpen, FaCalendar, FaClock, FaMapPin } from "react-icons/fa";
+import { BiCalendar, BiTime } from "react-icons/bi";
+import { FaBookOpen, FaCalendar } from "react-icons/fa";
 
 export const dynamic = "force-dynamic";
 export const fetchCache = "force-no-store";
@@ -15,15 +16,22 @@ export const fetchCache = "force-no-store";
 type GridItem = { icon: React.ReactNode; title: string; content: string; href?: string };
 const gridItems: GridItem[] = [
     {
-        icon: <FaBookOpen className="text-orange-300" />,
+        icon: <FaBookOpen className="text-green-400" />,
         title: "Prüfungssammlung",
         content: "Wir betreiben eine Sammlung an Altprüfungen, damit ihr euch besser auf Prüfungen vorbereiten könnt.",
         href: "/pruefungssammlung",
     },
     {
-        icon: <BiSolidDrink className="text-blue-300" />,
-        title: "Spritzerstände",
-        content: "Spritzer geht immer!",
+        icon: <BiCalendar className="text-red-400" />,
+        title: "Kalender",
+        content: "Unsere nächsten Veranstaltungen auf einen Blick!",
+        href: "/events",
+    },
+    {
+        icon: <BiTime className="text-blue-400" />,
+        title: "Journaldienste",
+        content: "Zu diesen Zeiten sind wir für euch vor Ort in der Fachschaft erreichbar.",
+        href: "/journaldienste",
     },
 ];
 
@@ -32,32 +40,28 @@ export const metadata: Metadata = {
 };
 
 export default async function Home() {
-    const response = await fetchAPI<Event>(`/events`, {
+    const aboutResponse = await fetchAPISingle<About>("/about");
+    const nextEventsResponse = await fetchAPICollection<Event>("/events", {
         sort: "start:desc",
+        filters: {
+            end: {
+                $gte: moment().toISOString(),
+            },
+        },
         pagination: {
             page: 1,
             pageSize: 3,
         },
     });
 
-    if (!Array.isArray(response.data)) {
-        throw new Error();
-    }
-
     return (
         <>
             <div className="lg:mt-12 mb-18 mx-auto max-w-4xl flex flex-col lg:flex-row-reverse gap-2 items-center">
                 <div className="mx-4 flex shrink-0 flex-col justify-center">
-                    {/* <div
-                        className={clsx(
-                            "absolute w-[256px] h-[128px] top-8 left-1/2 -translate-x-1/2",
-                            "bg-radial from-orange-300/30 from-10% to-40% to-transparent",
-                        )}
-                    ></div> */}
                     <div className="relative w-[96px] lg:w-auto">
                         <Image
                             className=""
-                            src="/FSTM_cube.png"
+                            src="/images/FSTM_cube.png"
                             width={140}
                             height={140}
                             alt="FSTM Cube"
@@ -65,7 +69,7 @@ export default async function Home() {
                         />
                         <Image
                             className="absolute top-0 scale-110 brightness-0 invert -z-5 select-none"
-                            src="/FSTM_cube.png"
+                            src="/images/FSTM_cube.png"
                             width={140}
                             height={140}
                             alt="FSTM Cube"
@@ -78,48 +82,30 @@ export default async function Home() {
                         <p className="mb-1 text-3xl font-medium">Willkommen bei der</p>
                         <h1 className="mb-5 text-5xl font-bold text-orange-400">Fachschaft Technische Mathematik</h1>
                     </div>
-                    <p className="">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam metus dolor, porta nec lectus a,
-                        tempus interdum lorem. Nunc iaculis nunc sed est dapibus suscipit. Fusce vitae euismod ante, sed
-                        hendrerit sapien.
-                    </p>
+                    <p className="">{aboutResponse.data?.description}</p>
                 </div>
             </div>
-            {response.data && (
+            {nextEventsResponse.data && (
                 <div className="mb-12 lg:mx-8">
                     <h3 className="mb-4 inline-flex items-center gap-2 text-xl">
                         <FaCalendar />
-                        <span>Nächste Events</span>
+                        <span className="font-semibold">Nächste Events</span>
                     </h3>
                     <div className="flex flex-col gap-2">
-                        {response.data.map((e) => (
-                            <Link
-                                key={e.documentId}
-                                href={`/events/` + e.documentId}
-                                className="py-3 px-4 flex flex-col gap-1 bg-background-emph hover:bg-background-emphest transition-colors border border-background-emphest rounded-lg"
-                            >
-                                <div className="flex flex-row items-center gap-3">
-                                    <span className="font-semibold">{e.name}</span>
-                                    {e.location && (
-                                        <span className="inline-flex flex-row gap-1 items-center text-sm text-gray-500 dark:text-gray-400">
-                                            <FaMapPin />
-                                            <span>{e.location}</span>
-                                        </span>
-                                    )}
-                                </div>
-                                <div className="text-gray-400 dark:text-gray-500 inline-flex items-center gap-2 text-sm">
-                                    <FaClock />
-                                    <LocalDatetime datetime={e.start} format="LLLL" />
-                                </div>
-                            </Link>
-                        ))}
+                        {nextEventsResponse.data.length > 0 ? (
+                            nextEventsResponse.data.map((e) => <EventListItem key={e.documentId} event={e} />)
+                        ) : (
+                            <div className="">
+                                Im Moment sind keine Events geplant. Bald haben wir wieder etwas Neues für euch!
+                            </div>
+                        )}
                     </div>
                     <p className="mt-4 text-gray-400 underline">
                         <Link href="/events">Mehr Events ...</Link>
                     </p>
                 </div>
             )}
-            <div className="mx-auto max-w-2xl grid lg:grid-cols-2 gap-2 lg:gap-8">
+            <div className="lg:mx-8 mx-auto grid lg:grid-cols-3 gap-2 lg:gap-8">
                 {gridItems
                     .map(
                         (item) =>
@@ -128,8 +114,8 @@ export default async function Home() {
                                 <div
                                     key={item.title}
                                     className={clsx(
-                                        "py-6 px-6 flex flex-col items-center text-center bg-background-emph border border-background-emphest rounded-xl transition-colors",
-                                        item.href && "hover:bg-background-emphest",
+                                        "py-6 px-6 flex flex-col items-center text-center border border-background-emphest",
+                                        item.href && "hover:bg-background-emph",
                                     )}
                                 >
                                     <span className="mb-4 text-3xl">{item.icon}</span>
