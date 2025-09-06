@@ -1,11 +1,11 @@
 import { EventListItem } from "@/components/event-list";
+import { FSTMLogo } from "@/components/fstm-logo";
 import { fetchAPICollection, fetchAPISingle } from "@/lib/strapi/api";
 import { About, Event } from "@/lib/strapi/entities";
 import { generateMetaTitle } from "@/lib/util/meta";
 import clsx from "clsx";
 import moment from "moment";
 import { Metadata } from "next";
-import Image from "next/image";
 import Link from "next/link";
 import { BiCalendar, BiTime } from "react-icons/bi";
 import { FaBookOpen, FaCalendar } from "react-icons/fa";
@@ -58,24 +58,7 @@ export default async function Home() {
         <>
             <div className="lg:mt-12 mb-18 mx-auto max-w-4xl flex flex-col lg:flex-row-reverse gap-2 items-center">
                 <div className="mx-4 flex shrink-0 flex-col justify-center">
-                    <div className="relative w-[96px] lg:w-auto">
-                        <Image
-                            className=""
-                            src="/images/FSTM_cube.png"
-                            width={140}
-                            height={140}
-                            alt="FSTM Cube"
-                            draggable={false}
-                        />
-                        <Image
-                            className="absolute top-0 scale-110 brightness-0 invert -z-5 select-none"
-                            src="/images/FSTM_cube.png"
-                            width={140}
-                            height={140}
-                            alt="FSTM Cube"
-                            draggable={false}
-                        />
-                    </div>
+                    <FSTMLogo size={140} className="w-[96px] lg:w-auto" />
                 </div>
                 <div className="flex flex-col">
                     <div className="font-heading">

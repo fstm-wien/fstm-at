@@ -12,6 +12,7 @@ import { IoMenu } from "react-icons/io5";
 import { MdLogin } from "react-icons/md";
 import { RxCross1 } from "react-icons/rx";
 
+import { FSTMLogo } from "../fstm-logo";
 import { ThemeToggle } from "../theme";
 
 export function Header() {
@@ -74,24 +75,7 @@ export function Header() {
             <div className="flex flex-row lg:hidden justify-between items-center">
                 <div className="">
                     <Link href="/">
-                        <div className="relative w-[46px]">
-                            <Image
-                                src="/images/FSTM_Cube.png"
-                                width={40}
-                                height={40}
-                                alt="FSTM Logo"
-                                title="Fachschaft Technische Mathematik"
-                                draggable={false}
-                            />
-                            <Image
-                                className="absolute top-0 scale-110 brightness-0 invert -z-5 select-none"
-                                src="/images/FSTM_Cube.png"
-                                width={40}
-                                height={40}
-                                alt=""
-                                draggable={false}
-                            />
-                        </div>
+                        <FSTMLogo size={46} />
                     </Link>
                 </div>
                 <div className="">
