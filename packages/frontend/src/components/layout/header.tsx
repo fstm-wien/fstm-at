@@ -4,7 +4,6 @@ import { SiteContext } from "@/lib/site-context";
 import { getStrapiURL } from "@/lib/strapi/api";
 import clsx from "clsx";
 import { motion } from "motion/react";
-import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useContext, useState } from "react";
@@ -26,24 +25,7 @@ export function Header() {
             <div className="hidden lg:grid px-8 h-16 grid-cols-3 items-center">
                 <div className="flex flex-row gap-4 items-center">
                     <Link href="/">
-                        <div className="relative w-[46px]">
-                            <Image
-                                src="/images/FSTM_Cube.png"
-                                width={46}
-                                height={46}
-                                alt="FSTM Logo"
-                                title="Fachschaft Technische Mathematik"
-                                draggable={false}
-                            />
-                            <Image
-                                className="absolute top-0 scale-110 brightness-0 invert -z-5 select-none"
-                                src="/images/FSTM_Cube.png"
-                                width={46}
-                                height={46}
-                                alt=""
-                                draggable={false}
-                            />
-                        </div>
+                        <FSTMLogo size={46} />
                     </Link>
                 </div>
                 <nav className="flex flex-row gap-4 justify-center">
