@@ -21,8 +21,8 @@ export function Header() {
     const [showSidebar, setShowSidebar] = useState(false);
 
     return (
-        <header className="mt-2 mb-4 px-4 max-w-6xl mx-auto w-full">
-            <div className="hidden lg:grid px-8 h-16 grid-cols-3 items-center">
+        <header className="mb-4 max-w-6xl mx-auto w-full not-md:sticky top-0 bg-background z-100">
+            <div className="px-12 hidden lg:grid h-16 grid-cols-3 items-center">
                 <div className="flex flex-row gap-4 items-center">
                     <Link href="/">
                         <FSTMLogo size={46} />
@@ -54,16 +54,12 @@ export function Header() {
                 </span>
             </div>
 
-            <div className="flex flex-row lg:hidden justify-between items-center">
-                <div className="">
-                    <Link href="/">
-                        <FSTMLogo size={46} />
-                    </Link>
-                </div>
-                <div className="">
-                    <div className="p-2" onClick={() => setShowSidebar(true)}>
-                        <IoMenu className="text-xl" />
-                    </div>
+            <div className="px-4 flex flex-row lg:hidden h-14 shadow justify-between items-center">
+                <Link href="/">
+                    <FSTMLogo size={40} />
+                </Link>
+                <div className="p-2" onClick={() => setShowSidebar(true)}>
+                    <IoMenu className="text-xl" />
                 </div>
             </div>
 
