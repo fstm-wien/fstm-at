@@ -1,14 +1,15 @@
-import { EventListItem } from "@/components/event-list";
-import { FSTMLogo } from "@/components/fstm-logo";
-import { fetchAPICollection, fetchAPISingle } from "@/lib/strapi/api";
-import { About, Event } from "@/lib/strapi/entities";
-import { generateMetaTitle } from "@/lib/util/meta";
 import clsx from "clsx";
 import moment from "moment";
 import { Metadata } from "next";
 import Link from "next/link";
 import { BiCalendar, BiTime } from "react-icons/bi";
 import { FaBookOpen, FaCalendar } from "react-icons/fa";
+
+import { EventListItem } from "@/components/event-list";
+import { FSTMLogo } from "@/components/fstm-logo";
+import { fetchAPICollection, fetchAPISingle } from "@/lib/strapi/api";
+import { About, Event } from "@/lib/strapi/entities";
+import { generateMetaTitle } from "@/lib/util/meta";
 
 export const dynamic = "force-dynamic";
 export const fetchCache = "force-no-store";
@@ -42,7 +43,7 @@ export const metadata: Metadata = {
 export default async function Home() {
     const aboutResponse = await fetchAPISingle<About>("/about");
     const nextEventsResponse = await fetchAPICollection<Event>("/events", {
-        sort: "start:desc",
+        sort: "start:asc",
         filters: {
             end: {
                 $gte: moment().toISOString(),
@@ -88,7 +89,7 @@ export default async function Home() {
                     </p>
                 </div>
             )}
-            <div className="lg:mx-8 mx-auto grid lg:grid-cols-3 gap-2 lg:gap-8">
+            <div className="lg:mx-8 mx-auto grid lg:grid-cols-3 gap-2 lg:gap-4">
                 {gridItems
                     .map(
                         (item) =>

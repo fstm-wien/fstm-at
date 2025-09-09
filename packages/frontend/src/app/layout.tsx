@@ -1,3 +1,7 @@
+import clsx from "clsx";
+import type { Metadata } from "next";
+import { Geist, Geist_Mono, PT_Sans } from "next/font/google";
+
 import { BackToTop } from "@/components/back-to-top";
 import { Footer } from "@/components/layout/footer";
 import { Header } from "@/components/layout/header";
@@ -6,9 +10,6 @@ import { SiteProvider } from "@/lib/site-context";
 import { fetchAPISingle, fetchAPISingleFromCollection } from "@/lib/strapi/api";
 import { GlobalMetadata, Navbar } from "@/lib/strapi/entities";
 import { generateMetaTitle } from "@/lib/util/meta";
-import clsx from "clsx";
-import type { Metadata } from "next";
-import { Geist, Geist_Mono, PT_Sans } from "next/font/google";
 
 import "./globals.css";
 

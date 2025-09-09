@@ -1,11 +1,12 @@
+import moment from "moment";
+import { Metadata } from "next";
+
 import { EventCalendar } from "@/components/event-calendar";
 import { EventList } from "@/components/event-list";
 import { PageHeading } from "@/components/page-heading";
 import { fetchAPICollection } from "@/lib/strapi/api";
 import { Event } from "@/lib/strapi/entities";
 import { generateMetaTitle } from "@/lib/util/meta";
-import moment from "moment";
-import { Metadata } from "next";
 
 export const dynamic = "force-dynamic";
 export const fetchCache = "force-no-store";
@@ -23,7 +24,7 @@ export default async function EventsPage() {
         throw new Error();
     }
 
-    const events = response.data;
+    const events = response.data.slice().reverse();
     const nextEvents = events.filter((e) => moment(e.end).isAfter());
     const pastEvents = events.filter((e) => moment(e.end).isBefore());
 
