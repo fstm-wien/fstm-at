@@ -372,6 +372,9 @@ export interface ApiEventEvent extends Struct.CollectionTypeSchema {
         createdAt: Schema.Attribute.DateTime;
         createdBy: Schema.Attribute.Relation<"oneToOne", "admin::user"> & Schema.Attribute.Private;
         end: Schema.Attribute.DateTime;
+        host: Schema.Attribute.Enumeration<["FSTM", "Andere Fachschaft", "TU Wien"]> &
+            Schema.Attribute.Required &
+            Schema.Attribute.DefaultTo<"FSTM">;
         locale: Schema.Attribute.String & Schema.Attribute.Private;
         localizations: Schema.Attribute.Relation<"oneToMany", "api::event.event"> & Schema.Attribute.Private;
         location: Schema.Attribute.String;

@@ -1,7 +1,5 @@
 "use client";
 
-import { SiteContext } from "@/lib/site-context";
-import { getStrapiURL } from "@/lib/strapi/api";
 import clsx from "clsx";
 import { motion } from "motion/react";
 import Link from "next/link";
@@ -10,6 +8,9 @@ import { useContext, useState } from "react";
 import { IoMenu } from "react-icons/io5";
 import { MdLogin } from "react-icons/md";
 import { RxCross1 } from "react-icons/rx";
+
+import { SiteContext } from "@/lib/site-context";
+import { getStrapiURL } from "@/lib/strapi/api";
 
 import { FSTMLogo } from "../fstm-logo";
 import { ThemeToggle } from "../theme";
@@ -21,7 +22,7 @@ export function Header() {
     const [showSidebar, setShowSidebar] = useState(false);
 
     return (
-        <header className="mb-4 max-w-6xl mx-auto w-full not-md:sticky top-0 bg-background z-50">
+        <header className="mb-4 max-w-6xl mx-auto w-full not-md:sticky top-0 bg-background z-50 whitespace-nowrap">
             <div className="px-12 hidden lg:grid h-16 grid-cols-3 items-center">
                 <div className="flex flex-row gap-4 items-center">
                     <Link href="/">

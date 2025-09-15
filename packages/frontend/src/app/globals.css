@@ -10,11 +10,16 @@
     --foreground: var(--color-gray-950);
 
     --fc-button-bg-color: var(--color-orange-400);
+    --fc-button-border-color: transparent;
     --fc-button-hover-bg-color: var(--color-orange-500);
+    --fc-button-hover-border-color: transparent;
     --fc-button-active-bg-color: var(--color-orange-500);
 
-    --fc-event-bg-color: var(--color-orange-400);
+    --fc-event-bg-color: var(--color-white);
     --fc-event-border-color: transparent;
+    --fc-event-text-color: var(--color-foreground);
+
+    --fc-event-selected-overlay-color: transparent;
 }
 
 @theme inline {
@@ -53,10 +58,32 @@ body {
     /* @apply hover:bg-orange-500; */
 }
 
-/* .fc-event {
-    
+.fc-event {
+    @apply !bg-transparent !shadow-none;
 }
 
+.fc-daygrid-event-harness {
+    @apply first:border-t border-b border-(--fc-border-color);
+    @apply bg-background;
+
+    &:hover {
+        @apply bg-background-emph;
+    }
+}
+
+.fc-toolbar .fc-toolbar-title {
+    @apply not-lg:!text-xl;
+}
+
+.fc-toolbar .fc-button-group {
+    @apply not-lg:!ml-1;
+}
+
+.fc-toolbar button {
+    @apply not-lg:!px-2 not-lg:!py-1;
+}
+
+/*
 .fc-button-primary {
     @apply !border-none;
     @apply !shadow-none;
@@ -71,9 +98,7 @@ body {
     @apply text-xs;
 }
 
-.fc-toolbar-title {
-    @apply not-lg:!text-2xl;
-}
+
 
 .fc-header-toolbar *:last-of-type button {
     @apply not-lg:!text-sm;

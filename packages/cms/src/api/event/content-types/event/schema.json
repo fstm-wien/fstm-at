@@ -1,31 +1,41 @@
 {
-    "kind": "collectionType",
-    "collectionName": "events",
-    "info": {
-        "singularName": "event",
-        "pluralName": "events",
-        "displayName": "Event",
-        "description": ""
+  "kind": "collectionType",
+  "collectionName": "events",
+  "info": {
+    "singularName": "event",
+    "pluralName": "events",
+    "displayName": "Event",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true
     },
-    "options": {
-        "draftAndPublish": true
+    "start": {
+      "type": "datetime"
     },
-    "attributes": {
-        "name": {
-            "type": "string",
-            "required": true
-        },
-        "start": {
-            "type": "datetime"
-        },
-        "end": {
-            "type": "datetime"
-        },
-        "location": {
-            "type": "string"
-        },
-        "content": {
-            "type": "blocks"
-        }
+    "end": {
+      "type": "datetime"
+    },
+    "location": {
+      "type": "string"
+    },
+    "content": {
+      "type": "blocks"
+    },
+    "host": {
+      "type": "enumeration",
+      "enum": [
+        "FSTM",
+        "Andere Fachschaft",
+        "TU Wien"
+      ],
+      "default": "FSTM",
+      "required": true
     }
+  }
 }
