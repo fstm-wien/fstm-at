@@ -48,9 +48,13 @@ body {
     @apply overflow-y-scroll;
 }
 
-.fc-event {
-    @apply cursor-pointer hyphens-auto break-words;
-    @apply hover:bg-orange-500;
+.fc-daygrid-event {
+    @apply cursor-pointer hyphens-auto break-words !whitespace-normal;
+    /* @apply hover:bg-orange-500; */
+}
+
+/* .fc-event {
+    
 }
 
 .fc-button-primary {
@@ -77,4 +81,4 @@ body {
 
 .fc-direction-ltr .fc-toolbar > * > :not(:first-child) {
     @apply not-lg:!ml-2;
-}
+} */
