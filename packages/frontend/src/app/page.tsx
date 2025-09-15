@@ -9,7 +9,6 @@ import { EventListItem } from "@/components/event-list";
 import { FSTMLogo } from "@/components/fstm-logo";
 import { fetchAPICollection, fetchAPISingle } from "@/lib/strapi/api";
 import { About, Event } from "@/lib/strapi/entities";
-import { generateMetaTitle } from "@/lib/util/meta";
 
 export const dynamic = "force-dynamic";
 export const fetchCache = "force-no-store";
@@ -35,10 +34,6 @@ const gridItems: GridItem[] = [
         href: "/journaldienste",
     },
 ];
-
-export const metadata: Metadata = {
-    title: generateMetaTitle("Home"),
-};
 
 export default async function Home() {
     const aboutResponse = await fetchAPISingle<About>("/about");

@@ -1,3 +1,4 @@
+import clsx from "clsx";
 import Link from "next/link";
 import { FaDiscord, FaInstagram, FaWhatsapp } from "react-icons/fa";
 
@@ -21,11 +22,28 @@ const socialIcons: {
 
 export function Footer() {
     return (
-        <footer className="mt-16 px-6 lg:px-20 py-4 lg:py-6 flex flex-row items-center border-t border-background-emphest justify-between">
-            <span className="text-sm text-gray-400">
-                &copy; {new Date().getFullYear()} Fachschaft Technische Mathematik
+        <footer
+            className={clsx(
+                "mt-16 px-6  py-4 lg:py-6 flex flex-col gap-y-1 justify-between ",
+                "lg:px-20 lg:flex-row lg:items-center",
+                "border-t border-background-emphest text-sm text-gray-400",
+            )}
+        >
+            <span className="">&copy; {new Date().getFullYear()} Fachschaft Technische Mathematik</span>
+            <span className="inline-flex flex-row gap-1">
+                <span>
+                    <Link href="/datenschutz" prefetch={false}>
+                        Datenschutzerklärung
+                    </Link>
+                </span>
+                <span>&bull;</span>
+                <span>
+                    <Link href="/impressum" prefetch={false}>
+                        Impressum
+                    </Link>
+                </span>
             </span>
-            <span className="flex flex-row gap-3">
+            <span className="flex flex-row gap-2 lg:gap-3">
                 {socialIcons.map((si) => (
                     <Link key={si.href} href={si.href} className="text-xl text-gray-400" target="_blank">
                         {si.icon}

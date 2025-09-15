@@ -5,7 +5,6 @@ import { createContext } from "react";
 import { Navbar } from "./strapi/entities";
 
 export interface SiteData {
-    title: string;
     description?: string;
 
     headerNavigation?: Navbar["items"];

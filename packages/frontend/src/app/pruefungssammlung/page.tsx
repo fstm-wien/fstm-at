@@ -1,9 +1,9 @@
-import { PageHeading } from "@/components/page-heading";
-import { findExamFiles } from "@/lib/nextcloud/api";
-import { generateMetaTitle } from "@/lib/util/meta";
 import { Metadata } from "next";
 import { FaLink } from "react-icons/fa";
 import { IoMail } from "react-icons/io5";
+
+import { PageHeading } from "@/components/page-heading";
+import { findExamFiles } from "@/lib/nextcloud/api";
 
 import { OrdnerItem } from "./ordner-item";
 
@@ -11,7 +11,7 @@ export const dynamic = "force-dynamic";
 export const fetchCache = "force-no-store";
 
 export const metadata: Metadata = {
-    title: generateMetaTitle("Prüfungssammlung"),
+    title: "Prüfungssammlung",
 };
 
 export default async function Pruefungssammlung() {

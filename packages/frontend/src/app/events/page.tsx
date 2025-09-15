@@ -6,13 +6,12 @@ import { EventList } from "@/components/event-list";
 import { PageHeading } from "@/components/page-heading";
 import { fetchAPICollection } from "@/lib/strapi/api";
 import { Event } from "@/lib/strapi/entities";
-import { generateMetaTitle } from "@/lib/util/meta";
 
 export const dynamic = "force-dynamic";
 export const fetchCache = "force-no-store";
 
 export const metadata: Metadata = {
-    title: generateMetaTitle("Events"),
+    title: "Events",
 };
 
 export default async function EventsPage() {

@@ -2,12 +2,11 @@ import { BlocksRenderer } from "@strapi/blocks-react-renderer";
 import { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { FaClock, FaMapPin } from "react-icons/fa";
+import { FaClock, FaMapPin, FaUser } from "react-icons/fa";
 
 import { LocalDatetime } from "@/components/local-datetime";
 import { fetchAPISingle } from "@/lib/strapi/api";
 import { Event } from "@/lib/strapi/entities";
-import { generateMetaTitle } from "@/lib/util/meta";
 
 export const dynamic = "force-dynamic";
 export const fetchCache = "force-no-store";
@@ -21,7 +20,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     const eventResponse = await fetchAPISingle<Event>(`/events/${id}`);
     const foundEvent = eventResponse.data;
     return {
-        title: generateMetaTitle("Events", ...(foundEvent ? [foundEvent.name] : [])),
+        title: foundEvent ? foundEvent.name : "404",
     };
 }
 
@@ -53,6 +52,10 @@ export default async function EventPage({ params }: { params: Promise<{ id: stri
                             <span>{foundEvent.location}</span>
                         </p>
                     )}
+                    <p className="flex flex-row items-center gap-2">
+                        <FaUser />
+                        <span>{foundEvent.host}</span>
+                    </p>
                 </div>
                 <article className="prose dark:prose-invert !max-w-full">
                     {foundEvent.content && <BlocksRenderer content={foundEvent.content}></BlocksRenderer>}

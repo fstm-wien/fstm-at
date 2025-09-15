@@ -1,5 +1,6 @@
 import qs from "qs";
 
+import { clientEnv } from "../env/client";
 import { Seite, StrapiEntity } from "./entities";
 
 export type StrapiAPIResponse<T extends StrapiEntity> = StrapiAPISingleResponse<T> | StrapiAPICollectionResponse<T>;
@@ -13,7 +14,7 @@ interface StrapiAPIResponseBase<T> {
 }
 
 export function getStrapiURL(path = "") {
-    return `${process.env.NEXT_PUBLIC_STRAPI_API_URL || "http://localhost:1337"}${path}`;
+    return `${clientEnv.NEXT_PUBLIC_CMS_URL || "http://localhost:1337"}${path}`;
 }
 
 export async function fetchAPI<T>(
@@ -26,7 +27,7 @@ export async function fetchAPI<T>(
             headers: {
                 "Content-Type": "application/json",
                 Accept: "application/json",
-                Authorization: `Bearer ${process.env.NEXT_PUBLIC_STRAPI_API_TOKEN}`,
+                Authorization: `Bearer ${clientEnv.NEXT_PUBLIC_CMS_READ_TOKEN}`,
             },
             ...options,
         };

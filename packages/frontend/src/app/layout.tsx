@@ -6,12 +6,13 @@ import { BackToTop } from "@/components/back-to-top";
 import { Footer } from "@/components/layout/footer";
 import { Header } from "@/components/layout/header";
 import { ThemeProvider } from "@/components/theme";
+import { clientEnv } from "@/lib/env/client";
 import { SiteProvider } from "@/lib/site-context";
 import { fetchAPISingle, fetchAPISingleFromCollection } from "@/lib/strapi/api";
 import { GlobalMetadata, Navbar } from "@/lib/strapi/entities";
-import { generateMetaTitle } from "@/lib/util/meta";
 
 import "./globals.css";
+import ogImage from "./opengraph-image.png";
 
 export const dynamic = "force-dynamic";
 
@@ -34,8 +35,20 @@ const ptSans = PT_Sans({
 export async function generateMetadata(): Promise<Metadata> {
     const eventResponse = await fetchAPISingle<GlobalMetadata>(`/global`);
     return {
-        title: generateMetaTitle(),
+        title: {
+            template: "%s | FSTM",
+            default: "Home | FSTM",
+        },
         description: eventResponse.data?.metaDescription,
+        metadataBase: new URL(clientEnv.NEXT_PUBLIC_SITE_URL),
+        openGraph: {
+            images: [
+                {
+                    url: "/images/FSTM_cube.png",
+                    alt: "FSTM",
+                },
+            ],
+        },
     };
 }
 
@@ -53,7 +66,6 @@ export default async function RootLayout({
         <html lang="de">
             <SiteProvider
                 value={{
-                    title: "FSTM",
                     headerNavigation: response.data?.items,
                 }}
             >

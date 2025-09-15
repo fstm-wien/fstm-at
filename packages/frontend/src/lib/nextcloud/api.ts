@@ -1,18 +1,16 @@
 import { XMLParser } from "fast-xml-parser";
 
+import { serverEnv } from "../env/server";
+
 export interface NextcloudFileInformation {
     name: string;
     size: number;
 }
 
 export async function findExamFiles(): Promise<NextcloudFileInformation[]> {
-    const credentials = process.env["NEXTCLOUD_LOGIN"];
-    const cloudRoot = process.env["NEXTCLOUD_WEBDAV"];
-    const pruefungssammlungPath = process.env["NEXTCLOUD_PRUEFUNGSSAMMLUNG"];
-
-    if (!credentials || !cloudRoot || !pruefungssammlungPath) {
-        throw new Error("Misconfigured Nextcloud access config.");
-    }
+    const credentials = serverEnv.NEXTCLOUD_LOGIN;
+    const cloudRoot = serverEnv.NEXTCLOUD_WEBDAV;
+    const pruefungssammlungPath = serverEnv.NEXTCLOUD_PRUEFUNGSSAMMLUNG;
 
     const response = await fetch(cloudRoot + "/remote.php/webdav" + pruefungssammlungPath, {
         method: "PROPFIND",

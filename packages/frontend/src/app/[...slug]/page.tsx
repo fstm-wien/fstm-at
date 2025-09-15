@@ -1,9 +1,9 @@
-import { PageHeading } from "@/components/page-heading";
-import { getPageBySlug } from "@/lib/strapi/api";
-import { generateMetaTitle } from "@/lib/util/meta";
 import { BlocksRenderer } from "@strapi/blocks-react-renderer";
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
+
+import { PageHeading } from "@/components/page-heading";
+import { getPageBySlug } from "@/lib/strapi/api";
 
 import { SideNavigation } from "./side-navigation";
 
@@ -19,7 +19,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     const pageResponse = await getPageBySlug(slug.join("/"));
     const foundPage = pageResponse.data;
     return {
-        title: generateMetaTitle(foundPage ? foundPage.title : "404"),
+        title: foundPage ? foundPage.title : "404",
     };
 }
 

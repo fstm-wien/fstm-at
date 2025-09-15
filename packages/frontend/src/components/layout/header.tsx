@@ -22,9 +22,9 @@ export function Header() {
     const [showSidebar, setShowSidebar] = useState(false);
 
     return (
-        <header className="mb-4 max-w-6xl mx-auto w-full not-md:sticky top-0 bg-background z-50 whitespace-nowrap">
-            <div className="px-12 hidden lg:grid h-16 grid-cols-3 items-center">
-                <div className="flex flex-row gap-4 items-center">
+        <header className="mb-4 max-w-6xl mx-auto w-full not-md:sticky top-0 bg-background z-50">
+            <div className="px-12 hidden lg:flex h-16 flex-row flex-nowrap items-center justify-between">
+                <div className="relative select-none">
                     <Link href="/">
                         <FSTMLogo size={46} />
                     </Link>
@@ -47,7 +47,7 @@ export function Header() {
                             </span>
                         ))}
                 </nav>
-                <span className="flex flex-row gap-1 items-center ml-auto mr-0">
+                <span className="flex flex-row gap-1 items-center">
                     <ThemeToggle />
                     <Link className="p-2 text-xl" href={getStrapiURL()} target="_blank">
                         <MdLogin />

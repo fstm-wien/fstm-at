@@ -1,16 +1,21 @@
 import sgMail from "@sendgrid/mail";
 import moment from "moment";
 import { NextRequest } from "next/server";
+import z from "zod";
+
+import { serverEnv } from "@/lib/env/server";
+
+const requestBodySchema = z.object({
+    name: z.string(),
+    regNr: z.coerce.number().int().gte(1000000).lte(99999999),
+});
 
 export async function POST(request: NextRequest) {
     const body = await request.json();
 
-    const name = body.name;
-    const regNr = body.regNr;
+    const { name, regNr } = requestBodySchema.parse(body);
 
-    // TODO: validation
-
-    const apiKey = process.env.SENDGRID_API_KEY;
+    const apiKey = serverEnv.SENDGRID_API_KEY;
     if (!apiKey) {
         throw new Error();
     }
@@ -18,13 +23,9 @@ export async function POST(request: NextRequest) {
 
     const email = `e${regNr}@student.tuwien.ac.at`;
 
-    const credentials = process.env.NEXTCLOUD_LOGIN;
-    const cloudRoot = process.env.NEXTCLOUD_WEBDAV;
-    const pruefungssammlungPath = process.env.NEXTCLOUD_PRUEFUNGSSAMMLUNG;
-
-    if (!credentials || !cloudRoot || !pruefungssammlungPath) {
-        throw new Error("Misconfigured Nextcloud access config.");
-    }
+    const credentials = serverEnv.NEXTCLOUD_LOGIN;
+    const cloudRoot = serverEnv.NEXTCLOUD_WEBDAV;
+    const pruefungssammlungPath = serverEnv.NEXTCLOUD_PRUEFUNGSSAMMLUNG;
 
     const response = await fetch(cloudRoot + "/ocs/v2.php/apps/files_sharing/api/v1/shares", {
         method: "POST",
