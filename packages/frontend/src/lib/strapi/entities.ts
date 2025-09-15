@@ -29,6 +29,13 @@ export interface Event extends StrapiEntity {
     start: string;
     end: string;
     location: string;
+    host: EventHost;
+}
+
+export enum EventHost {
+    FSTM = "FSTM",
+    AndereFachschaft = "Andere Fachschaft",
+    TUWien = "TU Wien",
 }
 
 export interface Journaldienst extends StrapiEntity {

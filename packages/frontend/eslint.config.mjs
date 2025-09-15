@@ -12,10 +12,13 @@ const compat = new FlatCompat({
 const eslintConfig = [
     ...compat.extends("next/core-web-vitals", "next/typescript"),
     {
+        parser: "@typescript-eslint/parser",
+        plugins: ["@typescript-eslint"],
+        extends: ["eslint:recommended", "plugin:@typescript-eslint/recommended"],
         rules: {
             "@next/next/no-img-element": "off", // allow <img> instead of <Image>
-            "no-unused-vars": "warn", // warn instead of error
-            "@typescript-eslint/no-unused-vars": "warn",
+            "no-unused-vars": "off",
+            "@typescript-eslint/no-unused-vars": "error",
         },
     },
 ];

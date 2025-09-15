@@ -1,12 +1,13 @@
-import { LocalDatetime } from "@/components/local-datetime";
-import { fetchAPISingle } from "@/lib/strapi/api";
-import { Event } from "@/lib/strapi/entities";
-import { generateMetaTitle } from "@/lib/util/meta";
 import { BlocksRenderer } from "@strapi/blocks-react-renderer";
 import { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { FaClock, FaMapPin } from "react-icons/fa";
+
+import { LocalDatetime } from "@/components/local-datetime";
+import { fetchAPISingle } from "@/lib/strapi/api";
+import { Event } from "@/lib/strapi/entities";
+import { generateMetaTitle } from "@/lib/util/meta";
 
 export const dynamic = "force-dynamic";
 export const fetchCache = "force-no-store";
@@ -36,7 +37,7 @@ export default async function EventPage({ params }: { params: Promise<{ id: stri
         <>
             <div className="hyphens-auto break-words">
                 <p className="text-gray-400 underline">
-                    <Link href="/events">&lt;&lt; Events</Link>
+                    <Link href="/events">Alle Events ...</Link>
                 </p>
                 <h1 className="font-bold mt-2 lg:mt-6 mb-1 text-4xl">{foundEvent.name}</h1>
                 <div className="flex flex-col lg:flex-row gap-2 lg:gap-4 mb-6 lg:text-lg text-gray-600 dark:text-gray-300">
