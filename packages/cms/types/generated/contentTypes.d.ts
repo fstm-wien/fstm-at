@@ -356,6 +356,31 @@ export interface ApiAboutAbout extends Struct.SingleTypeSchema {
     };
 }
 
+export interface ApiEmailEmail extends Struct.CollectionTypeSchema {
+    collectionName: "emails";
+    info: {
+        description: "";
+        displayName: "Email";
+        pluralName: "emails";
+        singularName: "email";
+    };
+    options: {
+        draftAndPublish: false;
+    };
+    attributes: {
+        content: Schema.Attribute.Blocks & Schema.Attribute.Required;
+        createdAt: Schema.Attribute.DateTime;
+        createdBy: Schema.Attribute.Relation<"oneToOne", "admin::user"> & Schema.Attribute.Private;
+        key: Schema.Attribute.String & Schema.Attribute.Required & Schema.Attribute.Unique;
+        locale: Schema.Attribute.String & Schema.Attribute.Private;
+        localizations: Schema.Attribute.Relation<"oneToMany", "api::email.email"> & Schema.Attribute.Private;
+        publishedAt: Schema.Attribute.DateTime;
+        subject: Schema.Attribute.String & Schema.Attribute.Required;
+        updatedAt: Schema.Attribute.DateTime;
+        updatedBy: Schema.Attribute.Relation<"oneToOne", "admin::user"> & Schema.Attribute.Private;
+    };
+}
+
 export interface ApiEventEvent extends Struct.CollectionTypeSchema {
     collectionName: "events";
     info: {
@@ -418,7 +443,7 @@ export interface ApiJournaldienstJournaldienst extends Struct.CollectionTypeSche
         singularName: "journaldienst";
     };
     options: {
-        draftAndPublish: true;
+        draftAndPublish: false;
     };
     attributes: {
         createdAt: Schema.Attribute.DateTime;
@@ -447,7 +472,7 @@ export interface ApiNavbarNavbar extends Struct.CollectionTypeSchema {
         singularName: "navbar";
     };
     options: {
-        draftAndPublish: true;
+        draftAndPublish: false;
     };
     attributes: {
         createdAt: Schema.Attribute.DateTime;
@@ -902,6 +927,7 @@ declare module "@strapi/strapi" {
             "admin::transfer-token-permission": AdminTransferTokenPermission;
             "admin::user": AdminUser;
             "api::about.about": ApiAboutAbout;
+            "api::email.email": ApiEmailEmail;
             "api::event.event": ApiEventEvent;
             "api::global.global": ApiGlobalGlobal;
             "api::journaldienst.journaldienst": ApiJournaldienstJournaldienst;

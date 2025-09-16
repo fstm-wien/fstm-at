@@ -15,6 +15,7 @@
         "@fullcalendar/timegrid": "^6.1.19",
         "@sendgrid/mail": "^8.1.5",
         "@strapi/blocks-react-renderer": "^1.0.2",
+        "blocks-html-renderer": "^1.0.5",
         "clsx": "^2.1.1",
         "fast-xml-parser": "^5.2.5",
         "moment": "^2.30.1",

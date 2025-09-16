@@ -52,3 +52,9 @@ export interface Navbar extends StrapiEntity {
         href: string;
     }[];
 }
+
+export interface Email extends StrapiEntity {
+    key: string;
+    subject: string;
+    content: BlocksContent | null;
+}

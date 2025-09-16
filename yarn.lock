@@ -6554,6 +6554,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"blocks-html-renderer@npm:^1.0.5":
+  version: 1.0.5
+  resolution: "blocks-html-renderer@npm:1.0.5"
+  checksum: 10c0/b4b4a71a64741d3419e580b422f0cd73275d7d57f2eb3c39a987d01102e710e223568678b3660b7722e4e7c71b87d00b78e83dd04cce1da87e67f1114c515473
+  languageName: node
+  linkType: hard
+
 "bn.js@npm:^4.0.0, bn.js@npm:^4.11.9":
   version: 4.12.2
   resolution: "bn.js@npm:4.12.2"
@@ -9886,6 +9893,7 @@ __metadata:
     "@types/node": "npm:^20"
     "@types/react": "npm:^19"
     "@types/react-dom": "npm:^19"
+    blocks-html-renderer: "npm:^1.0.5"
     clsx: "npm:^2.1.1"
     eslint: "npm:^9"
     eslint-config-next: "npm:15.3.2"
