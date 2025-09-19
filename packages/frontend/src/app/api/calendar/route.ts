@@ -4,7 +4,7 @@ import { NextRequest } from "next/server";
 import { fetchAPICollection } from "@/lib/strapi/api";
 import { Event } from "@/lib/strapi/entities";
 
-export const revalidate = 60 * 30;
+export const revalidate = 1800;
 
 export async function GET(request: NextRequest) {
     const headers = new Headers();
