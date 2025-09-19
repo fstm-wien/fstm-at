@@ -9898,6 +9898,7 @@ __metadata:
     eslint: "npm:^9"
     eslint-config-next: "npm:15.3.2"
     fast-xml-parser: "npm:^5.2.5"
+    ical-generator: "npm:^9.0.0"
     moment: "npm:^2.30.1"
     moment-timezone: "npm:^0.6.0"
     motion: "npm:^12.23.12"
@@ -10811,6 +10812,41 @@ __metadata:
   version: 2.1.0
   resolution: "human-signals@npm:2.1.0"
   checksum: 10c0/695edb3edfcfe9c8b52a76926cd31b36978782062c0ed9b1192b36bebc75c4c87c82e178dfcb0ed0fc27ca59d434198aac0bd0be18f5781ded775604db22304a
+  languageName: node
+  linkType: hard
+
+"ical-generator@npm:^9.0.0":
+  version: 9.0.0
+  resolution: "ical-generator@npm:9.0.0"
+  peerDependencies:
+    "@touch4it/ical-timezones": ">=1.6.0"
+    "@types/luxon": ">= 1.26.0"
+    "@types/mocha": ">= 8.2.1"
+    dayjs: ">= 1.10.0"
+    luxon: ">= 1.26.0"
+    moment: ">= 2.29.0"
+    moment-timezone: ">= 0.5.33"
+    rrule: ">= 2.6.8"
+  peerDependenciesMeta:
+    "@touch4it/ical-timezones":
+      optional: true
+    "@types/luxon":
+      optional: true
+    "@types/mocha":
+      optional: true
+    "@types/node":
+      optional: true
+    dayjs:
+      optional: true
+    luxon:
+      optional: true
+    moment:
+      optional: true
+    moment-timezone:
+      optional: true
+    rrule:
+      optional: true
+  checksum: 10c0/da5f1be22d18656f9bb4729df502f262cfc90a652dc9cbf48292f71361fed45305394b2a86e6aa15d1ff874bf946e863e5bc1cfa9b7e66c5b79ee3bdcaa773f1
   languageName: node
   linkType: hard
 
