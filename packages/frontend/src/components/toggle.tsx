@@ -26,7 +26,12 @@ export function Toggle({
                 checked={value}
                 onChange={(e) => onChange(e.target.checked)}
             />
-            <div className={clsx("w-8 h-5 bg-gray-300 rounded-full peer transition-colors duration-300", c)}></div>
+            <div
+                className={clsx(
+                    "w-8 h-5 bg-gray-300 dark:bg-gray-700 rounded-full peer transition-colors duration-300",
+                    c,
+                )}
+            ></div>
             <div className="absolute ml-1 w-3 h-3 bg-white rounded-full transition-transform duration-300 peer-checked:translate-x-3"></div>
         </label>
     );
