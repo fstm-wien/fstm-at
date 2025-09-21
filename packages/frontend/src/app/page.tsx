@@ -1,6 +1,5 @@
 import clsx from "clsx";
 import moment from "moment";
-import { Metadata } from "next";
 import Link from "next/link";
 import { BiCalendar, BiTime } from "react-icons/bi";
 import { FaBookOpen, FaCalendar } from "react-icons/fa";

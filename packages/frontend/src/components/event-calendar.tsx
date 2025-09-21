@@ -6,7 +6,7 @@ import FullCalendar from "@fullcalendar/react";
 import clsx from "clsx";
 import { useRouter } from "next/navigation";
 import qs from "qs";
-import { useEffect, useState } from "react";
+import { useMemo, useState } from "react";
 import { FaCheck, FaCopy, FaMapPin } from "react-icons/fa";
 
 import { Event, EventHost } from "@/lib/strapi/entities";
@@ -42,10 +42,10 @@ export function EventCalendar({ events }: { events: Event[] }) {
                         </span>
                     </div>
                     <a
-                        className="text-gray-500 hover:text-orange-400 hover:underline cursor-pointer"
+                        className="px-3 py-1 bg-background-emph hover:bg-background-emphest rounded-sm cursor-pointer mr-0 ml-auto select-none"
                         onClick={() => setShowCalendarExport(true)}
                     >
-                        Kalender abbonieren ...
+                        Kalender abbonieren
                     </a>
                 </div>
                 <FullCalendar
@@ -91,50 +91,57 @@ export function EventCalendar({ events }: { events: Event[] }) {
 }
 
 function CalendarExportModal({ show, onClose }: { show: boolean; onClose: () => void }) {
-    const eventHostsState: Record<string, [boolean, React.Dispatch<React.SetStateAction<boolean>>]> = {};
-    for (const host of Object.keys(eventHostClassLookup)) {
-        eventHostsState[host] = useState(true);
-    }
-    const [url, setUrl] = useState("");
-    const [copied, setCopied] = useState(false);
-
-    const handleCopy = async () => {
-        try {
-            await navigator.clipboard.writeText(url);
-            setCopied(true);
-            setTimeout(() => setCopied(false), 2000);
-        } catch (err) {
-            console.error("Fehler beim Kopieren: ", err);
-        }
-    };
-
-    useEffect(
-        () => {
-            const base = `${window.location.origin}/api/calendar`;
-            const exclude = Object.entries(eventHostsState)
-                .filter(([, v]) => !v[0])
-                .map(([k]) => k)
-                .join(",");
-
-            setUrl(base + (exclude.length > 0 ? `?${qs.stringify({ exclude })}` : ""));
-        },
-        Object.values(eventHostsState).map((v) => v[0]),
+    const [eventHostsState, setEventHostsState] = useState<Record<EventHost, boolean>>(
+        Object.fromEntries(Object.values(EventHost).map((h) => [h, true])) as Record<EventHost, boolean>,
     );
+
+    const url = useMemo(() => {
+        const base = `${window.location.origin}/api/calendar`;
+        const exclude = Object.entries(eventHostsState)
+            .filter(([, v]) => !v)
+            .map(([k]) => k)
+            .join(",");
+
+        return base + (exclude.length > 0 ? `?${qs.stringify({ exclude })}` : "");
+    }, [eventHostsState]);
+
+    const [copied, setCopied] = useState(false);
+    const handleCopy = () => {
+        (async function () {
+            try {
+                await navigator.clipboard.writeText(url);
+                setCopied(true);
+                setTimeout(() => setCopied(false), 2000);
+            } catch (err) {
+                console.error("Fehler beim Kopieren: ", err);
+            }
+        })();
+    };
+    const handleToggle = (key: EventHost) => {
+        setEventHostsState((old) => ({
+            ...old,
+            [key]: !old[key],
+        }));
+    };
 
     return (
         <Modal show={show} onClose={onClose}>
             <h1 className="text-2xl">Kalender exportieren</h1>
             <div>
-                <p className="mb-1">
+                <p className="mb-2">
                     Mit dem untenstehenden Link kannst du unseren Kalender abonnieren. So werden neue Events automatisch
                     in deinem Kalender angezeigt.
                 </p>
                 <p className="mb-1">Wähle hier aus, welche Veranstalter du sehen möchtest.</p>
                 <div className="flex flex-col gap-y-1 p-2 mb-2">
-                    {Object.entries(eventHostClassLookup).map(([k, v]) => (
+                    {Object.entries(eventHostsState).map(([k, v]) => (
                         <span key={k} className="inline-flex items-center flex-row gap-2">
-                            <Toggle value={eventHostsState[k][0]} onChange={eventHostsState[k][1]} activeColor={v} />
-                            <span className={clsx(eventHostsState[k][0] ? "" : "text-gray-500")}>{k}</span>
+                            <Toggle
+                                value={v}
+                                onChange={() => handleToggle(k as EventHost)}
+                                activeColor={eventHostClassLookup[k as EventHost]}
+                            />
+                            <span className={clsx(v ? "" : "text-gray-500")}>{k}</span>
                         </span>
                     ))}
                 </div>

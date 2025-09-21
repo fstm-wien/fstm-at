@@ -24,13 +24,13 @@ export function Footer() {
     return (
         <footer
             className={clsx(
-                "mt-16 px-6  py-4 lg:py-6 flex flex-col gap-y-1 justify-between ",
+                "mt-16 px-6  py-6 flex flex-col gap-y-2 justify-between ",
                 "lg:px-20 lg:flex-row lg:items-center",
                 "border-t border-background-emphest text-sm text-gray-400",
             )}
         >
             <span className="">&copy; {new Date().getFullYear()} Fachschaft Technische Mathematik</span>
-            <span className="inline-flex flex-row gap-1">
+            <span className="inline-flex flex-row gap-x-3">
                 <span>
                     <Link href="/datenschutz" prefetch={false}>
                         Datenschutzerklärung

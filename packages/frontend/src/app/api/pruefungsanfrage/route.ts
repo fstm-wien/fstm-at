@@ -5,7 +5,7 @@ import { NextRequest } from "next/server";
 import z from "zod";
 
 import { serverEnv } from "@/lib/env/server";
-import { fetchAPISingle, fetchAPISingleFromCollection } from "@/lib/strapi/api";
+import { fetchAPISingleFromCollection } from "@/lib/strapi/api";
 import { Email } from "@/lib/strapi/entities";
 import { replaceByLookup } from "@/lib/util/templating";
 

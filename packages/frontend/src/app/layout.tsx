@@ -1,6 +1,7 @@
 import clsx from "clsx";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono, PT_Sans } from "next/font/google";
+import "react-loading-skeleton/dist/skeleton.css";
 
 import { BackToTop } from "@/components/back-to-top";
 import { Footer } from "@/components/layout/footer";
@@ -12,7 +13,6 @@ import { fetchAPISingle, fetchAPISingleFromCollection } from "@/lib/strapi/api";
 import { GlobalMetadata, Navbar } from "@/lib/strapi/entities";
 
 import "./globals.css";
-import ogImage from "./opengraph-image.png";
 
 export const dynamic = "force-dynamic";
 

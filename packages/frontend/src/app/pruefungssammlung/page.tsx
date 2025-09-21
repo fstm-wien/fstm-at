@@ -1,4 +1,5 @@
 import { Metadata } from "next";
+import { Suspense } from "react";
 import { FaLink } from "react-icons/fa";
 import { IoMail } from "react-icons/io5";
 
@@ -14,9 +15,7 @@ export const metadata: Metadata = {
     title: "Prüfungssammlung",
 };
 
-export default async function Pruefungssammlung() {
-    const files = await findExamFiles();
-
+export default function Pruefungssammlung() {
     return (
         <>
             <PageHeading>Prüfungssammlung</PageHeading>
@@ -43,11 +42,31 @@ export default async function Pruefungssammlung() {
                 </p>
             </div>
             <h3 className="mb-2 text-lg font-semibold">Aktuell haben wir (digital) Prüfungen zu:</h3>
-            <div className="flex flex-col divide-y divide-background-emphest">
-                {files.map((f) => (
-                    <OrdnerItem key={f.name} info={f} />
-                ))}
-            </div>
+            <Suspense fallback={<ExamListFallback />}>
+                <ExamList />
+            </Suspense>
         </>
+    );
+}
+
+async function ExamList() {
+    const files = await findExamFiles();
+
+    return (
+        <div className="flex flex-col divide-y divide-background-emphest">
+            {files.map((f, i) => (
+                <OrdnerItem key={f.name} info={f} index={i} />
+            ))}
+        </div>
+    );
+}
+
+function ExamListFallback() {
+    return (
+        <div className="flex flex-col divide-y divide-background-emphest">
+            {Array.from(Array(16).keys()).map((f, i) => (
+                <OrdnerItem key={f} index={i} />
+            ))}
+        </div>
     );
 }
