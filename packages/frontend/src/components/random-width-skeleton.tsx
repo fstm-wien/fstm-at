@@ -12,7 +12,6 @@ const RandomWidthSkeleton: React.FC<
     const propDelta = props.delta ?? 0.2;
     const propWidth = props.width ?? 60;
     const width = pseudoRandomFromIndex(props.seed, propWidth * (1 - propDelta), propWidth * (1 + propDelta));
-    console.log(width);
     return <Skeleton {...props} width={width} />;
 };
 
