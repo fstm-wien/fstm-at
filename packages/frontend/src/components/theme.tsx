@@ -5,10 +5,22 @@ import { AnimatePresence } from "motion/react";
 import { motion } from "motion/react";
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { FaMoon, FaSun } from "react-icons/fa";
+import { SkeletonTheme, SkeletonThemeProps } from "react-loading-skeleton";
 
 export type Theme = "light" | "dark";
 
 const THEME_KEY = "theme";
+
+const skeletonConfig: Record<Theme, Partial<SkeletonThemeProps>> = {
+    light: {
+        baseColor: "#ebebeb",
+        highlightColor: "#f5f5f5",
+    },
+    dark: {
+        baseColor: "#282c34",
+        highlightColor: "#616978",
+    },
+};
 
 export interface ThemeContextProps {
     theme: Theme;
@@ -36,7 +48,11 @@ export const ThemeProvider: React.FC<React.PropsWithChildren> = ({ children }) =
         localStorage.setItem(THEME_KEY, theme);
     }, [theme]);
 
-    return <ThemeContext.Provider value={{ theme, toggleTheme }}>{children}</ThemeContext.Provider>;
+    return (
+        <ThemeContext.Provider value={{ theme, toggleTheme }}>
+            <SkeletonTheme {...skeletonConfig[theme]}>{children}</SkeletonTheme>
+        </ThemeContext.Provider>
+    );
 };
 
 export function useTheme() {
