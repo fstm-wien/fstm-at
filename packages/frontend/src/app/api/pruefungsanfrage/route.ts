@@ -68,7 +68,7 @@ export async function POST(request: NextRequest) {
         };
         const msg = {
             to: email,
-            from: "fsmat@hornik.dev",
+            from: serverEnv.SENDGRID_EMAIL,
             subject: replaceByLookup(emailTemplate.data.subject, templatingData),
             html: replaceByLookup(renderBlock(emailTemplate.data.content ?? []), templatingData),
         };
