@@ -18,14 +18,14 @@ jobs:
             - name: Checkout code
               uses: actions/checkout@v4
 
-            - name: Extract and restart backend process
+            - name: Stop, build and restart server
               uses: appleboy/ssh-action@v1.0.3
               with:
                   host: ${{ secrets.DROPLET_HOST }}
                   username: ${{ secrets.DROPLET_USER }}
                   key: ${{ secrets.DROPLET_KEY }}
                   script: |
-                      cd /var/www/fsmat
+                      cd /var/www/fstm-at
 
                       pm2 stop ecosystem.config.js
 
