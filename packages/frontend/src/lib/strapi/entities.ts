@@ -39,9 +39,20 @@ export enum EventHost {
 }
 
 export interface Journaldienst extends StrapiEntity {
+    weekday: Weekday;
     start: string;
     end: string;
     people: string;
+}
+
+export enum Weekday {
+    Monday = "Montag",
+    Tuesday = "Dienstag",
+    Wednesday = "Mittwoch",
+    Thursday = "Donnerstag",
+    Friday = "Freitag",
+    Saturday = "Samstag",
+    Sunday = "Sonntag",
 }
 
 export interface Navbar extends StrapiEntity {
