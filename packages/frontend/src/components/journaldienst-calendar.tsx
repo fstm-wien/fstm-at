@@ -31,7 +31,7 @@ export type JournaldienstCalendarProps = JournaldienstCalendarConfigProps & {
     journaldienste: Journaldienst[];
 }
 
-export function JournaldienstCalendarFetch(props: JournaldienstCalendarConfigProps) {
+export function JournaldienstCalendarFetch({pagination = false, pageSize = 2, ...props}: JournaldienstCalendarConfigProps & {pagination?: boolean, pageSize?: number}) {
     const [journaldienste, setJournaldienste] = useState<Journaldienst[]>([]);
     useEffect(() => {
         fetchAPICollection<Journaldienst>(`/journaldienste`).then(response => {
@@ -42,8 +42,38 @@ export function JournaldienstCalendarFetch(props: JournaldienstCalendarConfigPro
             console.log(response.data)
         });
     }, [])
+    if (!pagination)
+        return <JournaldienstCalendar journaldienste={journaldienste} {...props} />;
+    else
+    return (
+        <JournaldienstCalendarPagination pageSize={pageSize} journaldienste={journaldienste} {...props} />
+    );
+}
 
-    return <JournaldienstCalendar journaldienste={journaldienste} {...props} />;
+export function JournaldienstCalendarPagination({
+    pageSize = 2,
+    weekdays = [Weekday.Monday, Weekday.Tuesday, Weekday.Wednesday, Weekday.Thursday, Weekday.Friday],
+    ...props
+}: JournaldienstCalendarProps & { pageSize?: number }) {
+    const [currentPage, setCurrentPage] = useState<number>(0);
+
+    const nextPage = () => {
+        setCurrentPage((currentPage + 1) % weekdays.length);
+    }
+    const prevPage = () => {
+        setCurrentPage((currentPage - 1 + weekdays.length) % weekdays.length);
+    }
+
+    return <>
+        <div className="w-full">
+            <div className="w-full flex gap-2">
+                <button className="flex-1 border rounded-lg" onClick={prevPage}>&lt;</button>
+                <button className="flex-1 border rounded-lg" onClick={nextPage}>&gt;</button>
+            </div>
+            <JournaldienstCalendarFetch weekdays={weekdays.concat(weekdays).slice(currentPage, currentPage + pageSize)
+            } {...props} />
+        </div>
+    </>
 }
 
 export function JournaldienstCalendar({
