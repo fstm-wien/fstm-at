@@ -13,7 +13,7 @@ import { SiteContext } from "@/lib/site-context";
 import { getStrapiURL } from "@/lib/strapi/api";
 
 import { FSTMLogo } from "../fstm-logo";
-import { ThemeToggle } from "../theme";
+import { ThemeToggle } from "../theme-toggle";
 
 export function Header() {
     const siteContext = useContext(SiteContext);

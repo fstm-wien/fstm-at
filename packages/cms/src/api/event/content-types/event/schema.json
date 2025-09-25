@@ -24,9 +24,6 @@
     "location": {
       "type": "string"
     },
-    "content": {
-      "type": "blocks"
-    },
     "host": {
       "type": "enumeration",
       "enum": [
@@ -36,6 +33,9 @@
       ],
       "default": "FSTM",
       "required": true
+    },
+    "content": {
+      "type": "richtext"
     }
   }
 }

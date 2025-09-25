@@ -96,6 +96,8 @@ function CalendarExportModal({ show, onClose }: { show: boolean; onClose: () => 
     );
 
     const url = useMemo(() => {
+        if (typeof window === "undefined") return "";
+
         const base = `${window.location.origin}/api/calendar`;
         const exclude = Object.entries(eventHostsState)
             .filter(([, v]) => !v)

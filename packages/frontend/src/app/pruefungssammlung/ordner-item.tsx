@@ -58,9 +58,9 @@ export function OrdnerItem({ info, index }: { info?: NextcloudFileInformation; i
     return (
         <>
             <div className="px-2 py-2 flex flex-row grow-0 gap-3 items-center bg-background hover:bg-background-emph">
-                <span>{info ? info.name : <RandomWidthSkeleton width={240} seed={index} />}</span>
+                <span>{info ? info.name : <RandomWidthSkeleton inline width={240} seed={index} />}</span>
                 <span className="ml-auto shrink-0 text-xs text-gray-400">
-                    {info ? humanFileSize(info.size) : <RandomWidthSkeleton width={50} seed={index} />}
+                    {info ? humanFileSize(info.size) : <RandomWidthSkeleton inline width={50} seed={index} />}
                 </span>
 
                 <div className="mr-0 flex flex-row gap-2">

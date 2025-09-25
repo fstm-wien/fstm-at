@@ -1,10 +1,10 @@
-import { BlocksRenderer } from "@strapi/blocks-react-renderer";
 import { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { FaClock, FaMapPin, FaUser } from "react-icons/fa";
 
 import { LocalDatetime } from "@/components/local-datetime";
+import { MarkdownContent } from "@/components/markdown/markdown-content";
 import { fetchAPISingle } from "@/lib/strapi/api";
 import { Event } from "@/lib/strapi/entities";
 
@@ -58,7 +58,7 @@ export default async function EventPage({ params }: { params: Promise<{ id: stri
                     </p>
                 </div>
                 <article className="prose dark:prose-invert !max-w-full">
-                    {foundEvent.content && <BlocksRenderer content={foundEvent.content}></BlocksRenderer>}
+                    {foundEvent.content && <MarkdownContent source={foundEvent.content} />}
                 </article>
             </div>
         </>

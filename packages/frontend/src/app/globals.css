@@ -83,27 +83,30 @@ body {
     @apply not-lg:!px-2 not-lg:!py-1;
 }
 
-/*
-.fc-button-primary {
-    @apply !border-none;
-    @apply !shadow-none;
-    @apply focus:ring-2 focus:ring-orange-600;
+.gradientText {
+    background: linear-gradient(90deg, #b15a7a, #b671cf, #76b7cb);
+    -webkit-text-fill-color: transparent;
+    -webkit-background-clip: text;
+    background-clip: text;
 }
 
-.fc-timegrid-axis {
-    @apply text-xs;
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
 }
 
-.fc-timegrid-slot-label {
-    @apply text-xs;
+@keyframes growAndShrink {
+    0% {
+        transform: scale(0);
+    }
+    50% {
+        transform: scale(1);
+    }
+    100% {
+        transform: scale(0);
+    }
 }
-
-
-
-.fc-header-toolbar *:last-of-type button {
-    @apply not-lg:!text-sm;
-}
-
-.fc-direction-ltr .fc-toolbar > * > :not(:first-child) {
-    @apply not-lg:!ml-2;
-} */

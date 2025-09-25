@@ -14,9 +14,6 @@
     "title": {
       "type": "string"
     },
-    "content": {
-      "type": "blocks"
-    },
     "slug": {
       "type": "string",
       "required": true,
@@ -27,6 +24,10 @@
       "relation": "manyToOne",
       "target": "api::navbar.navbar",
       "inversedBy": "seiten"
+    },
+    "content": {
+      "type": "richtext",
+      "required": false
     }
   }
 }
