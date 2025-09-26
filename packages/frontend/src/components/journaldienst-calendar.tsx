@@ -1,12 +1,200 @@
 "use client";
 
-import { fetchAPICollection } from "@/lib/strapi/api";
-import { Journaldienst, Weekday } from "@/lib/strapi/entities";
 import { useEffect, useMemo, useState } from "react";
+import { Journaldienst as StrapiJournaldienst, Weekday } from "@/lib/strapi/entities";
+import { FaArrowRight, FaArrowLeft } from "react-icons/fa";
+import defaultTheme from "tailwindcss/defaultTheme";
 
-const timeRegex = /^(\d{2}):(\d{2}):(\d{2})\.(\d{3})$/;
-const parseTime = (timeString: string) => {
-    const match = timeString.match(timeRegex);
+type Journaldienst = {
+    fromHour: number;
+    fromMinute: number;
+    toHour: number;
+    toMinute: number;
+    weekday: Weekday;
+    people: string;
+}
+
+export enum PaginationType {
+    Never = "never",
+    Always = "always",
+    Mobile = "mobile",
+}
+
+export type JournaldienstCalendarConfigProps = {
+    weekdays?: Weekday[];
+    expandHours?: boolean;
+    fromHour?: number;
+    toHour?: number;
+    pxPerMinute?: number;
+    pagination?: PaginationType;
+    pageSize?: number;
+    page?: number;
+    onPageChange?: (newPage: number) => void;
+};
+
+export type JournaldienstCalendarProps = JournaldienstCalendarConfigProps & {
+    journaldienste: StrapiJournaldienst[];
+};
+
+export function JournaldienstCalendar({
+    journaldienste,
+    weekdays = [Weekday.Monday, Weekday.Tuesday, Weekday.Wednesday, Weekday.Thursday, Weekday.Friday],
+    expandHours = true,
+    fromHour = 8,
+    toHour = 16,
+    pxPerMinute = 0.8,
+    pagination = PaginationType.Mobile,
+    pageSize = 3,
+    page,
+    onPageChange,
+}: JournaldienstCalendarProps) {
+    const [isMobile, setIsMobile] = useState(false);
+
+    useEffect(() => {
+        const mql = window.matchMedia(`(max-width: ${defaultTheme.screens.md})`);
+        const handleChange = (e: MediaQueryListEvent) => setIsMobile(e.matches);
+        setIsMobile(mql.matches);
+        mql.addEventListener("change", handleChange);
+        return () => mql.removeEventListener("change", handleChange);
+    }, []);
+
+    const paginationEnabled = useMemo(() => {
+        if (pagination === PaginationType.Always) return true;
+        if (pagination === PaginationType.Never) return false;
+        if (pagination === PaginationType.Mobile) return isMobile;
+    }, [pagination, isMobile]);
+
+    const [currentPage, setCurrentPage] = useState(page ?? 0);
+
+    useEffect(() => {
+        if (page !== undefined) {
+            setCurrentPage(page);
+        }
+    }, [page]);
+
+    const handlePageChange = (newPage: number) => {
+        if (page === undefined) {
+            setCurrentPage(newPage);
+        }
+        onPageChange?.(newPage);
+    }
+    const prevPage = () => handlePageChange((currentPage - 1 + weekdays.length) % weekdays.length);
+    const nextPage = () => handlePageChange((currentPage + 1) % weekdays.length);
+
+    const computedWeekdays = useMemo(() => {
+        if (!paginationEnabled) {
+            return weekdays;
+        }
+        return weekdays.concat(weekdays).slice(currentPage, currentPage + pageSize);
+    }, [weekdays, paginationEnabled, pageSize, currentPage]);
+
+    const [journaldiensteByWeekday, computedFromHour, computedToHour] = useMemo(() => {
+        const journaldiensteByWeekday: Record<Weekday, Journaldienst[]> = {
+            [Weekday.Monday]: [],
+            [Weekday.Tuesday]: [],
+            [Weekday.Wednesday]: [],
+            [Weekday.Thursday]: [],
+            [Weekday.Friday]: [],
+            [Weekday.Saturday]: [],
+            [Weekday.Sunday]: [],
+        };
+
+        let computedFromHour = fromHour;
+        let computedToHour = toHour;
+
+        journaldienste
+            .map(parseStrapiJournaldienst)
+            .forEach((journaldienst) => {
+                if (expandHours || (fromHour <= journaldienst.fromHour && toHour >= journaldienst.toHour)) {
+                    journaldiensteByWeekday[journaldienst.weekday].push(journaldienst);
+                }
+                if (expandHours) {
+                    computedFromHour = Math.min(computedFromHour, journaldienst.fromHour);
+                    computedToHour = Math.max(computedToHour, journaldienst.toHour);
+                }
+            });
+        return [journaldiensteByWeekday, computedFromHour, computedToHour];
+    }, [journaldienste, fromHour, toHour, expandHours]);
+
+    const hours = useMemo(
+        () => [...new Array(computedToHour - computedFromHour + 1).keys()].map((h) => h + computedFromHour),
+        [computedFromHour, computedToHour],
+    );
+
+    return (
+        <>
+            <div className="w-full flex flex-col items-stretch">
+                {paginationEnabled && (
+                    <div className="flex flex-row mb-2 gap-2">
+                        <button
+                            className="flex-1 px-2 py-1 bg-gray-200 dark:bg-gray-800 rounded flex justify-center"
+                            onClick={prevPage}
+                        >
+                            <FaArrowLeft />
+                        </button>
+                        <button
+                            className="flex-1 px-2 py-1 bg-gray-200 dark:bg-gray-800 rounded flex justify-center"
+                            onClick={nextPage}
+                        >
+                            <FaArrowRight />
+                        </button>
+                    </div>
+                )}
+                <div className="flex flex-row items-stretch">
+                    <div className="invisible flex flex-col">
+                        {hours.map((h) => (
+                            <span className="text-xs" key={`${h}-placeholder`}>{formatTime(h)}</span>
+                        ))}
+                    </div>
+                    <div className="flex-1 flex flex-row divide-x divide-gray-200 dark:divide-gray-700">
+                        {computedWeekdays.map((wd) => (
+                            <div key={wd} className="flex-1 px-2">
+                                <div className="font-bold mb-2 text-center hyphens-none">{wd}</div>
+                                <div className="relative">
+                                    {hours.map((h) => (
+                                        <div
+                                            key={`${wd}-${h}`}
+                                            style={{ height: 60 * pxPerMinute }}
+                                            className="border-t border-gray-200 dark:border-gray-700"
+                                        >
+                                            {wd == computedWeekdays[0] ? (
+                                                <span key={`${wd}-${h}-label`} className="absolute transform -translate-x-2">
+                                                    <span className="absolute transform -translate-x-full -translate-y-1/2 text-xs text-gray-500">
+                                                        {formatTime(h)}
+                                                    </span>
+                                                </span>
+                                            ) : null}
+                                        </div>
+                                    ))}
+                                    {journaldiensteByWeekday[wd].map((jd) => (
+                                        <div
+                                            key={JSON.stringify(jd)}
+                                            className="absolute w-full rounded-lg bg-orange-400 dark:bg-gray-900 dark:border dark:border-orange-400 p-2"
+                                            style={{
+                                                top: ((jd.fromHour - computedFromHour) * 60 + jd.fromMinute) * pxPerMinute,
+                                                height:
+                                                    ((jd.toHour - jd.fromHour) * 60 + jd.toMinute - jd.fromMinute) *
+                                                    pxPerMinute,
+                                            }}
+                                        >
+                                            <div>{jd.people}</div>
+                                            <div className="text-xs text-gray-700 dark:text-gray-400">{`${formatTime(jd.fromHour, jd.fromMinute)} - ${formatTime(jd.toHour, jd.toMinute)}`}</div>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            </div>
+        </>
+    );
+}
+
+const STRAPI_TIME_REGEX = /^(\d{2}):(\d{2}):(\d{2})\.(\d{3})$/;
+
+const parseStrapiTime = (time: string) => {
+    const match = time.match(STRAPI_TIME_REGEX);
     if (!match) {
         throw new Error("Invalid time format");
     }
@@ -15,144 +203,23 @@ const parseTime = (timeString: string) => {
         hours: parseInt(hours, 10),
         minutes: parseInt(minutes, 10),
         seconds: parseInt(seconds, 10),
-        milliseconds: parseInt(milliseconds, 10)
+        milliseconds: parseInt(milliseconds, 10),
     };
 };
 
-export type JournaldienstCalendarConfigProps = {
-    weekdays?: Weekday[];
-    expandHours?: boolean;
-    fromHour?: number;
-    toHour?: number;
-    pxPerMinute?: number;
+const parseStrapiJournaldienst = (jd: StrapiJournaldienst): Journaldienst => {
+    const fromParsed = parseStrapiTime(jd.start);
+    const toParsed = parseStrapiTime(jd.end);
+    return {
+        fromHour: fromParsed.hours,
+        fromMinute: fromParsed.minutes,
+        toHour: toParsed.hours,
+        toMinute: toParsed.minutes,
+        weekday: jd.weekday,
+        people: jd.people,
+    };
 }
 
-export type JournaldienstCalendarProps = JournaldienstCalendarConfigProps & {
-    journaldienste: Journaldienst[];
-}
-
-export function JournaldienstCalendarFetch({pagination = false, pageSize = 2, ...props}: JournaldienstCalendarConfigProps & {pagination?: boolean, pageSize?: number}) {
-    const [journaldienste, setJournaldienste] = useState<Journaldienst[]>([]);
-    useEffect(() => {
-        fetchAPICollection<Journaldienst>(`/journaldienste`).then(response => {
-            if (!Array.isArray(response.data)) {
-                throw new Error();
-            }
-            setJournaldienste(response.data);
-            console.log(response.data)
-        });
-    }, [])
-    if (!pagination)
-        return <JournaldienstCalendar journaldienste={journaldienste} {...props} />;
-    else
-    return (
-        <JournaldienstCalendarPagination pageSize={pageSize} journaldienste={journaldienste} {...props} />
-    );
-}
-
-export function JournaldienstCalendarPagination({
-    pageSize = 2,
-    weekdays = [Weekday.Monday, Weekday.Tuesday, Weekday.Wednesday, Weekday.Thursday, Weekday.Friday],
-    ...props
-}: JournaldienstCalendarProps & { pageSize?: number }) {
-    const [currentPage, setCurrentPage] = useState<number>(0);
-
-    const nextPage = () => {
-        setCurrentPage((currentPage + 1) % weekdays.length);
-    }
-    const prevPage = () => {
-        setCurrentPage((currentPage - 1 + weekdays.length) % weekdays.length);
-    }
-
-    return <>
-        <div className="w-full">
-            <div className="w-full flex gap-2">
-                <button className="flex-1 border rounded-lg" onClick={prevPage}>&lt;</button>
-                <button className="flex-1 border rounded-lg" onClick={nextPage}>&gt;</button>
-            </div>
-            <JournaldienstCalendarFetch weekdays={weekdays.concat(weekdays).slice(currentPage, currentPage + pageSize)
-            } {...props} />
-        </div>
-    </>
-}
-
-export function JournaldienstCalendar({
-    journaldienste,
-    weekdays = [Weekday.Monday, Weekday.Tuesday, Weekday.Wednesday, Weekday.Thursday, Weekday.Friday],
-    expandHours = true,
-    fromHour = 8,
-    toHour = 16,
-    pxPerMinute = 0.8
-}: JournaldienstCalendarProps) {
-    const [jds, computedFromHour, computedToHour] = useMemo(() => {
-        const journaldienstByWeekday: Record<Weekday, {fromHour: number, fromMinute: number, toHour: number, toMinute: number, weekday: Weekday, people: string}[]> = {
-            [Weekday.Monday]: [],
-            [Weekday.Tuesday]: [],
-            [Weekday.Wednesday]: [],
-            [Weekday.Thursday]: [],
-            [Weekday.Friday]: [],
-            [Weekday.Saturday]: [],
-            [Weekday.Sunday]: []
-        };
-
-        let fromh = fromHour
-        let toh = toHour
-
-        journaldienste.map(journaldienst => {
-            const fromParsed = parseTime(journaldienst.start)
-            const toParsed = parseTime(journaldienst.end)
-
-            return {
-                fromHour: fromParsed.hours,
-                fromMinute: fromParsed.minutes,
-                toHour: toParsed.hours,
-                toMinute: toParsed.minutes,
-                weekday: journaldienst.weekday,
-                people: journaldienst.people
-            }
-        }).forEach(journaldienst => {
-            if (weekdays.includes(journaldienst.weekday) && (expandHours || (fromHour <= journaldienst.fromHour && toHour >= journaldienst.toHour))) {
-                journaldienstByWeekday[journaldienst.weekday].push(journaldienst);
-            }
-            if (expandHours) {
-                fromh = Math.min(fromh, journaldienst.fromHour);
-                toh = Math.max(toh, journaldienst.toHour);
-            }
-        });
-        return [journaldienstByWeekday, fromh, toh];
-    }, [journaldienste, weekdays, fromHour, toHour])
-
-    const hours = useMemo(() => [... new Array(computedToHour - computedFromHour + 1).keys()].map(h => h + computedFromHour), [computedFromHour, computedToHour]);
-
-    return <>
-        <div className="w-full flex flex-row align-stretch">
-            <div className="invisible flex flex-col">
-                {hours.map(h => <span className="text-xs" key={h}>{`${h < 10 ? '0' : ''}${h}:00`}</span>)}
-            </div>
-            <div className="flex-1 flex flex-row divide-x divide-gray-200 dark:divide-gray-700">
-                {weekdays.map(wd => (
-                    <div key={wd} className="flex-1 px-2">
-                        <div className="font-bold mb-2 text-center">{wd}</div>
-                        <div className="relative">
-                            {hours.map(h => (
-                                <div key={wd + h} style={{height: 60 * pxPerMinute}} className="border-t border-gray-200 dark:border-gray-700">
-                                    {wd == weekdays[0] ? (
-                                        <span key={`${wd}-${h}`} className="absolute transform -translate-x-2"><span className="absolute transform -translate-x-full -translate-y-1/2 text-xs text-gray-500">
-                                            {`${h < 10 ? '0' : ''}${h}:00`}
-                                        </span></span>
-                                    ) : null}
-                                </div>
-                            ))}
-                            {jds[wd].map(jd => (
-                                <div key={JSON.stringify(jd)} className="absolute w-full rounded-lg bg-orange-400 dark:bg-gray-900 dark:border dark:border-orange-400 p-2" style={{top: ((jd.fromHour - computedFromHour) * 60 + jd.fromMinute) * pxPerMinute, height: ((jd.toHour - jd.fromHour) * 60 + jd.toMinute - jd.fromMinute) * pxPerMinute}}>
-                                    <div>{jd.people}</div>
-                                    <div className="text-xs text-gray-700 dark:text-gray-400">{`${jd.fromHour < 10 ? '0' : ''}${jd.fromHour}:${jd.fromMinute < 10 ? '0' : ''}${jd.fromMinute} - ${jd.toHour < 10 ? '0' : ''}${jd.toHour}:${jd.toMinute < 10 ? '0' : ''}${jd.toMinute}`}</div>
-                                </div>
-                            ))}
-                        </div>
-                    </div>
-                ))}
-            </div>
-        </div>
-    </>
+const formatTime = (h: number, m: number = 0) => {
+    return `${h < 10 ? "0" : ""}${h}:${m < 10 ? "0" : ""}${m}`;
 }
