@@ -1,4 +1,4 @@
-import { BlocksContent } from "@strapi/blocks-react-renderer";
+import { Node as BlockNode } from "blocks-html-renderer";
 
 export interface StrapiEntity {
     id: number;
@@ -19,13 +19,13 @@ export interface GlobalMetadata extends StrapiEntity {
 export interface Seite extends StrapiEntity {
     title: string;
     slug: string;
-    content: BlocksContent | null;
+    content: string | null;
     navbar?: Navbar;
 }
 
 export interface Event extends StrapiEntity {
     name: string;
-    content: BlocksContent | null;
+    content: string | null;
     start: string;
     end: string;
     location: string;
@@ -67,5 +67,5 @@ export interface Navbar extends StrapiEntity {
 export interface Email extends StrapiEntity {
     key: string;
     subject: string;
-    content: BlocksContent | null;
+    content: BlockNode[] | null;
 }

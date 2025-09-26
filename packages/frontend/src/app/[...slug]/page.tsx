@@ -1,7 +1,7 @@
-import { BlocksRenderer } from "@strapi/blocks-react-renderer";
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
 
+import { MarkdownContent } from "@/components/markdown/markdown-content";
 import { PageHeading } from "@/components/page-heading";
 import { getPageBySlug } from "@/lib/strapi/api";
 
@@ -42,7 +42,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
                 <div className="hyphens-auto break-words">
                     <PageHeading>{foundPage.title}</PageHeading>
                     <article className="prose dark:prose-invert !max-w-full">
-                        {foundPage.content && <BlocksRenderer content={foundPage.content}></BlocksRenderer>}
+                        {foundPage.content && <MarkdownContent source={foundPage.content} />}
                     </article>
                 </div>
             </div>

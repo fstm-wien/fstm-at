@@ -1,12 +1,13 @@
 import clsx from "clsx";
 import type { Metadata } from "next";
+import { ThemeProvider } from "next-themes";
 import { Geist, Geist_Mono, PT_Sans } from "next/font/google";
 import "react-loading-skeleton/dist/skeleton.css";
 
 import { BackToTop } from "@/components/back-to-top";
 import { Footer } from "@/components/layout/footer";
 import { Header } from "@/components/layout/header";
-import { ThemeProvider } from "@/components/theme";
+import { SkeletonThemeProvider } from "@/components/skeleton-theme-provider";
 import { clientEnv } from "@/lib/env/client";
 import { SiteProvider } from "@/lib/site-context";
 import { fetchAPISingle, fetchAPISingleFromCollection } from "@/lib/strapi/api";
@@ -63,26 +64,28 @@ export default async function RootLayout({
     });
 
     return (
-        <html lang="de">
+        <html lang="de" suppressHydrationWarning>
             <SiteProvider
                 value={{
                     headerNavigation: response.data?.items,
                 }}
             >
-                <ThemeProvider>
-                    <body
-                        className={clsx(
-                            ...[geist, geistMono, ptSans].map((f) => f.variable),
-                            `antialiased flex flex-col min-h-dvh`,
-                        )}
-                    >
-                        <Header />
-                        <main className="flex flex-col grow mx-auto px-4 max-w-5xl w-full">{children}</main>
-                        <Footer />
+                <body
+                    className={clsx(
+                        ...[geist, geistMono, ptSans].map((f) => f.variable),
+                        `antialiased flex flex-col min-h-dvh`,
+                    )}
+                >
+                    <ThemeProvider attribute="class" disableTransitionOnChange>
+                        <SkeletonThemeProvider>
+                            <Header />
+                            <main className="flex flex-col grow mx-auto px-4 max-w-5xl w-full">{children}</main>
+                            <Footer />
 
-                        <BackToTop />
-                    </body>
-                </ThemeProvider>
+                            <BackToTop />
+                        </SkeletonThemeProvider>
+                    </ThemeProvider>
+                </body>
             </SiteProvider>
         </html>
     );
