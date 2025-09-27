@@ -69,3 +69,13 @@ export interface Email extends StrapiEntity {
     subject: string;
     content: BlockNode[] | null;
 }
+
+export interface Link extends StrapiEntity {
+    title: string;
+    description?: string;
+    faIcon?: string;
+    slug: string;
+    target: string;
+    visible: boolean;
+    priority: number;
+}
