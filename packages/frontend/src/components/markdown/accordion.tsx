@@ -15,9 +15,9 @@ export function Accordion({ title, children }: AccordionProps) {
     const toggleExpanded = () => setExpanded((e) => !e);
 
     return (
-        <motion.div className="mb-4 rounded-sm bg-background-emph not-prose overflow-hidden">
+        <motion.div className="mb-4 rounded-sm bg-background-emph overflow-hidden">
             <div
-                className="px-6 py-4 flex flex-row items-start gap-3 cursor-pointer select-none"
+                className="px-6 py-4 flex flex-row items-start gap-3 cursor-pointer select-none hover:bg-background-emphest"
                 onClick={toggleExpanded}
             >
                 <motion.span className="grow-0 inline-block" animate={{ rotate: expanded ? 180 : 0 }}>
@@ -29,7 +29,7 @@ export function Accordion({ title, children }: AccordionProps) {
                 {expanded && (
                     <motion.div
                         key="content"
-                        className="px-6"
+                        className="px-6 [&>p:first-child]:mt-2 [&>p:last-of-type]:mb-0"
                         initial="collapsed"
                         animate="open"
                         exit="collapsed"
