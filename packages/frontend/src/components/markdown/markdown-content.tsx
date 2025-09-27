@@ -3,16 +3,19 @@ import ReactMarkdown, { Components } from "react-markdown";
 import remarkDirective from "remark-directive";
 import remarkGfm from "remark-gfm";
 
+import { Accordion } from "./accordion";
 import { directiveShortcodes } from "./directive-shortcodes";
-import { Sparkly } from "./sparkly";
 import { JournaldienstCalendarShortcode } from "./journaldienst-calendar-shortcode";
+import { Sparkly } from "./sparkly";
 
 type ShortcodeMap = {
+    accordion: typeof Accordion;
     sparkly: typeof Sparkly;
     journaldienst_calendar: typeof JournaldienstCalendarShortcode;
 };
 
 const shortcodes: ShortcodeMap = {
+    accordion: Accordion,
     sparkly: Sparkly,
     journaldienst_calendar: JournaldienstCalendarShortcode,
 };
