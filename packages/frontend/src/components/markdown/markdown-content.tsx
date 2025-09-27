@@ -5,13 +5,16 @@ import remarkGfm from "remark-gfm";
 
 import { directiveShortcodes } from "./directive-shortcodes";
 import { Sparkly } from "./sparkly";
+import { JournaldienstCalendarShortcode } from "./journaldienst-calendar-shortcode";
 
 type ShortcodeMap = {
     sparkly: typeof Sparkly;
+    journaldienst_calendar: typeof JournaldienstCalendarShortcode;
 };
 
 const shortcodes: ShortcodeMap = {
     sparkly: Sparkly,
+    journaldienst_calendar: JournaldienstCalendarShortcode,
 };
 
 function parsePropsFromNode(node: Element): Record<string, unknown> {

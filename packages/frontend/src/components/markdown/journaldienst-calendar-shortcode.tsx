@@ -1,0 +1,21 @@
+import { fetchAPICollection } from "@/lib/strapi/api";
+import { JournaldienstCalendar, JournaldienstCalendarConfigProps } from '@/components/journaldienst-calendar';
+import { Journaldienst } from "@/lib/strapi/entities";
+import { Suspense } from "react";
+
+export function JournaldienstCalendarShortcode(props: JournaldienstCalendarConfigProps) {
+    return (
+        <Suspense fallback={<JournaldienstCalendar journaldienste={[]} {...props} />} >
+            <JournaldienstCalendarLoader {...props} />
+        </Suspense>
+    );
+}
+
+async function JournaldienstCalendarLoader(props: JournaldienstCalendarConfigProps) {
+    const response = await fetchAPICollection<Journaldienst>(`/journaldienste`);
+    if (!Array.isArray(response.data)) {
+        throw new Error("Invalid response from API");
+    }
+
+    return <JournaldienstCalendar journaldienste={response.data} {...props} />;
+}
