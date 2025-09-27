@@ -1,9 +1,11 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
-import { Journaldienst as StrapiJournaldienst, Weekday } from "@/lib/strapi/entities";
-import { FaArrowRight, FaArrowLeft } from "react-icons/fa";
+import clsx from "clsx";
+import { ButtonHTMLAttributes, useEffect, useMemo, useState } from "react";
+import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 import defaultTheme from "tailwindcss/defaultTheme";
+
+import { Journaldienst as StrapiJournaldienst, Weekday } from "@/lib/strapi/entities";
 
 type Journaldienst = {
     fromHour: number;
@@ -12,7 +14,7 @@ type Journaldienst = {
     toMinute: number;
     weekday: Weekday;
     people: string;
-}
+};
 
 export enum PaginationType {
     Never = "never",
@@ -77,7 +79,7 @@ export function JournaldienstCalendar({
             setCurrentPage(newPage);
         }
         onPageChange?.(newPage);
-    }
+    };
     const prevPage = () => handlePageChange((currentPage - 1 + weekdays.length) % weekdays.length);
     const nextPage = () => handlePageChange((currentPage + 1) % weekdays.length);
 
@@ -102,17 +104,15 @@ export function JournaldienstCalendar({
         let computedFromHour = fromHour;
         let computedToHour = toHour;
 
-        journaldienste
-            .map(parseStrapiJournaldienst)
-            .forEach((journaldienst) => {
-                if (expandHours || (fromHour <= journaldienst.fromHour && toHour >= journaldienst.toHour)) {
-                    journaldiensteByWeekday[journaldienst.weekday].push(journaldienst);
-                }
-                if (expandHours) {
-                    computedFromHour = Math.min(computedFromHour, journaldienst.fromHour);
-                    computedToHour = Math.max(computedToHour, journaldienst.toHour);
-                }
-            });
+        journaldienste.map(parseStrapiJournaldienst).forEach((journaldienst) => {
+            if (expandHours || (fromHour <= journaldienst.fromHour && toHour >= journaldienst.toHour)) {
+                journaldiensteByWeekday[journaldienst.weekday].push(journaldienst);
+            }
+            if (expandHours) {
+                computedFromHour = Math.min(computedFromHour, journaldienst.fromHour);
+                computedToHour = Math.max(computedToHour, journaldienst.toHour);
+            }
+        });
         return [journaldiensteByWeekday, computedFromHour, computedToHour];
     }, [journaldienste, fromHour, toHour, expandHours]);
 
@@ -125,30 +125,26 @@ export function JournaldienstCalendar({
         <>
             <div className="w-full flex flex-col items-stretch">
                 {paginationEnabled && (
-                    <div className="flex flex-row mb-2 gap-2">
-                        <button
-                            className="flex-1 px-2 py-1 bg-gray-200 dark:bg-gray-800 rounded flex justify-center"
-                            onClick={prevPage}
-                        >
+                    <div className="flex flex-row mb-4 gap-2">
+                        <PaginationButton onClick={prevPage} disabled={currentPage <= 0}>
                             <FaArrowLeft />
-                        </button>
-                        <button
-                            className="flex-1 px-2 py-1 bg-gray-200 dark:bg-gray-800 rounded flex justify-center"
-                            onClick={nextPage}
-                        >
+                        </PaginationButton>
+                        <PaginationButton onClick={nextPage} disabled={currentPage >= weekdays.length - pageSize}>
                             <FaArrowRight />
-                        </button>
+                        </PaginationButton>
                     </div>
                 )}
                 <div className="flex flex-row items-stretch">
                     <div className="invisible flex flex-col">
                         {hours.map((h) => (
-                            <span className="text-xs" key={`${h}-placeholder`}>{formatTime(h)}</span>
+                            <span className="text-xs" key={`${h}-placeholder`}>
+                                {formatTime(h)}
+                            </span>
                         ))}
                     </div>
                     <div className="flex-1 flex flex-row divide-x divide-gray-200 dark:divide-gray-700">
                         {computedWeekdays.map((wd) => (
-                            <div key={wd} className="flex-1 px-2">
+                            <div key={wd} className="flex-1 px-1">
                                 <div className="font-bold mb-2 text-center hyphens-none">{wd}</div>
                                 <div className="relative">
                                     {hours.map((h) => (
@@ -158,7 +154,10 @@ export function JournaldienstCalendar({
                                             className="border-t border-gray-200 dark:border-gray-700"
                                         >
                                             {wd == computedWeekdays[0] ? (
-                                                <span key={`${wd}-${h}-label`} className="absolute transform -translate-x-2">
+                                                <span
+                                                    key={`${wd}-${h}-label`}
+                                                    className="absolute transform -translate-x-2"
+                                                >
                                                     <span className="absolute transform -translate-x-full -translate-y-1/2 text-xs text-gray-500">
                                                         {formatTime(h)}
                                                     </span>
@@ -169,15 +168,17 @@ export function JournaldienstCalendar({
                                     {journaldiensteByWeekday[wd].map((jd) => (
                                         <div
                                             key={JSON.stringify(jd)}
-                                            className="absolute w-full rounded-lg bg-orange-400 dark:bg-gray-900 dark:border dark:border-orange-400 p-2"
+                                            className="absolute w-full rounded-sm bg-orange-400 dark:bg-gray-800 dark:border dark:border-orange-400 p-2 select-none"
                                             style={{
-                                                top: ((jd.fromHour - computedFromHour) * 60 + jd.fromMinute) * pxPerMinute,
+                                                top:
+                                                    ((jd.fromHour - computedFromHour) * 60 + jd.fromMinute) *
+                                                    pxPerMinute,
                                                 height:
                                                     ((jd.toHour - jd.fromHour) * 60 + jd.toMinute - jd.fromMinute) *
                                                     pxPerMinute,
                                             }}
                                         >
-                                            <div>{jd.people}</div>
+                                            <div className="mb-1 font-semibold leading-[1.1]">{jd.people}</div>
                                             <div className="text-xs text-gray-700 dark:text-gray-400">{`${formatTime(jd.fromHour, jd.fromMinute)} - ${formatTime(jd.toHour, jd.toMinute)}`}</div>
                                         </div>
                                     ))}
@@ -218,8 +219,23 @@ const parseStrapiJournaldienst = (jd: StrapiJournaldienst): Journaldienst => {
         weekday: jd.weekday,
         people: jd.people,
     };
-}
+};
 
 const formatTime = (h: number, m: number = 0) => {
     return `${h < 10 ? "0" : ""}${h}:${m < 10 ? "0" : ""}${m}`;
+};
+
+function PaginationButton({ children, ...props }: ButtonHTMLAttributes<HTMLButtonElement>) {
+    return (
+        <button
+            className={clsx(
+                "flex-1 px-2 py-2 bg-gray-300 rounded flex justify-center transition-transform active:scale-95",
+                "dark:bg-gray-800",
+                "disabled:opacity-40",
+            )}
+            {...props}
+        >
+            {children}
+        </button>
+    );
 }

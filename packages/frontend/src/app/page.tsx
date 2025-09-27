@@ -30,7 +30,7 @@ const gridItems: GridItem[] = [
         icon: <BiTime className="text-blue-400" />,
         title: "Journaldienste",
         content: "Zu diesen Zeiten sind wir für euch vor Ort in der Fachschaft erreichbar.",
-        href: "/journaldienste",
+        href: "/fachschaft/journaldienste",
     },
 ];
 

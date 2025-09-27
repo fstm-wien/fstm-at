@@ -39,7 +39,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
                         <SideNavigation navbar={foundPage.navbar} />
                     </aside>
                 )}
-                <div className="hyphens-auto break-words">
+                <div className="grow hyphens-auto break-words">
                     <PageHeading>{foundPage.title}</PageHeading>
                     <article className="prose dark:prose-invert !max-w-full">
                         {foundPage.content && <MarkdownContent source={foundPage.content} />}
