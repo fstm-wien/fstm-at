@@ -29,7 +29,7 @@ export function Accordion({ title, children }: AccordionProps) {
                 {expanded && (
                     <motion.div
                         key="content"
-                        className="px-6 [&>p:first-child]:mt-2 [&>p:last-of-type]:mb-0"
+                        className="px-6 [&>*:first-child]:mt-2 [&>p:last-of-type]:mb-0"
                         initial="collapsed"
                         animate="open"
                         exit="collapsed"

@@ -10,17 +10,17 @@
   "options": {
     "draftAndPublish": false
   },
+  "pluginOptions": {},
   "attributes": {
     "location": {
       "type": "string"
     },
     "items": {
-      "displayName": "NavbarItem",
       "type": "component",
-      "repeatable": true,
-      "component": "shared.navbar-item"
+      "component": "shared.navbar-item",
+      "repeatable": true
     },
-    "seiten": {
+    "pages": {
       "type": "relation",
       "relation": "oneToMany",
       "target": "api::seite.seite",

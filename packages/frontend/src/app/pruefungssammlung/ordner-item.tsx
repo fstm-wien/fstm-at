@@ -2,7 +2,7 @@
 
 import clsx from "clsx";
 import { useEffect, useState } from "react";
-import { FaCheckCircle, FaLink } from "react-icons/fa";
+import { FaCheckCircle, FaExclamationCircle, FaLink } from "react-icons/fa";
 import { IoMail } from "react-icons/io5";
 
 import { Modal } from "@/components/modal";
@@ -10,9 +10,15 @@ import RandomWidthSkeleton from "@/components/random-width-skeleton";
 import { NextcloudFileInformation } from "@/lib/nextcloud/api";
 import { humanFileSize } from "@/lib/util/human-file-size";
 
+enum ResponseType {
+    Success,
+    UnknownError,
+    TooManyRequests,
+}
+
 export function OrdnerItem({ info, index }: { info?: NextcloudFileInformation; index: number }) {
     const [showForm, setShowForm] = useState(false);
-    const [showSuccess, setShowSuccess] = useState(false);
+    const [responseType, setResponseType] = useState<ResponseType | undefined>(undefined);
 
     const [regNr, setRegNr] = useState("");
     const [formError, setFormError] = useState(true);
@@ -39,15 +45,25 @@ export function OrdnerItem({ info, index }: { info?: NextcloudFileInformation; i
         setIsSubmitting(true);
         fetch("/api/pruefungsanfrage", {
             method: "POST",
-            body: JSON.stringify({ name: info?.name, regNr }),
+            body: JSON.stringify({
+                folder: info?.name,
+                matriculationNr: regNr,
+            }),
         }).then((res) => {
             setIsSubmitting(false);
+            setShowForm(false);
+
             if (res.ok) {
-                setShowForm(false);
-                setShowSuccess(true);
+                setResponseType(ResponseType.Success);
+            } else if (res.status === 429) {
+                setResponseType(ResponseType.TooManyRequests);
+            } else {
+                setResponseType(ResponseType.UnknownError);
             }
         });
     };
+
+    const clearResponseType = () => setResponseType(undefined);
 
     useEffect(() => {
         if (!showForm) {
@@ -121,7 +137,7 @@ export function OrdnerItem({ info, index }: { info?: NextcloudFileInformation; i
                             </p>
                         </div>
                     </Modal>
-                    <Modal show={showSuccess} onClose={() => setShowSuccess(false)}>
+                    <Modal show={responseType === ResponseType.Success} onClose={clearResponseType}>
                         <div className="mr-6 flex flex-row gap-4 items-center">
                             <FaCheckCircle className="text-green-500 text-2xl shrink-0" />
                             <p>
@@ -132,7 +148,40 @@ export function OrdnerItem({ info, index }: { info?: NextcloudFileInformation; i
 
                         <div
                             className="mx-auto px-6 py-2 bg-orange-600 hover:bg-orange-700 cursor-pointer rounded-md text-white transition-colors font-semibold"
-                            onClick={() => setShowSuccess(false)}
+                            onClick={clearResponseType}
+                        >
+                            Okay!
+                        </div>
+                    </Modal>
+                    <Modal show={responseType === ResponseType.UnknownError} onClose={clearResponseType}>
+                        <div className="mr-6 flex flex-row gap-4 items-center">
+                            <FaExclamationCircle className="text-red-500 text-2xl shrink-0" />
+                            <p>
+                                Es ist ein Fehler aufgetreteten. Falls dies öfter passiert, bitte lass es uns per Email
+                                wissen!
+                            </p>
+                        </div>
+
+                        <div
+                            className="mx-auto px-6 py-2 bg-orange-600 hover:bg-orange-700 cursor-pointer rounded-md text-white transition-colors font-semibold"
+                            onClick={clearResponseType}
+                        >
+                            Okay!
+                        </div>
+                    </Modal>
+                    <Modal show={responseType === ResponseType.TooManyRequests} onClose={clearResponseType}>
+                        <div className="mr-6 flex flex-row gap-4 items-center">
+                            <FaExclamationCircle className="text-orange-500 text-2xl shrink-0" />
+                            <p>
+                                Es wurden bereits 5 Prüfungen dieses Monat für diese Matrikelnummer angefordert. Falls
+                                du noch mehr anfordern möchtest, bitte schreib uns eine Email diesbezüglich oder komm in
+                                der Fachschaft vorbei!
+                            </p>
+                        </div>
+
+                        <div
+                            className="mx-auto px-6 py-2 bg-orange-600 hover:bg-orange-700 cursor-pointer rounded-md text-white transition-colors font-semibold"
+                            onClick={clearResponseType}
                         >
                             Okay!
                         </div>

@@ -10,6 +10,7 @@
   "options": {
     "draftAndPublish": true
   },
+  "pluginOptions": {},
   "attributes": {
     "title": {
       "type": "string"
@@ -23,7 +24,7 @@
       "type": "relation",
       "relation": "manyToOne",
       "target": "api::navbar.navbar",
-      "inversedBy": "seiten"
+      "inversedBy": "pages"
     },
     "content": {
       "type": "richtext",
