@@ -30,7 +30,7 @@ export async function GET(request: NextRequest) {
     }
 
     const cal = ical({ name: "FSTM Events" });
-    const baseUrl = request.nextUrl.origin
+    const baseUrl = request.nextUrl.origin;
 
     response.data.forEach((event) => {
         cal.createEvent({
