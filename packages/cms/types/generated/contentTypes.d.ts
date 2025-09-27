@@ -185,6 +185,52 @@ export interface AdminRole extends Struct.CollectionTypeSchema {
     };
 }
 
+export interface AdminSession extends Struct.CollectionTypeSchema {
+    collectionName: "strapi_sessions";
+    info: {
+        description: "Session Manager storage";
+        displayName: "Session";
+        name: "Session";
+        pluralName: "sessions";
+        singularName: "session";
+    };
+    options: {
+        draftAndPublish: false;
+    };
+    pluginOptions: {
+        "content-manager": {
+            visible: false;
+        };
+        "content-type-builder": {
+            visible: false;
+        };
+        i18n: {
+            localized: false;
+        };
+    };
+    attributes: {
+        absoluteExpiresAt: Schema.Attribute.DateTime & Schema.Attribute.Private;
+        childId: Schema.Attribute.String & Schema.Attribute.Private;
+        createdAt: Schema.Attribute.DateTime;
+        createdBy: Schema.Attribute.Relation<"oneToOne", "admin::user"> & Schema.Attribute.Private;
+        deviceId: Schema.Attribute.String & Schema.Attribute.Required & Schema.Attribute.Private;
+        expiresAt: Schema.Attribute.DateTime & Schema.Attribute.Required & Schema.Attribute.Private;
+        locale: Schema.Attribute.String & Schema.Attribute.Private;
+        localizations: Schema.Attribute.Relation<"oneToMany", "admin::session"> & Schema.Attribute.Private;
+        origin: Schema.Attribute.String & Schema.Attribute.Required & Schema.Attribute.Private;
+        publishedAt: Schema.Attribute.DateTime;
+        sessionId: Schema.Attribute.String &
+            Schema.Attribute.Required &
+            Schema.Attribute.Private &
+            Schema.Attribute.Unique;
+        status: Schema.Attribute.String & Schema.Attribute.Private;
+        type: Schema.Attribute.String & Schema.Attribute.Private;
+        updatedAt: Schema.Attribute.DateTime;
+        updatedBy: Schema.Attribute.Relation<"oneToOne", "admin::user"> & Schema.Attribute.Private;
+        userId: Schema.Attribute.String & Schema.Attribute.Required & Schema.Attribute.Private;
+    };
+}
+
 export interface AdminTransferToken extends Struct.CollectionTypeSchema {
     collectionName: "strapi_transfer_tokens";
     info: {
@@ -481,8 +527,32 @@ export interface ApiNavbarNavbar extends Struct.CollectionTypeSchema {
         locale: Schema.Attribute.String & Schema.Attribute.Private;
         localizations: Schema.Attribute.Relation<"oneToMany", "api::navbar.navbar"> & Schema.Attribute.Private;
         location: Schema.Attribute.String;
+        pages: Schema.Attribute.Relation<"oneToMany", "api::seite.seite">;
         publishedAt: Schema.Attribute.DateTime;
-        seiten: Schema.Attribute.Relation<"oneToMany", "api::seite.seite">;
+        updatedAt: Schema.Attribute.DateTime;
+        updatedBy: Schema.Attribute.Relation<"oneToOne", "admin::user"> & Schema.Attribute.Private;
+    };
+}
+
+export interface ApiPruefungsanfragePruefungsanfrage extends Struct.CollectionTypeSchema {
+    collectionName: "pruefungsanfragen";
+    info: {
+        displayName: "Pr\u00FCfungsanfrage";
+        pluralName: "pruefungsanfragen";
+        singularName: "pruefungsanfrage";
+    };
+    options: {
+        draftAndPublish: false;
+    };
+    attributes: {
+        createdAt: Schema.Attribute.DateTime;
+        createdBy: Schema.Attribute.Relation<"oneToOne", "admin::user"> & Schema.Attribute.Private;
+        folder: Schema.Attribute.String & Schema.Attribute.Required;
+        locale: Schema.Attribute.String & Schema.Attribute.Private;
+        localizations: Schema.Attribute.Relation<"oneToMany", "api::pruefungsanfrage.pruefungsanfrage"> &
+            Schema.Attribute.Private;
+        matriculationNr: Schema.Attribute.Integer & Schema.Attribute.Required;
+        publishedAt: Schema.Attribute.DateTime;
         updatedAt: Schema.Attribute.DateTime;
         updatedBy: Schema.Attribute.Relation<"oneToOne", "admin::user"> & Schema.Attribute.Private;
     };
@@ -923,6 +993,7 @@ declare module "@strapi/strapi" {
             "admin::api-token-permission": AdminApiTokenPermission;
             "admin::permission": AdminPermission;
             "admin::role": AdminRole;
+            "admin::session": AdminSession;
             "admin::transfer-token": AdminTransferToken;
             "admin::transfer-token-permission": AdminTransferTokenPermission;
             "admin::user": AdminUser;
@@ -932,6 +1003,7 @@ declare module "@strapi/strapi" {
             "api::global.global": ApiGlobalGlobal;
             "api::journaldienst.journaldienst": ApiJournaldienstJournaldienst;
             "api::navbar.navbar": ApiNavbarNavbar;
+            "api::pruefungsanfrage.pruefungsanfrage": ApiPruefungsanfragePruefungsanfrage;
             "api::seite.seite": ApiSeiteSeite;
             "plugin::content-releases.release": PluginContentReleasesRelease;
             "plugin::content-releases.release-action": PluginContentReleasesReleaseAction;

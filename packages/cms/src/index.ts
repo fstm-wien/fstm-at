@@ -1,20 +1,21 @@
-// import type { Core } from '@strapi/strapi';
+import type { Core } from "@strapi/strapi";
+import moment from "moment";
 
 export default {
-    /**
-     * An asynchronous register function that runs before
-     * your application is initialized.
-     *
-     * This gives you an opportunity to extend code.
-     */
-    register(/* { strapi }: { strapi: Core.Strapi } */) {},
+    register() {},
+    bootstrap({ strapi }: { strapi: Core.Strapi }) {
+        strapi.cron.add({
+            "monthly-pruefungsanfrage-prune": {
+                task: async () => {
+                    const oneMonthAgo = moment().utc().subtract(1, "month");
+                    const oneMonthAgoIso = oneMonthAgo.toISOString();
 
-    /**
-     * An asynchronous bootstrap function that runs before
-     * your application gets started.
-     *
-     * This gives you an opportunity to set up your data model,
-     * run jobs, or perform some special logic.
-     */
-    bootstrap(/* { strapi }: { strapi: Core.Strapi } */) {},
+                    await strapi.db.query("api::pruefungsanfrage.pruefungsanfrage").deleteMany({
+                        where: { createdAt: { $lt: oneMonthAgoIso } },
+                    });
+                },
+                options: { rule: "30 2 * * *" }, // run daily at 02:30
+            },
+        });
+    },
 };
