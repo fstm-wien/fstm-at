@@ -2,10 +2,12 @@ import clsx from "clsx";
 
 export function Toggle({
     value = false,
+    label,
     onChange,
     activeColor,
 }: {
     value?: boolean;
+    label?: string;
     onChange: (newValue: boolean) => void;
     activeColor: string;
 }) {
@@ -33,6 +35,7 @@ export function Toggle({
                 )}
             ></div>
             <div className="absolute ml-1 w-3 h-3 bg-white rounded-full transition-transform duration-300 peer-checked:translate-x-3"></div>
+            <span className="ml-2 text-gray-500 peer-checked:text-current">{label}</span>
         </label>
     );
 }
