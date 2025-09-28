@@ -16,7 +16,7 @@ import { Toggle } from "./toggle";
 
 const eventHostClassLookup: Record<EventHost, string> = {
     [EventHost.FSTM]: "bg-orange-400",
-    [EventHost.AndereFachschaft]: "bg-green-600",
+    [EventHost.AndereFachschaften]: "bg-green-600",
     [EventHost.TUWien]: "bg-blue-400",
 };
 
@@ -45,7 +45,7 @@ export function EventCalendar({ events }: { events: Event[] }) {
                         className="px-3 py-1 bg-background-emph hover:bg-background-emphest rounded-sm cursor-pointer mr-0 ml-auto select-none"
                         onClick={() => setShowCalendarExport(true)}
                     >
-                        Kalender abbonieren
+                        Kalender abonnieren
                     </a>
                 </div>
                 <FullCalendar

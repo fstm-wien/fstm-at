@@ -168,7 +168,7 @@ export function JournaldienstCalendar({
                                     {journaldiensteByWeekday[wd].map((jd) => (
                                         <div
                                             key={JSON.stringify(jd)}
-                                            className="absolute w-full rounded-sm bg-orange-400 dark:bg-gray-800 dark:border dark:border-orange-400 p-2 select-none"
+                                            className="absolute p-1 lg:p-2 text-sm lg:text-base w-full rounded-sm bg-orange-400 dark:bg-gray-800 dark:border dark:border-orange-400 select-none"
                                             style={{
                                                 top:
                                                     ((jd.fromHour - computedFromHour) * 60 + jd.fromMinute) *
@@ -178,8 +178,8 @@ export function JournaldienstCalendar({
                                                     pxPerMinute,
                                             }}
                                         >
-                                            <div className="mb-1 font-semibold leading-[1.1]">{jd.people}</div>
-                                            <div className="text-xs text-gray-700 dark:text-gray-400">{`${formatTime(jd.fromHour, jd.fromMinute)} - ${formatTime(jd.toHour, jd.toMinute)}`}</div>
+                                            <div className="font-semibold leading-[1.1]">{jd.people}</div>
+                                            <div className="text-[10px] lg:text-xs text-gray-700 dark:text-gray-400">{`${formatTime(jd.fromHour, jd.fromMinute)} - ${formatTime(jd.toHour, jd.toMinute)}`}</div>
                                         </div>
                                     ))}
                                 </div>

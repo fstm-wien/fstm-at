@@ -15,7 +15,7 @@ export function Accordion({ title, children }: AccordionProps) {
     const toggleExpanded = () => setExpanded((e) => !e);
 
     return (
-        <motion.div className="mb-4 rounded-sm bg-background-emph overflow-hidden">
+        <motion.div className="mb-2 rounded-sm bg-background-emph overflow-hidden">
             <div
                 className="px-6 py-4 flex flex-row items-start gap-3 cursor-pointer select-none hover:bg-background-emphest"
                 onClick={toggleExpanded}

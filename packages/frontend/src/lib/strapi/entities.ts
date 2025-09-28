@@ -34,7 +34,7 @@ export interface Event extends StrapiEntity {
 
 export enum EventHost {
     FSTM = "FSTM",
-    AndereFachschaft = "Andere Fachschaft",
+    AndereFachschaften = "Andere Fachschaften",
     TUWien = "TU Wien",
 }
 

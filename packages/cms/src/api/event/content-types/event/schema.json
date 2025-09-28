@@ -10,6 +10,7 @@
   "options": {
     "draftAndPublish": true
   },
+  "pluginOptions": {},
   "attributes": {
     "name": {
       "type": "string",
@@ -26,13 +27,13 @@
     },
     "host": {
       "type": "enumeration",
+      "required": true,
+      "default": "FSTM",
       "enum": [
         "FSTM",
-        "Andere Fachschaft",
+        "Andere Fachschaften",
         "TU Wien"
-      ],
-      "default": "FSTM",
-      "required": true
+      ]
     },
     "content": {
       "type": "richtext"
