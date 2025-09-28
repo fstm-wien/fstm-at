@@ -135,16 +135,15 @@ function CalendarExportModal({ show, onClose }: { show: boolean; onClose: () => 
                     in deinem Kalender angezeigt.
                 </p>
                 <p className="mb-1">Wähle hier aus, welche Veranstalter du sehen möchtest.</p>
-                <div className="flex flex-col gap-y-1 p-2 mb-2">
+                <div className="flex flex-col gap-y-1 p-2 mb-2 items-start">
                     {Object.entries(eventHostsState).map(([k, v]) => (
-                        <span key={k} className="inline-flex items-center flex-row gap-2">
-                            <Toggle
-                                value={v}
-                                onChange={() => handleToggle(k as EventHost)}
-                                activeColor={eventHostClassLookup[k as EventHost]}
-                            />
-                            <span className={clsx(v ? "" : "text-gray-500")}>{k}</span>
-                        </span>
+                        <Toggle
+                            key={k}
+                            value={v}
+                            label={k}
+                            onChange={() => handleToggle(k as EventHost)}
+                            activeColor={eventHostClassLookup[k as EventHost]}
+                        />
                     ))}
                 </div>
                 <div className="flex flex-row">

@@ -16,9 +16,6 @@ export async function GET(request: NextRequest) {
             .get("exclude")
             ?.split(",")
             .map((host) => host.trim()) || [];
-    console.log(excludeHosts);
-
-    const cal = ical({ name: "FSTM Events" });
 
     const response = await fetchAPICollection<Event>(`/events`, {
         filters: {
@@ -32,12 +29,15 @@ export async function GET(request: NextRequest) {
         throw new Error();
     }
 
+    const cal = ical({ name: "FSTM Events" });
+    const baseUrl = request.nextUrl.origin;
+
     response.data.forEach((event) => {
         cal.createEvent({
             start: new Date(event.start),
             end: new Date(event.end),
             summary: event.name,
-            description: `Veranstalter: ${event.host}`, // TODO: add content?
+            description: `Veranstalter: ${event.host}\nMehr Informationen unter: ${baseUrl}/events/${event.documentId}`,
             location: event.location || "",
         });
     });
