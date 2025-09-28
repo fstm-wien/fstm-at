@@ -3,6 +3,7 @@
     <head>
         <meta charset="utf-8" />
         <title>Wartung | FSTM</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link rel="icon" href="/images/FSTM_Cube_small.png" type="image/png" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -32,32 +33,46 @@
             .divider {
                 width: 1px;
                 height: 80px;
-                background-color: rgb(185, 185, 185);
-            }
-            .logo {
-                margin-right: 1.5em;
-            }
-            .info {
-                margin-left: 2.4em;
+                background-color: #e3e3e3;
+                margin: 0 2.4em 0 1.5em;
             }
             .title {
-                font-size: 2em;
+                font-size: 1.6em;
                 font-weight: bold;
-                margin-bottom: 0.4em;
+                margin-bottom: 0.6em;
             }
             .subtitle {
-                font-size: 1.2em;
+                font-size: 1em;
                 line-height: 1.6;
+                margin-bottom: 1em;
+            }
+            .author {
+                font-size: 0.8em;
+                color: gray;
+            }
+
+            @media screen and (max-width: 764px) {
+                main {
+                    flex-direction: column;
+                    text-align: center;
+                }
+                .divider {
+                    display: none;
+                }
+                .logo {
+                    margin-bottom: 1em;
+                }
             }
         </style>
     </head>
     <body>
         <main>
-            <img class="logo" src="/images/FSTM_Cube.png" width="128" draggable="false" />
+            <img class="logo" src="/images/FSTM_cube.png" width="128" draggable="false" />
             <div class="divider"></div>
             <div class="info">
-                <p class="title">Wir warten gerade die Website.</p>
+                <p class="title">Die Website wird aktuell gewartet.</p>
                 <p class="subtitle">Das dauert normalerweise nicht lang. <br />Schau bald wieder vorbei!</p>
+                <p class="author">&mdash; Eure Fachschaft Technische Mathematik</p>
             </div>
         </main>
     </body>
