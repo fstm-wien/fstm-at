@@ -8,6 +8,7 @@
         "cms:dev": "yarn workspace cms dev",
         "cms:build": "yarn workspace cms build",
         "cms:start": "yarn workspace cms start",
+        "maintenance:dev": "node ./scripts/maintenance.js",
         "dev": "node ./scripts/dev.js",
         "build": "node ./scripts/build.js",
         "start": "node ./scripts/start.js",
