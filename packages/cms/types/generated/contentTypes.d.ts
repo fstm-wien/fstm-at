@@ -469,6 +469,7 @@ export interface ApiGlobalGlobal extends Struct.SingleTypeSchema {
         draftAndPublish: false;
     };
     attributes: {
+        announcement: Schema.Attribute.Component<"shared.announcement", false>;
         createdAt: Schema.Attribute.DateTime;
         createdBy: Schema.Attribute.Relation<"oneToOne", "admin::user"> & Schema.Attribute.Private;
         locale: Schema.Attribute.String & Schema.Attribute.Private;

@@ -4,19 +4,22 @@ import clsx from "clsx";
 import { motion } from "motion/react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useContext, useState } from "react";
+import { useState } from "react";
 import { IoMenu } from "react-icons/io5";
 import { MdLogin } from "react-icons/md";
 import { RxCross1 } from "react-icons/rx";
 
-import { SiteContext } from "@/lib/site-context";
 import { getStrapiURL } from "@/lib/strapi/api";
+import { Navbar } from "@/lib/strapi/entities";
 
 import { FSTMLogo } from "../fstm-logo";
 import { ThemeToggle } from "../theme-toggle";
 
-export function Header() {
-    const siteContext = useContext(SiteContext);
+export type HeaderProps = {
+    navigation?: Navbar;
+};
+
+export function Header({ navigation }: HeaderProps) {
     const pathname = usePathname();
 
     const [showSidebar, setShowSidebar] = useState(false);
@@ -30,8 +33,8 @@ export function Header() {
                     </Link>
                 </div>
                 <nav className="flex flex-row gap-4 justify-center">
-                    {siteContext?.headerNavigation &&
-                        siteContext.headerNavigation.map((nav) => (
+                    {navigation &&
+                        navigation.items.map((nav) => (
                             <span key={nav.href}>
                                 <Link
                                     href={nav.href}
@@ -87,8 +90,8 @@ export function Header() {
                             <RxCross1 />
                         </div>
                         <nav className="mt-6 flex flex-col items-end gap-4">
-                            {siteContext?.headerNavigation &&
-                                siteContext.headerNavigation.map((nav) => (
+                            {navigation &&
+                                navigation.items.map((nav) => (
                                     <span key={nav.href}>
                                         <Link
                                             href={nav.href}

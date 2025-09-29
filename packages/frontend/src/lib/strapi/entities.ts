@@ -12,8 +12,13 @@ export interface About extends StrapiEntity {
     description: string;
 }
 
-export interface GlobalMetadata extends StrapiEntity {
+export interface GlobalData extends StrapiEntity {
     metaDescription: string;
+    announcement?: {
+        id: number;
+        identifier: string;
+        content: string;
+    };
 }
 
 export interface Seite extends StrapiEntity {
