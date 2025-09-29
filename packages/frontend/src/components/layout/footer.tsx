@@ -1,26 +1,15 @@
 import clsx from "clsx";
 import Link from "next/link";
-import { FaDiscord, FaInstagram, FaWhatsapp } from "react-icons/fa";
 
-const socialIcons: {
-    icon: React.ReactNode;
-    href: string;
-}[] = [
-    {
-        icon: <FaDiscord />,
-        href: "https://discord.gg/JAr6EZTEvb",
-    },
-    {
-        icon: <FaInstagram />,
-        href: "https://www.instagram.com/fstm_tuwien/",
-    },
-    {
-        icon: <FaWhatsapp />,
-        href: "https://chat.whatsapp.com/CbeftBqE96q3PI4idXULj4?mode=ems_copy_h_t",
-    },
-];
+import { GlobalData } from "@/lib/strapi/entities";
 
-export function Footer() {
+import DynamicIcon from "../dynamic-icon";
+
+export type FooterProps = {
+    links: GlobalData["footerLinks"];
+};
+
+export function Footer({ links }: FooterProps) {
     return (
         <footer
             className={clsx(
@@ -44,9 +33,9 @@ export function Footer() {
                 </span>
             </span>
             <span className="flex flex-row gap-2 lg:gap-3">
-                {socialIcons.map((si) => (
-                    <Link key={si.href} href={si.href} className="text-xl text-gray-400" target="_blank">
-                        {si.icon}
+                {links.map((l) => (
+                    <Link key={l.target} href={l.target} className="text-xl text-gray-400" target="_blank">
+                        <DynamicIcon name={l.faIcon} />
                     </Link>
                 ))}
             </span>

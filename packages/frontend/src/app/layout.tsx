@@ -4,14 +4,14 @@ import { ThemeProvider } from "next-themes";
 import { Geist, Geist_Mono, PT_Sans } from "next/font/google";
 import "react-loading-skeleton/dist/skeleton.css";
 
+import { AnnouncementBar } from "@/components/announcement-bar";
 import { BackToTop } from "@/components/back-to-top";
 import { Footer } from "@/components/layout/footer";
 import { Header } from "@/components/layout/header";
 import { SkeletonThemeProvider } from "@/components/skeleton-theme-provider";
 import { clientEnv } from "@/lib/env/client";
-import { SiteProvider } from "@/lib/site-context";
 import { fetchAPISingle, fetchAPISingleFromCollection } from "@/lib/strapi/api";
-import { GlobalMetadata, Navbar } from "@/lib/strapi/entities";
+import { GlobalData, Navbar } from "@/lib/strapi/entities";
 
 import "./globals.css";
 
@@ -40,13 +40,13 @@ export const viewport: Viewport = {
 };
 
 export async function generateMetadata(): Promise<Metadata> {
-    const eventResponse = await fetchAPISingle<GlobalMetadata>(`/global`);
+    const metadataResponse = await fetchAPISingle<GlobalData>(`/global`);
     return {
         title: {
             template: "%s | FSTM",
             default: "Home | FSTM",
         },
-        description: eventResponse.data?.metaDescription,
+        description: metadataResponse.data?.metaDescription,
         metadataBase: new URL(clientEnv.NEXT_PUBLIC_SITE_URL),
         openGraph: {
             images: [
@@ -64,35 +64,36 @@ export default async function RootLayout({
 }: Readonly<{
     children: React.ReactNode;
 }>) {
-    const response = await fetchAPISingleFromCollection<Navbar>(`/navbars`, {
+    const headerNavResponse = await fetchAPISingleFromCollection<Navbar>(`/navbars`, {
         "filters[location][$eq]": "header",
         populate: ["items"],
     });
 
+    const globalDataResponse = await fetchAPISingle<GlobalData>(`/global`, {
+        populate: ["announcement", "footerLinks"],
+    });
+    const announcement = globalDataResponse.data?.announcement;
+    const footerLinks = globalDataResponse.data?.footerLinks ?? [];
+
     return (
         <html lang="de" suppressHydrationWarning>
-            <SiteProvider
-                value={{
-                    headerNavigation: response.data?.items,
-                }}
+            <body
+                className={clsx(
+                    ...[geist, geistMono, ptSans].map((f) => f.variable),
+                    `antialiased flex flex-col min-h-dvh`,
+                )}
             >
-                <body
-                    className={clsx(
-                        ...[geist, geistMono, ptSans].map((f) => f.variable),
-                        `antialiased flex flex-col min-h-dvh`,
-                    )}
-                >
-                    <ThemeProvider attribute="class" disableTransitionOnChange>
-                        <SkeletonThemeProvider>
-                            <Header />
-                            <main className="flex flex-col grow mx-auto px-4 max-w-5xl w-full">{children}</main>
-                            <Footer />
+                <ThemeProvider attribute="class" disableTransitionOnChange>
+                    <SkeletonThemeProvider>
+                        {announcement && <AnnouncementBar announcement={announcement} />}
+                        <Header navigation={headerNavResponse.data ?? undefined} />
+                        <main className="flex flex-col grow mx-auto px-4 max-w-5xl w-full">{children}</main>
+                        <Footer links={footerLinks} />
 
-                            <BackToTop />
-                        </SkeletonThemeProvider>
-                    </ThemeProvider>
-                </body>
-            </SiteProvider>
+                        <BackToTop />
+                    </SkeletonThemeProvider>
+                </ThemeProvider>
+            </body>
         </html>
     );
 }

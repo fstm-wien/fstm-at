@@ -1,5 +1,44 @@
 import type { Schema, Struct } from "@strapi/strapi";
 
+export interface SharedAnnouncement extends Struct.ComponentSchema {
+    collectionName: "components_shared_announcements";
+    info: {
+        displayName: "Announcement";
+        icon: "bell";
+    };
+    attributes: {
+        content: Schema.Attribute.RichText;
+        identifier: Schema.Attribute.String & Schema.Attribute.Required;
+    };
+}
+
+export interface SharedFooterLinks extends Struct.ComponentSchema {
+    collectionName: "components_shared_footer_links";
+    info: {
+        displayName: "Footer Links";
+        icon: "link";
+    };
+    attributes: {
+        faIcon: Schema.Attribute.String;
+        target: Schema.Attribute.String & Schema.Attribute.Required;
+    };
+}
+
+export interface SharedGridItems extends Struct.ComponentSchema {
+    collectionName: "components_shared_grid_items";
+    info: {
+        displayName: "Grid Items";
+        icon: "apps";
+    };
+    attributes: {
+        color: Schema.Attribute.String;
+        content: Schema.Attribute.RichText;
+        faIcon: Schema.Attribute.String;
+        target: Schema.Attribute.String;
+        title: Schema.Attribute.String & Schema.Attribute.Required;
+    };
+}
+
 export interface SharedMedia extends Struct.ComponentSchema {
     collectionName: "components_shared_media";
     info: {
@@ -77,6 +116,9 @@ export interface SharedSlider extends Struct.ComponentSchema {
 declare module "@strapi/strapi" {
     export module Public {
         export interface ComponentSchemas {
+            "shared.announcement": SharedAnnouncement;
+            "shared.footer-links": SharedFooterLinks;
+            "shared.grid-items": SharedGridItems;
             "shared.media": SharedMedia;
             "shared.navbar-item": SharedNavbarItem;
             "shared.quote": SharedQuote;

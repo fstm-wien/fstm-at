@@ -180,6 +180,17 @@
                 randomStep();
                 setInterval(randomStep, 2000);
             }, 1000);
+
+            setInterval(() => {
+                fetch(window.location.toString()).then((res) => {
+                    if (false) {
+                        console.info("Seite wieder online!");
+                        window.location.reload();
+                    } else {
+                        console.info("Seite immer noch nicht verfügbar. Versuche es erneut in 10 Sekunden.");
+                    }
+                });
+            }, 10000);
         </script>
     </body>
 </html>

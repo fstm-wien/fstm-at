@@ -1,9 +1,11 @@
 import clsx from "clsx";
 import moment from "moment";
 import Link from "next/link";
-import { BiCalendar, BiTime } from "react-icons/bi";
-import { FaBookOpen, FaCalendar } from "react-icons/fa";
+import { FaCalendar } from "react-icons/fa";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 
+import DynamicIcon from "@/components/dynamic-icon";
 import { EventListItem } from "@/components/event-list";
 import { FSTMLogo } from "@/components/fstm-logo";
 import { fetchAPICollection, fetchAPISingle } from "@/lib/strapi/api";
@@ -12,30 +14,10 @@ import { About, Event } from "@/lib/strapi/entities";
 export const dynamic = "force-dynamic";
 export const fetchCache = "force-no-store";
 
-type GridItem = { icon: React.ReactNode; title: string; content: string; href?: string };
-const gridItems: GridItem[] = [
-    {
-        icon: <FaBookOpen className="text-green-400" />,
-        title: "Prüfungssammlung",
-        content: "Wir betreiben eine Sammlung an Altprüfungen, damit ihr euch besser auf Prüfungen vorbereiten könnt.",
-        href: "/pruefungssammlung",
-    },
-    {
-        icon: <BiCalendar className="text-red-400" />,
-        title: "Kalender",
-        content: "Unsere nächsten Veranstaltungen auf einen Blick!",
-        href: "/events",
-    },
-    {
-        icon: <BiTime className="text-blue-400" />,
-        title: "Journaldienste",
-        content: "Zu diesen Zeiten sind wir für euch vor Ort in der Fachschaft erreichbar.",
-        href: "/fachschaft/journaldienste",
-    },
-];
-
 export default async function Home() {
-    const aboutResponse = await fetchAPISingle<About>("/about");
+    const aboutResponse = await fetchAPISingle<About>("/about", {
+        populate: ["gridItems"],
+    });
     const nextEventsResponse = await fetchAPICollection<Event>("/events", {
         sort: "start:asc",
         filters: {
@@ -84,7 +66,7 @@ export default async function Home() {
                 </div>
             )}
             <div className="lg:mx-8 mx-auto grid lg:grid-cols-3 gap-2 lg:gap-4">
-                {gridItems
+                {(aboutResponse.data?.gridItems ?? [])
                     .map(
                         (item) =>
                             [
@@ -92,19 +74,27 @@ export default async function Home() {
                                 <div
                                     key={item.title}
                                     className={clsx(
-                                        "py-6 px-6 flex flex-col items-center text-center border border-background-emphest",
-                                        item.href && "hover:bg-background-emph",
+                                        "py-6 px-6 flex flex-col items-center text-center border border-background-emphest rounded-sm",
+                                        item.target && "hover:bg-background-emph",
                                     )}
                                 >
-                                    <span className="mb-4 text-3xl">{item.icon}</span>
-                                    <p className="mb-2 font-semibold text-lg">{item.title}</p>
-                                    <p className="text-sm">{item.content}</p>
+                                    {item.faIcon && (
+                                        <span className="mb-4 text-2xl" style={{ color: item.color || "unset" }}>
+                                            <DynamicIcon name={item.faIcon} />
+                                        </span>
+                                    )}
+                                    <h3 className="mb-2 font-semibold text-lg">{item.title}</h3>
+                                    {item.content && (
+                                        <div className="text-sm prose">
+                                            <ReactMarkdown remarkPlugins={[remarkGfm]}>{item.content}</ReactMarkdown>
+                                        </div>
+                                    )}
                                 </div>,
-                            ] as [GridItem, JSX.Element],
+                            ] as [About["gridItems"][number], JSX.Element],
                     )
                     .map(([item, element]) =>
-                        item.href ? (
-                            <Link key={element.key} href={item.href}>
+                        item.target ? (
+                            <Link key={element.key} href={item.target}>
                                 {element}
                             </Link>
                         ) : (

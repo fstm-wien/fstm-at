@@ -15,6 +15,16 @@
     "metaDescription": {
       "type": "text",
       "required": true
+    },
+    "announcement": {
+      "type": "component",
+      "component": "shared.announcement",
+      "repeatable": false
+    },
+    "footerLinks": {
+      "type": "component",
+      "component": "shared.footer-links",
+      "repeatable": true
     }
   }
 }

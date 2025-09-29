@@ -24,6 +24,11 @@
     "description": {
       "type": "text",
       "required": true
+    },
+    "gridItems": {
+      "type": "component",
+      "component": "shared.grid-items",
+      "repeatable": true
     }
   }
 }
