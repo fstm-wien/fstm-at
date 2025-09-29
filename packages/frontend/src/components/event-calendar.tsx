@@ -148,7 +148,11 @@ function CalendarExportModal({ show, onClose }: { show: boolean; onClose: () => 
                 </div>
 
                 <a
-                    className="rounded-sm border border-orange-400 text-orange-600 bg-orange-100 py-2 text-center hover:bg-orange-200 transition cursor-pointer mb-4"
+                    className={clsx(
+                        "rounded-sm border py-2 text-center transition cursor-pointer mb-4",
+                        "border-orange-400 text-orange-600 bg-orange-100 hover:bg-orange-200",
+                        "dark:border-orange-600 dark:bg-orange-800/30 dark:text-orange-200",
+                    )}
                     href={url.replace(/https?:\/\//, "webcal://")}
                 >
                     Kalender abonnieren
@@ -156,7 +160,7 @@ function CalendarExportModal({ show, onClose }: { show: boolean; onClose: () => 
                 <div className="text-sm mb-1">... oder kopiere den Link zum Abonnieren:</div>
                 <div className="flex flex-row text-sm">
                     <input
-                        className="w-full px-3 py-2 border border-gray-300 rounded-l-sm bg-gray-50 text-gray-700 focus:outline-none"
+                        className="w-full px-3 py-2 border border-gray-300 dark:border-gray-500 rounded-l-sm bg-gray-50 dark:bg-gray-700 text-gray-700 dark:text-white focus:outline-none"
                         type="text"
                         readOnly
                         value={url}

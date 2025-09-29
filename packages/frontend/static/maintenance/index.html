@@ -4,6 +4,7 @@
         <meta charset="utf-8" />
         <title>Wartung | FSTM</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="robots" content="noindex" />
         <link rel="icon" href="/FSTM_cube.png" type="image/png" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -68,10 +69,11 @@
             .scene {
                 width: 164px;
                 height: 164px;
-                perspective: 900px;
+                perspective: 100000px;
                 display: flex;
                 justify-content: center;
                 align-items: center;
+                user-select: none;
 
                 --size: 80;
                 --half: calc(var(--size) / 2);
@@ -98,6 +100,7 @@
                 width: 100%;
                 height: 100%;
                 backface-visibility: hidden;
+                border: 1px solid rgb(0, 0, 0, 0.1);
                 box-shadow: inset 0 0 40px rgba(0, 0, 0, 0.2);
                 background-size: cover;
                 background-position: center;
@@ -173,7 +176,10 @@
                 cubeRotate.style.transform = `rotateX(${rotation.x}deg) rotateY(${rotation.y}deg) rotateZ(${rotation.z}deg)`;
             }
 
-            setInterval(randomStep, 2000);
+            setTimeout(() => {
+                randomStep();
+                setInterval(randomStep, 2000);
+            }, 1000);
         </script>
     </body>
 </html>

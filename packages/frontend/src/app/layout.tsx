@@ -1,5 +1,5 @@
 import clsx from "clsx";
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { ThemeProvider } from "next-themes";
 import { Geist, Geist_Mono, PT_Sans } from "next/font/google";
 import "react-loading-skeleton/dist/skeleton.css";
@@ -32,6 +32,12 @@ const ptSans = PT_Sans({
     subsets: ["latin"],
     weight: ["400", "700"],
 });
+
+export const viewport: Viewport = {
+    width: "device-width",
+    initialScale: 1,
+    themeColor: "#ff8904",
+};
 
 export async function generateMetadata(): Promise<Metadata> {
     const eventResponse = await fetchAPISingle<GlobalMetadata>(`/global`);
