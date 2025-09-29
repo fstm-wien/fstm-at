@@ -8,7 +8,7 @@
         "cms:dev": "yarn workspace cms dev",
         "cms:build": "yarn workspace cms build",
         "cms:start": "yarn workspace cms start",
-        "maintenance:dev": "node ./scripts/maintenance.js",
+        "maintenance:dev": "serve ./packages/frontend/static/maintenance",
         "dev": "node ./scripts/dev.js",
         "build": "node ./scripts/build.js",
         "start": "node ./scripts/start.js",
@@ -22,6 +22,7 @@
     "devDependencies": {
         "@trivago/prettier-plugin-sort-imports": "^5.2.2",
         "pm2": "^6.0.8",
-        "prettier": "^3.5.3"
+        "prettier": "^3.5.3",
+        "serve": "^14.2.5"
     }
 }

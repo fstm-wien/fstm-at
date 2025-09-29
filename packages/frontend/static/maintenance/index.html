@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="de">
+    <head>
+        <meta charset="utf-8" />
+        <title>Wartung | FSTM</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="icon" href="/FSTM_cube.png" type="image/png" />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=PT+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap"
+            rel="stylesheet"
+        />
+        <style>
+            html,
+            body {
+                font-family: "PT Sans", sans-serif;
+                font-weight: 400;
+                font-style: normal;
+            }
+            * {
+                margin: 0;
+                padding: 0;
+            }
+            main {
+                display: flex;
+                flex-direction: row;
+                justify-content: center;
+                align-items: center;
+                width: 100dvw;
+                height: 100dvh;
+            }
+
+            .divider {
+                width: 1px;
+                height: 80px;
+                background-color: #e3e3e3;
+                margin: 0 2.4em 0 1.5em;
+            }
+            .title {
+                font-size: 1.6em;
+                font-weight: bold;
+                margin-bottom: 0.6em;
+            }
+            .subtitle {
+                font-size: 1em;
+                line-height: 1.6;
+                margin-bottom: 1em;
+            }
+            .author {
+                font-size: 0.8em;
+                color: gray;
+            }
+
+            @media screen and (max-width: 764px) {
+                main {
+                    flex-direction: column;
+                    text-align: center;
+                }
+                .divider {
+                    display: none;
+                }
+                .logo {
+                    margin-bottom: 1em;
+                }
+            }
+
+            .scene {
+                width: 164px;
+                perspective: 900px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+
+                --size: 80;
+                --half: calc(var(--size) / 2);
+            }
+
+            .cube-wrap {
+                transform: rotateX(-35deg) rotateY(45deg);
+                transform-style: preserve-3d;
+            }
+            .cube-rotate {
+                transform-style: preserve-3d;
+                transition: transform 800ms cubic-bezier(0.2, 0.8, 0.2, 1);
+            }
+
+            .cube {
+                position: relative;
+                width: calc(var(--size) * 1px);
+                height: calc(var(--size) * 1px);
+                transform-style: preserve-3d;
+            }
+
+            .face {
+                position: absolute;
+                width: 100%;
+                height: 100%;
+                backface-visibility: hidden;
+                box-shadow: inset 0 0 40px rgba(0, 0, 0, 0.2);
+                background-size: cover;
+                background-position: center;
+                background-repeat: no-repeat;
+            }
+
+            .front {
+                transform: translateZ(calc(var(--half) * 1px));
+                background-image: url("/fstm_cube_2.png");
+                filter: brightness(0.9);
+            }
+            .back {
+                transform: rotateY(180deg) translateZ(calc(var(--half) * 1px)) rotateZ(180deg);
+                background-image: url("/fstm_cube_2.png");
+                filter: brightness(0.8);
+            }
+            .right {
+                transform: rotateY(90deg) translateZ(calc(var(--half) * 1px)) rotateZ(180deg) scaleX(-1);
+                background-image: url("/fstm_cube_3.png");
+                filter: brightness(0.9);
+            }
+            .left {
+                transform: rotateY(-90deg) translateZ(calc(var(--half) * 1px));
+                background-image: url("/fstm_cube_3.png");
+                filter: brightness(0.8);
+            }
+            .top {
+                transform: rotateX(90deg) translateZ(calc(var(--half) * 1px));
+                background-image: url("/fstm_cube_1.png");
+            }
+            .bottom {
+                transform: rotateX(-90deg) translateZ(calc(var(--half) * 1px)) rotateZ(180deg) scaleY(-1);
+                background-image: url("/fstm_cube_1.png");
+                filter: brightness(0.8);
+            }
+        </style>
+    </head>
+    <body>
+        <main>
+            <div class="scene" role="img">
+                <div class="cube-wrap" tabindex="0">
+                    <div class="cube-rotate">
+                        <div class="cube">
+                            <div class="face front"></div>
+                            <div class="face back"></div>
+                            <div class="face right"></div>
+                            <div class="face left"></div>
+                            <div class="face top"></div>
+                            <div class="face bottom"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="divider"></div>
+            <div class="info">
+                <p class="title">Die Website wird aktuell gewartet.</p>
+                <p class="subtitle">Das dauert normalerweise nicht lang. <br />Schau bald wieder vorbei!</p>
+                <p class="author">&mdash; Eure Fachschaft Technische Mathematik</p>
+            </div>
+        </main>
+        <script>
+            const cubeRotate = document.querySelector(".cube-rotate");
+            let rotation = { x: 0, y: 0, z: 0 };
+
+            function randomStep() {
+                const axis = Math.floor(Math.random() * 3);
+                const dir = Math.random() < 0.5 ? -90 : 90;
+
+                if (axis === 0) rotation.x += dir;
+                if (axis === 1) rotation.y += dir;
+                if (axis === 2) rotation.z += dir;
+
+                cubeRotate.style.transform = `rotateX(${rotation.x}deg) rotateY(${rotation.y}deg) rotateZ(${rotation.z}deg)`;
+            }
+
+            setInterval(randomStep, 2000);
+        </script>
+    </body>
+</html>
