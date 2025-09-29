@@ -128,7 +128,7 @@ function CalendarExportModal({ show, onClose }: { show: boolean; onClose: () => 
 
     return (
         <Modal show={show} onClose={onClose}>
-            <h1 className="text-2xl">Kalender exportieren</h1>
+            <h1 className="text-2xl font-bold">Kalender exportieren</h1>
             <div className="flex flex-col">
                 <p className="mb-2">
                     Mit dem untenstehenden Link kannst du unseren Kalender abonnieren. So werden neue Events automatisch
@@ -146,9 +146,15 @@ function CalendarExportModal({ show, onClose }: { show: boolean; onClose: () => 
                         />
                     ))}
                 </div>
-                <a className="rounded-sm bg-orange-400 text-white py-2 text-center hover:bg-orange-500 transition cursor-pointer mb-2" href={url.replace(/https?:\/\//, "webcal://")}>Kalender abonnieren</a>
-                <div>oder Link zum Abonnieren kopieren:</div>
-                <div className="flex flex-row">
+
+                <a
+                    className="rounded-sm border border-orange-400 text-orange-600 bg-orange-100 py-2 text-center hover:bg-orange-200 transition cursor-pointer mb-4"
+                    href={url.replace(/https?:\/\//, "webcal://")}
+                >
+                    Kalender abonnieren
+                </a>
+                <div className="text-sm mb-1">... oder kopiere den Link zum Abonnieren:</div>
+                <div className="flex flex-row text-sm">
                     <input
                         className="w-full px-3 py-2 border border-gray-300 rounded-l-sm bg-gray-50 text-gray-700 focus:outline-none"
                         type="text"
