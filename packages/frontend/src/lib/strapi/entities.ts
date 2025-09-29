@@ -10,6 +10,14 @@ export interface StrapiEntity {
 
 export interface About extends StrapiEntity {
     description: string;
+    gridItems: {
+        id: number;
+        title: string;
+        content?: string;
+        faIcon?: string;
+        color?: string;
+        target?: string;
+    }[];
 }
 
 export interface GlobalData extends StrapiEntity {
@@ -19,6 +27,11 @@ export interface GlobalData extends StrapiEntity {
         identifier: string;
         content: string;
     };
+    footerLinks: {
+        id: number;
+        target: string;
+        faIcon: string;
+    }[];
 }
 
 export interface Seite extends StrapiEntity {

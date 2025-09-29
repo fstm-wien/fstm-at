@@ -1,0 +1,28 @@
+{
+  "collectionName": "components_shared_grid_items",
+  "info": {
+    "displayName": "Grid Items",
+    "icon": "apps"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "content": {
+      "type": "richtext"
+    },
+    "faIcon": {
+      "type": "string"
+    },
+    "color": {
+      "type": "string",
+      "required": false
+    },
+    "target": {
+      "type": "string"
+    }
+  },
+  "config": {}
+}

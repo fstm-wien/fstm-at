@@ -19,7 +19,7 @@ export function EventListItem({ event }: { event: Event }) {
     return (
         <Link
             href={`/events/` + event.documentId}
-            className="py-3 px-4 flex flex-col gap-1 hover:bg-background-emph transition-colors border border-background-emphest"
+            className="py-3 px-4 flex flex-col gap-1 hover:bg-background-emph transition-colors border border-background-emphest rounded-sm"
         >
             <div className="flex flex-row items-center gap-3">
                 <span className="font-semibold">{event.name}</span>

@@ -1,0 +1,18 @@
+{
+  "collectionName": "components_shared_footer_links",
+  "info": {
+    "displayName": "Footer Links",
+    "icon": "link"
+  },
+  "options": {},
+  "attributes": {
+    "target": {
+      "type": "string",
+      "required": true
+    },
+    "faIcon": {
+      "type": "string"
+    }
+  },
+  "config": {}
+}

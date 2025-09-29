@@ -394,6 +394,7 @@ export interface ApiAboutAbout extends Struct.SingleTypeSchema {
         createdAt: Schema.Attribute.DateTime;
         createdBy: Schema.Attribute.Relation<"oneToOne", "admin::user"> & Schema.Attribute.Private;
         description: Schema.Attribute.Text & Schema.Attribute.Required;
+        gridItems: Schema.Attribute.Component<"shared.grid-items", true>;
         locale: Schema.Attribute.String & Schema.Attribute.Private;
         localizations: Schema.Attribute.Relation<"oneToMany", "api::about.about"> & Schema.Attribute.Private;
         publishedAt: Schema.Attribute.DateTime;
@@ -472,6 +473,7 @@ export interface ApiGlobalGlobal extends Struct.SingleTypeSchema {
         announcement: Schema.Attribute.Component<"shared.announcement", false>;
         createdAt: Schema.Attribute.DateTime;
         createdBy: Schema.Attribute.Relation<"oneToOne", "admin::user"> & Schema.Attribute.Private;
+        footerLinks: Schema.Attribute.Component<"shared.footer-links", true>;
         locale: Schema.Attribute.String & Schema.Attribute.Private;
         localizations: Schema.Attribute.Relation<"oneToMany", "api::global.global"> & Schema.Attribute.Private;
         metaDescription: Schema.Attribute.Text & Schema.Attribute.Required;

@@ -70,9 +70,10 @@ export default async function RootLayout({
     });
 
     const globalDataResponse = await fetchAPISingle<GlobalData>(`/global`, {
-        populate: ["announcement"],
+        populate: ["announcement", "footerLinks"],
     });
     const announcement = globalDataResponse.data?.announcement;
+    const footerLinks = globalDataResponse.data?.footerLinks ?? [];
 
     return (
         <html lang="de" suppressHydrationWarning>
@@ -87,7 +88,7 @@ export default async function RootLayout({
                         {announcement && <AnnouncementBar announcement={announcement} />}
                         <Header navigation={headerNavResponse.data ?? undefined} />
                         <main className="flex flex-col grow mx-auto px-4 max-w-5xl w-full">{children}</main>
-                        <Footer />
+                        <Footer links={footerLinks} />
 
                         <BackToTop />
                     </SkeletonThemeProvider>
