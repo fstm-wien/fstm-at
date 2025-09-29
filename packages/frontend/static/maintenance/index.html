@@ -183,7 +183,7 @@
 
             setInterval(() => {
                 fetch(window.location.toString()).then((res) => {
-                    if (false) {
+                    if (res.ok) {
                         console.info("Seite wieder online!");
                         window.location.reload();
                     } else {
