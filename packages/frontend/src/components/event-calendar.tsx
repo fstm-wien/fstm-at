@@ -128,8 +128,8 @@ function CalendarExportModal({ show, onClose }: { show: boolean; onClose: () => 
 
     return (
         <Modal show={show} onClose={onClose}>
-            <h1 className="text-2xl">Kalender exportieren</h1>
-            <div>
+            <h1 className="text-2xl font-bold">Kalender exportieren</h1>
+            <div className="flex flex-col">
                 <p className="mb-2">
                     Mit dem untenstehenden Link kannst du unseren Kalender abonnieren. So werden neue Events automatisch
                     in deinem Kalender angezeigt.
@@ -146,15 +146,23 @@ function CalendarExportModal({ show, onClose }: { show: boolean; onClose: () => 
                         />
                     ))}
                 </div>
-                <div className="flex flex-row">
+
+                <a
+                    className="rounded-sm border border-orange-400 text-orange-600 bg-orange-100 py-2 text-center hover:bg-orange-200 transition cursor-pointer mb-4"
+                    href={url.replace(/https?:\/\//, "webcal://")}
+                >
+                    Kalender abonnieren
+                </a>
+                <div className="text-sm mb-1">... oder kopiere den Link zum Abonnieren:</div>
+                <div className="flex flex-row text-sm">
                     <input
-                        className="w-full px-3 py-2 border border-gray-300 rounded-l-lg bg-gray-50 text-gray-700 focus:outline-none"
+                        className="w-full px-3 py-2 border border-gray-300 rounded-l-sm bg-gray-50 text-gray-700 focus:outline-none"
                         type="text"
                         readOnly
                         value={url}
                     />
                     <button
-                        className="px-4 py-2 bg-orange-400 text-white rounded-r-lg hover:bg-orange-500 transition cursor-pointer"
+                        className="px-4 py-2 bg-orange-400 text-white rounded-r-sm hover:bg-orange-500 transition cursor-pointer"
                         onClick={handleCopy}
                         disabled={copied}
                         title={copied ? "Kopiert!" : "In Zwischenablage kopieren"}

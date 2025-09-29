@@ -94,7 +94,7 @@ export function OrdnerItem({ info, index }: { info?: NextcloudFileInformation; i
             {info && (
                 <>
                     <Modal show={showForm} onClose={() => setShowForm(false)}>
-                        <h1 className="text-2xl">Prüfungsordner anfragen</h1>
+                        <h1 className="text-2xl font-bold">Prüfungsordner anfragen</h1>
                         <div>
                             <p className="mb-1">
                                 Wir schicken dir den Zugriff auf den Prüfungsordner <b>{info.name}</b> als Link per
