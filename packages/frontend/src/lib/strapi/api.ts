@@ -100,7 +100,7 @@ export async function getLinkBySlug(slug: string): Promise<StrapiAPISingleRespon
         filters: {
             slug: {
                 $eq: slug,
-            }
-        }
+            },
+        },
     });
 }
