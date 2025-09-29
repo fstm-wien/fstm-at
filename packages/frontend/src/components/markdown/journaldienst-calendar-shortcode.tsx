@@ -1,11 +1,12 @@
-import { fetchAPICollection } from "@/lib/strapi/api";
-import { JournaldienstCalendar, JournaldienstCalendarConfigProps } from '@/components/journaldienst-calendar';
-import { Journaldienst } from "@/lib/strapi/entities";
 import { Suspense } from "react";
+
+import { JournaldienstCalendar, JournaldienstCalendarConfigProps } from "@/components/journaldienst-calendar";
+import { fetchAPICollection } from "@/lib/strapi/api";
+import { Journaldienst } from "@/lib/strapi/entities";
 
 export function JournaldienstCalendarShortcode(props: JournaldienstCalendarConfigProps) {
     return (
-        <Suspense fallback={<JournaldienstCalendar journaldienste={[]} {...props} />} >
+        <Suspense fallback={<JournaldienstCalendar journaldienste={[]} {...props} />}>
             <JournaldienstCalendarLoader {...props} />
         </Suspense>
     );

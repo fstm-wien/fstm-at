@@ -1,9 +1,10 @@
 "use client";
 
-import { Navbar } from "@/lib/strapi/entities";
 import clsx from "clsx";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+
+import { Navbar } from "@/lib/strapi/entities";
 
 export function SideNavigation({ navbar }: { navbar: Navbar }) {
     const pathname = usePathname();

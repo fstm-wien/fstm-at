@@ -1,7 +1,7 @@
 import qs from "qs";
 
 import { clientEnv } from "../env/client";
-import { Seite, StrapiEntity } from "./entities";
+import { Link, Seite, StrapiEntity } from "./entities";
 
 export type StrapiAPIResponse<T extends StrapiEntity> = StrapiAPISingleResponse<T> | StrapiAPICollectionResponse<T>;
 export type StrapiAPISingleResponse<T extends StrapiEntity> = StrapiAPIResponseBase<T | null>;
@@ -90,6 +90,16 @@ export async function getPageBySlug(slug: string): Promise<StrapiAPISingleRespon
         populate: {
             navbar: {
                 populate: ["items"],
+            },
+        },
+    });
+}
+
+export async function getLinkBySlug(slug: string): Promise<StrapiAPISingleResponse<Link>> {
+    return await fetchAPISingleFromCollection<Link>(`/links`, {
+        filters: {
+            slug: {
+                $eq: slug,
             },
         },
     });

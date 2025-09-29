@@ -509,6 +509,35 @@ export interface ApiJournaldienstJournaldienst extends Struct.CollectionTypeSche
     };
 }
 
+export interface ApiLinkLink extends Struct.CollectionTypeSchema {
+    collectionName: "links";
+    info: {
+        description: "";
+        displayName: "Link";
+        pluralName: "links";
+        singularName: "link";
+    };
+    options: {
+        draftAndPublish: true;
+    };
+    attributes: {
+        createdAt: Schema.Attribute.DateTime;
+        createdBy: Schema.Attribute.Relation<"oneToOne", "admin::user"> & Schema.Attribute.Private;
+        description: Schema.Attribute.Text;
+        faIcon: Schema.Attribute.String & Schema.Attribute.DefaultTo<"FaLink">;
+        locale: Schema.Attribute.String & Schema.Attribute.Private;
+        localizations: Schema.Attribute.Relation<"oneToMany", "api::link.link"> & Schema.Attribute.Private;
+        priority: Schema.Attribute.Decimal & Schema.Attribute.DefaultTo<1>;
+        publishedAt: Schema.Attribute.DateTime;
+        slug: Schema.Attribute.String & Schema.Attribute.Required & Schema.Attribute.Unique;
+        target: Schema.Attribute.String & Schema.Attribute.Required;
+        title: Schema.Attribute.String & Schema.Attribute.Required;
+        updatedAt: Schema.Attribute.DateTime;
+        updatedBy: Schema.Attribute.Relation<"oneToOne", "admin::user"> & Schema.Attribute.Private;
+        visible: Schema.Attribute.Boolean & Schema.Attribute.Required & Schema.Attribute.DefaultTo<false>;
+    };
+}
+
 export interface ApiNavbarNavbar extends Struct.CollectionTypeSchema {
     collectionName: "navbars";
     info: {
@@ -1002,6 +1031,7 @@ declare module "@strapi/strapi" {
             "api::event.event": ApiEventEvent;
             "api::global.global": ApiGlobalGlobal;
             "api::journaldienst.journaldienst": ApiJournaldienstJournaldienst;
+            "api::link.link": ApiLinkLink;
             "api::navbar.navbar": ApiNavbarNavbar;
             "api::pruefungsanfrage.pruefungsanfrage": ApiPruefungsanfragePruefungsanfrage;
             "api::seite.seite": ApiSeiteSeite;
