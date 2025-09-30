@@ -4,8 +4,8 @@ const nextConfig: NextConfig = {
     async rewrites() {
         return [
             {
-                source: "/l",
-                destination: "/links",
+                source: "/l/:path*",
+                destination: "/links/:path*",
             },
         ];
     },
