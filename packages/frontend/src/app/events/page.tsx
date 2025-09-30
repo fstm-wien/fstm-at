@@ -34,14 +34,18 @@ export default async function EventsPage() {
                 <EventCalendar events={events} />
             </div>
             <div className="flex flex-col gap-8">
-                <div>
-                    <h3 className="mb-4 text-2xl font-semibold">Nächste Events</h3>
-                    <EventList events={nextEvents} />
-                </div>
-                <div className="opacity-50">
-                    <h3 className="mb-4 text-2xl font-semibold">Vergangene Events</h3>
-                    <EventList events={pastEvents} />
-                </div>
+                {nextEvents.length > 0 && (
+                    <div>
+                        <h3 className="mb-4 text-2xl font-semibold">Nächste Events</h3>
+                        <EventList events={nextEvents} />
+                    </div>
+                )}
+                {pastEvents.length > 0 && (
+                    <div className="opacity-50">
+                        <h3 className="mb-4 text-2xl font-semibold">Vergangene Events</h3>
+                        <EventList events={pastEvents} />
+                    </div>
+                )}
             </div>
         </>
     );

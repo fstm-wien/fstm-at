@@ -5,6 +5,7 @@ import { FaClock, FaMapPin, FaUser } from "react-icons/fa";
 
 import { LocalDatetime } from "@/components/local-datetime";
 import { MarkdownContent } from "@/components/markdown/markdown-content";
+import { PageHeading } from "@/components/page-heading";
 import { fetchAPISingle } from "@/lib/strapi/api";
 import { Event } from "@/lib/strapi/entities";
 
@@ -38,16 +39,16 @@ export default async function EventPage({ params }: { params: Promise<{ id: stri
                 <p className="text-gray-400 underline">
                     <Link href="/events">Alle Events ...</Link>
                 </p>
-                <h1 className="font-bold mt-2 lg:mt-6 mb-1 text-4xl">{foundEvent.name}</h1>
-                <div className="flex flex-col lg:flex-row gap-2 lg:gap-4 mb-6 lg:text-lg text-gray-600 dark:text-gray-300">
+                <PageHeading className="mb-2">{foundEvent.name}</PageHeading>
+                <div className="flex flex-col lg:flex-row gap-y-1 lg:gap-x-6 mb-6 lg:text-lg text-gray-600 dark:text-gray-300">
                     <p className="flex flex-row flex-wrap items-center">
-                        <FaClock className="mr-2" />
+                        <FaClock className="mr-1" />
                         <LocalDatetime datetime={foundEvent.start} format="LLL" />
-                        <span className="mx-2">-</span>
+                        <span className="mx-1">&mdash;</span>
                         <LocalDatetime datetime={foundEvent.end} format="LLL" />
                     </p>
                     {foundEvent.location && (
-                        <p className="flex flex-row items-center gap-2">
+                        <p className="flex flex-row items-center gap-1">
                             <FaMapPin />
                             <span>{foundEvent.location}</span>
                         </p>

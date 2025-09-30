@@ -85,7 +85,7 @@ export default async function Home() {
                                     )}
                                     <h3 className="mb-2 font-semibold text-lg">{item.title}</h3>
                                     {item.content && (
-                                        <div className="text-sm prose">
+                                        <div className="text-sm prose dark:prose-invert">
                                             <ReactMarkdown remarkPlugins={[remarkGfm]}>{item.content}</ReactMarkdown>
                                         </div>
                                     )}
