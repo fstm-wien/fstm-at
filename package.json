@@ -1,19 +1,19 @@
 {
-    "name": "fsmat-at",
+    "name": "@fstm-at/root",
     "private": true,
     "scripts": {
-        "frontend:dev": "yarn workspace frontend dev",
-        "frontend:build": "yarn workspace frontend build",
-        "frontend:start": "yarn workspace frontend start",
-        "cms:dev": "yarn workspace cms dev",
-        "cms:build": "yarn workspace cms build",
-        "cms:start": "yarn workspace cms start",
+        "frontend:dev": "yarn workspace @fstm-at/frontend dev",
+        "frontend:build": "yarn workspace @fstm-at/frontend build",
+        "frontend:start": "yarn workspace @fstm-at/frontend start",
+        "cms:dev": "yarn workspace @fstm-at/cms dev",
+        "cms:build": "yarn workspace @fstm-at/cms build",
+        "cms:start": "yarn workspace @fstm-at/cms start",
         "maintenance:dev": "serve ./packages/frontend/static/maintenance",
         "dev": "node ./scripts/dev.js",
         "build": "node ./scripts/build.js",
         "start": "node ./scripts/start.js",
         "format": "prettier --write .",
-        "lint": "yarn workspace frontend lint"
+        "lint": "yarn workspace @fstm-at/frontend lint"
     },
     "workspaces": [
         "packages/*"

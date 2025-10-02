@@ -1,5 +1,5 @@
 {
-  "name": "cms",
+  "name": "@fstm-at/cms",
   "version": "0.1.0",
   "private": true,
   "description": "A Strapi application",
@@ -16,6 +16,7 @@
     "upgrade:dry": "npx @strapi/upgrade latest --dry"
   },
   "dependencies": {
+    "@fstm-at/pruefungsupload-plugin": "workspace:^",
     "@strapi/plugin-cloud": "5.24.1",
     "@strapi/plugin-users-permissions": "5.24.1",
     "@strapi/strapi": "5.24.1",
