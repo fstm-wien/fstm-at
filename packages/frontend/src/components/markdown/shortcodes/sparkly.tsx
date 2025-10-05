@@ -2,8 +2,8 @@
 
 import { CSSProperties, useState } from "react";
 
+import { useRandomInterval } from "@/lib/hooks/use-random-interval";
 import { randomRange } from "@/lib/util/random";
-import { useRandomInterval } from "@/lib/util/use-random-interval";
 
 function SparkleStar({ color, size, style }: { color: string; size: number; style: CSSProperties }) {
     return (

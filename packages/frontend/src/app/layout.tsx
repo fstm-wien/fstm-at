@@ -8,7 +8,6 @@ import { AnnouncementBar } from "@/components/announcement-bar";
 import { BackToTop } from "@/components/back-to-top";
 import { Footer } from "@/components/layout/footer";
 import { Header } from "@/components/layout/header";
-import { SkeletonThemeProvider } from "@/components/skeleton-theme-provider";
 import { clientEnv } from "@/lib/env/client";
 import { fetchAPISingle, fetchAPISingleFromCollection } from "@/lib/strapi/api";
 import { GlobalData, Navbar } from "@/lib/strapi/entities";
@@ -84,14 +83,12 @@ export default async function RootLayout({
                 )}
             >
                 <ThemeProvider attribute="class" disableTransitionOnChange>
-                    <SkeletonThemeProvider>
-                        {announcement && <AnnouncementBar announcement={announcement} />}
-                        <Header navigation={headerNavResponse.data ?? undefined} />
-                        <main className="flex flex-col grow mx-auto px-4 max-w-5xl w-full">{children}</main>
-                        <Footer links={footerLinks} />
+                    {announcement && <AnnouncementBar announcement={announcement} />}
+                    <Header navigation={headerNavResponse.data ?? undefined} />
+                    <main className="flex flex-col grow mx-auto px-4 max-w-5xl w-full">{children}</main>
+                    <Footer links={footerLinks} />
 
-                        <BackToTop />
-                    </SkeletonThemeProvider>
+                    <BackToTop />
                 </ThemeProvider>
             </body>
         </html>

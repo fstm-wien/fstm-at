@@ -11,8 +11,9 @@ import { FaCheck, FaCopy, FaMapPin } from "react-icons/fa";
 
 import { Event, EventHost } from "@/lib/strapi/entities";
 
-import { Modal } from "./modal";
-import { Toggle } from "./toggle";
+import { Button, LinkButton } from "../ui/button";
+import { Modal } from "../ui/modal";
+import { Toggle } from "../ui/toggle";
 
 const eventHostClassLookup: Record<EventHost, string> = {
     [EventHost.FSTM]: "bg-orange-400",
@@ -21,8 +22,8 @@ const eventHostClassLookup: Record<EventHost, string> = {
 };
 
 export function EventCalendar({ events }: { events: Event[] }) {
-    const router = useRouter();
     const [showCalendarExport, setShowCalendarExport] = useState(false);
+    const router = useRouter();
 
     return (
         <>
@@ -41,12 +42,9 @@ export function EventCalendar({ events }: { events: Event[] }) {
                             ))}
                         </span>
                     </div>
-                    <a
-                        className="px-3 py-1 bg-background-emph hover:bg-background-emphest rounded-sm cursor-pointer mr-0 ml-auto select-none"
-                        onClick={() => setShowCalendarExport(true)}
-                    >
+                    <Button variant="secondary" onClick={() => setShowCalendarExport(true)}>
                         Kalender abonnieren
-                    </a>
+                    </Button>
                 </div>
                 <FullCalendar
                     plugins={[dayGridPlugin]}
@@ -60,7 +58,10 @@ export function EventCalendar({ events }: { events: Event[] }) {
                         host: e.host,
                     }))}
                     locale={deLocale}
-                    eventClick={(info) => router.push(`/events/${info.event._def.publicId}`)}
+                    eventClick={(info) => {
+                        const event = events.find((e) => e.documentId === info.event._def.publicId)!;
+                        router.push(`/events/${event.documentId}`);
+                    }}
                     nowIndicator={true}
                     displayEventEnd={true}
                     // height={"70dvh"}
@@ -147,16 +148,13 @@ function CalendarExportModal({ show, onClose }: { show: boolean; onClose: () => 
                     ))}
                 </div>
 
-                <a
-                    className={clsx(
-                        "rounded-sm border py-2 text-center transition cursor-pointer mb-4",
-                        "border-orange-400 text-orange-600 bg-orange-100 hover:bg-orange-200",
-                        "dark:border-orange-600 dark:bg-orange-800/30 dark:text-orange-200",
-                    )}
+                <LinkButton
+                    variant="outlined"
+                    className="w-full mb-4 py-2"
                     href={url.replace(/https?:\/\//, "webcal://")}
                 >
                     Kalender abonnieren
-                </a>
+                </LinkButton>
                 <div className="text-sm mb-1">... oder kopiere den Link zum Abonnieren:</div>
                 <div className="flex flex-row text-sm">
                     <input

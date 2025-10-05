@@ -1,4 +1,3 @@
-import clsx from "clsx";
 import moment from "moment";
 import Link from "next/link";
 import { FaCalendar } from "react-icons/fa";
@@ -6,8 +5,9 @@ import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 
 import DynamicIcon from "@/components/dynamic-icon";
-import { EventListItem } from "@/components/event-list";
+import { EventList } from "@/components/events/event-list";
 import { FSTMLogo } from "@/components/fstm-logo";
+import { Card, LinkCard } from "@/components/ui/card";
 import { fetchAPICollection, fetchAPISingle } from "@/lib/strapi/api";
 import { About, Event } from "@/lib/strapi/entities";
 
@@ -51,56 +51,44 @@ export default async function Home() {
                         <FaCalendar />
                         <span className="font-semibold">Nächste Events</span>
                     </h3>
-                    <div className="flex flex-col gap-2">
-                        {nextEventsResponse.data.length > 0 ? (
-                            nextEventsResponse.data.map((e) => <EventListItem key={e.documentId} event={e} />)
-                        ) : (
-                            <div className="">
-                                Im Moment sind keine Events geplant. Bald haben wir wieder etwas Neues für euch!
-                            </div>
-                        )}
-                    </div>
+                    {nextEventsResponse.data.length > 0 ? (
+                        <EventList events={nextEventsResponse.data} />
+                    ) : (
+                        <p>Im Moment sind keine Events geplant. Bald haben wir wieder etwas Neues für euch!</p>
+                    )}
                     <p className="mt-4 text-gray-400 underline">
                         <Link href="/events">Mehr Events ...</Link>
                     </p>
                 </div>
             )}
             <div className="lg:mx-8 mx-auto grid lg:grid-cols-3 gap-2 lg:gap-4">
-                {(aboutResponse.data?.gridItems ?? [])
-                    .map(
-                        (item) =>
-                            [
-                                item,
-                                <div
-                                    key={item.title}
-                                    className={clsx(
-                                        "py-6 px-6 flex flex-col items-center text-center border border-background-emphest rounded-sm",
-                                        item.target && "hover:bg-background-emph",
-                                    )}
-                                >
-                                    {item.faIcon && (
-                                        <span className="mb-4 text-2xl" style={{ color: item.color || "unset" }}>
-                                            <DynamicIcon name={item.faIcon} />
-                                        </span>
-                                    )}
-                                    <h3 className="mb-2 font-semibold text-lg">{item.title}</h3>
-                                    {item.content && (
-                                        <div className="text-sm prose dark:prose-invert">
-                                            <ReactMarkdown remarkPlugins={[remarkGfm]}>{item.content}</ReactMarkdown>
-                                        </div>
-                                    )}
-                                </div>,
-                            ] as [About["gridItems"][number], JSX.Element],
-                    )
-                    .map(([item, element]) =>
-                        item.target ? (
-                            <Link key={element.key} href={item.target}>
-                                {element}
-                            </Link>
-                        ) : (
-                            element
-                        ),
-                    )}
+                {(aboutResponse.data?.gridItems ?? []).map((item) => {
+                    const content = (
+                        <div className="m-auto flex flex-col justify-center items-center text-center">
+                            {item.faIcon && (
+                                <span className="mb-4 text-2xl" style={{ color: item.color || "unset" }}>
+                                    <DynamicIcon name={item.faIcon} />
+                                </span>
+                            )}
+                            <h3 className="mb-2 font-semibold text-lg">{item.title}</h3>
+                            {item.content && (
+                                <div className="text-sm prose dark:prose-invert">
+                                    <ReactMarkdown remarkPlugins={[remarkGfm]}>{item.content}</ReactMarkdown>
+                                </div>
+                            )}
+                        </div>
+                    );
+
+                    return item.target ? (
+                        <LinkCard key={item.id} size="large" href={item.target}>
+                            {content}
+                        </LinkCard>
+                    ) : (
+                        <Card key={item.id} size="large">
+                            {content}
+                        </Card>
+                    );
+                })}
             </div>
         </>
     );

@@ -1,24 +1,10 @@
 import { Element } from "hast";
-import ReactMarkdown, { Components } from "react-markdown";
+import Markdown, { Components } from "react-markdown";
 import remarkDirective from "remark-directive";
 import remarkGfm from "remark-gfm";
 
-import { Accordion } from "./accordion";
 import { directiveShortcodes } from "./directive-shortcodes";
-import { JournaldienstCalendarShortcode } from "./journaldienst-calendar-shortcode";
-import { Sparkly } from "./sparkly";
-
-type ShortcodeMap = {
-    accordion: typeof Accordion;
-    sparkly: typeof Sparkly;
-    journaldienst_calendar: typeof JournaldienstCalendarShortcode;
-};
-
-const shortcodes: ShortcodeMap = {
-    accordion: Accordion,
-    sparkly: Sparkly,
-    journaldienst_calendar: JournaldienstCalendarShortcode,
-};
+import { shortcodes } from "./shortcodes";
 
 function parsePropsFromNode(node: Element): Record<string, unknown> {
     const propsStr = node.properties?.["data-props"];
@@ -30,9 +16,9 @@ function parsePropsFromNode(node: Element): Record<string, unknown> {
     }
 }
 
-function getShortcodeName(node: Element): keyof ShortcodeMap | undefined {
+function getShortcodeName(node: Element): string | undefined {
     const n = node.properties?.["data-shortcode"];
-    return typeof n === "string" && n in shortcodes ? (n as keyof ShortcodeMap) : undefined;
+    return typeof n === "string" && n in shortcodes ? n : undefined;
 }
 
 export interface MarkdownProps {
@@ -63,8 +49,8 @@ export function MarkdownContent({ source }: MarkdownProps) {
     };
 
     return (
-        <ReactMarkdown remarkPlugins={[remarkGfm, remarkDirective, directiveShortcodes]} components={components}>
+        <Markdown remarkPlugins={[remarkGfm, remarkDirective, directiveShortcodes]} components={components}>
             {source}
-        </ReactMarkdown>
+        </Markdown>
     );
 }

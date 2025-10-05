@@ -4,9 +4,9 @@ import { AnimatePresence, motion } from "motion/react";
 import { ReactNode, useState } from "react";
 import { FaChevronDown } from "react-icons/fa";
 
-type AccordionProps = {
+export type AccordionProps = {
     title?: string;
-    children: ReactNode;
+    children?: ReactNode;
 };
 
 export function Accordion({ title, children }: AccordionProps) {

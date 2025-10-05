@@ -43,6 +43,16 @@
     --fc-page-bg-color: var(--color-gray-800);
 }
 
+.react-loading-skeleton {
+    --base-color: #ebebeb;
+    --highlight-color: #f5f5f5;
+}
+
+.dark .react-loading-skeleton {
+    --base-color: #282c34;
+    --highlight-color: #616978;
+}
+
 body {
     @apply bg-background;
     @apply text-foreground;

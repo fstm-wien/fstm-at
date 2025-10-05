@@ -122,73 +122,69 @@ export function JournaldienstCalendar({
     );
 
     return (
-        <>
-            <div className="w-full flex flex-col items-stretch">
-                {paginationEnabled && (
-                    <div className="flex flex-row mb-4 gap-2">
-                        <PaginationButton onClick={prevPage} disabled={currentPage <= 0}>
-                            <FaArrowLeft />
-                        </PaginationButton>
-                        <PaginationButton onClick={nextPage} disabled={currentPage >= weekdays.length - pageSize}>
-                            <FaArrowRight />
-                        </PaginationButton>
-                    </div>
-                )}
-                <div className="flex flex-row items-stretch">
-                    <div className="invisible flex flex-col">
-                        {hours.map((h) => (
-                            <span className="text-xs" key={`${h}-placeholder`}>
-                                {formatTime(h)}
-                            </span>
-                        ))}
-                    </div>
-                    <div className="flex-1 flex flex-row divide-x divide-gray-200 dark:divide-gray-700">
-                        {computedWeekdays.map((wd) => (
-                            <div key={wd} className="flex-1 px-1">
-                                <div className="font-bold mb-2 text-center hyphens-none">{wd}</div>
-                                <div className="relative">
-                                    {hours.map((h) => (
-                                        <div
-                                            key={`${wd}-${h}`}
-                                            style={{ height: 60 * pxPerMinute }}
-                                            className="border-t border-gray-200 dark:border-gray-700"
-                                        >
-                                            {wd == computedWeekdays[0] ? (
-                                                <span
-                                                    key={`${wd}-${h}-label`}
-                                                    className="absolute transform -translate-x-2"
-                                                >
-                                                    <span className="absolute transform -translate-x-full -translate-y-1/2 text-xs text-gray-500">
-                                                        {formatTime(h)}
-                                                    </span>
+        <div className="w-full flex flex-col items-stretch not-prose">
+            {paginationEnabled && (
+                <div className="flex flex-row mb-4 gap-2">
+                    <PaginationButton onClick={prevPage} disabled={currentPage <= 0}>
+                        <FaArrowLeft />
+                    </PaginationButton>
+                    <PaginationButton onClick={nextPage} disabled={currentPage >= weekdays.length - pageSize}>
+                        <FaArrowRight />
+                    </PaginationButton>
+                </div>
+            )}
+            <div className="flex flex-row items-stretch">
+                <div className="invisible flex flex-col">
+                    {hours.map((h) => (
+                        <span className="text-xs" key={`${h}-placeholder`}>
+                            {formatTime(h)}
+                        </span>
+                    ))}
+                </div>
+                <div className="flex-1 flex flex-row divide-x divide-gray-200 dark:divide-gray-700">
+                    {computedWeekdays.map((wd) => (
+                        <div key={wd} className="flex-1 px-1">
+                            <div className="font-bold mb-2 text-center hyphens-none">{wd}</div>
+                            <div className="relative">
+                                {hours.map((h) => (
+                                    <div
+                                        key={`${wd}-${h}`}
+                                        style={{ height: 60 * pxPerMinute }}
+                                        className="border-t border-gray-200 dark:border-gray-700"
+                                    >
+                                        {wd == computedWeekdays[0] ? (
+                                            <span
+                                                key={`${wd}-${h}-label`}
+                                                className="absolute transform -translate-x-2"
+                                            >
+                                                <span className="absolute transform -translate-x-full -translate-y-1/2 text-xs text-gray-500">
+                                                    {formatTime(h)}
                                                 </span>
-                                            ) : null}
-                                        </div>
-                                    ))}
-                                    {journaldiensteByWeekday[wd].map((jd) => (
-                                        <div
-                                            key={JSON.stringify(jd)}
-                                            className="absolute p-1 lg:p-2 text-sm lg:text-base w-full rounded-sm bg-orange-400 dark:bg-gray-800 dark:border dark:border-orange-400 select-none"
-                                            style={{
-                                                top:
-                                                    ((jd.fromHour - computedFromHour) * 60 + jd.fromMinute) *
-                                                    pxPerMinute,
-                                                height:
-                                                    ((jd.toHour - jd.fromHour) * 60 + jd.toMinute - jd.fromMinute) *
-                                                    pxPerMinute,
-                                            }}
-                                        >
-                                            <div className="font-semibold leading-[1.1]">{jd.people}</div>
-                                            <div className="text-[10px] lg:text-xs text-gray-700 dark:text-gray-400">{`${formatTime(jd.fromHour, jd.fromMinute)} - ${formatTime(jd.toHour, jd.toMinute)}`}</div>
-                                        </div>
-                                    ))}
-                                </div>
+                                            </span>
+                                        ) : null}
+                                    </div>
+                                ))}
+                                {journaldiensteByWeekday[wd].map((jd) => (
+                                    <div
+                                        key={JSON.stringify(jd)}
+                                        className="absolute p-1 lg:p-2 text-sm lg:text-base w-full rounded-sm bg-orange-400 dark:bg-gray-800 dark:border dark:border-orange-400 select-none"
+                                        style={{
+                                            top: ((jd.fromHour - computedFromHour) * 60 + jd.fromMinute) * pxPerMinute,
+                                            height:
+                                                ((jd.toHour - jd.fromHour) * 60 + jd.toMinute - jd.fromMinute) *
+                                                pxPerMinute,
+                                        }}
+                                    >
+                                        <div className="font-semibold leading-[1.1]">{jd.people}</div>
+                                        <div className="text-[10px] lg:text-xs text-gray-700 dark:text-gray-400">{`${formatTime(jd.fromHour, jd.fromMinute)} - ${formatTime(jd.toHour, jd.toMinute)}`}</div>
+                                    </div>
+                                ))}
                             </div>
-                        ))}
-                    </div>
+                        </div>
+                    ))}
                 </div>
             </div>
-        </>
+        </div>
     );
 }
 

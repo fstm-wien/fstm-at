@@ -6,7 +6,7 @@ import { useTheme } from "next-themes";
 import { useCallback } from "react";
 import { FaMoon, FaSun } from "react-icons/fa";
 
-import { useMounted } from "@/lib/util/use-mounted";
+import { useMounted } from "@/lib/hooks/use-mounted";
 
 export function ThemeToggle() {
     const mounted = useMounted();

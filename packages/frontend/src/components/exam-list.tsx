@@ -1,14 +1,16 @@
 "use client";
 
 import clsx from "clsx";
-import { useEffect, useState } from "react";
-import { FaCheckCircle, FaExclamationCircle, FaLink } from "react-icons/fa";
+import { ChangeEvent, useEffect, useMemo, useState } from "react";
+import { FaCheckCircle, FaExclamationCircle, FaLink, FaSearch } from "react-icons/fa";
 import { IoMail } from "react-icons/io5";
 
-import { Modal } from "@/components/modal";
 import RandomWidthSkeleton from "@/components/random-width-skeleton";
-import { NextcloudFileInformation } from "@/lib/nextcloud/api";
+import { Modal, ModalTitle } from "@/components/ui/modal";
+import type { NextcloudFileInformation } from "@/lib/nextcloud/api";
 import { humanFileSize } from "@/lib/util/human-file-size";
+
+import { IconButton } from "./ui/button";
 
 enum ResponseType {
     Success,
@@ -16,7 +18,51 @@ enum ResponseType {
     TooManyRequests,
 }
 
-export function OrdnerItem({ info, index }: { info?: NextcloudFileInformation; index: number }) {
+export type ExamData = {
+    name: string;
+    size: number;
+};
+
+export type ExamListProps = {
+    files?: (ExamData | null)[];
+};
+
+export function ExamList({ files }: ExamListProps) {
+    const [filter, setFilter] = useState("");
+
+    const filteredFiles = useMemo(() => {
+        if (!filter) {
+            return files;
+        }
+
+        const lowercaseFilter = filter.toLowerCase();
+        return files?.filter((f) => f?.name.toLocaleLowerCase().includes(lowercaseFilter));
+    }, [files, filter]);
+
+    const handleFilterChange = (e: ChangeEvent<HTMLInputElement>) => {
+        setFilter(e.target.value);
+    };
+
+    return (
+        <div className="not-prose">
+            <div className="relative mb-2">
+                <input
+                    className="w-full pl-9 pr-3 py-2 border border-gray-300 dark:border-gray-600 rounded-l-sm bg-background text-gray-700 dark:text-white focus:outline-none"
+                    type="text"
+                    onChange={handleFilterChange}
+                    value={filter}
+                />
+                <FaSearch className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 dark:text-gray-600" />
+            </div>
+            <div className="flex flex-col divide-y divide-background-emphest">
+                {filteredFiles &&
+                    filteredFiles.map((f, i) => <ExamListItem key={f?.name ?? i} info={f ?? undefined} index={i} />)}
+            </div>
+        </div>
+    );
+}
+
+export function ExamListItem({ info, index }: { info?: NextcloudFileInformation; index: number }) {
     const [showForm, setShowForm] = useState(false);
     const [responseType, setResponseType] = useState<ResponseType | undefined>(undefined);
 
@@ -43,7 +89,7 @@ export function OrdnerItem({ info, index }: { info?: NextcloudFileInformation; i
         }
 
         setIsSubmitting(true);
-        fetch("/api/pruefungsanfrage", {
+        fetch("/api/exams/request", {
             method: "POST",
             body: JSON.stringify({
                 folder: info?.name,
@@ -94,7 +140,7 @@ export function OrdnerItem({ info, index }: { info?: NextcloudFileInformation; i
             {info && (
                 <>
                     <Modal show={showForm} onClose={() => setShowForm(false)}>
-                        <h1 className="text-2xl font-bold">Prüfungsordner anfragen</h1>
+                        <ModalTitle>Prüfungsordner anfragen</ModalTitle>
                         <div>
                             <p className="mb-1">
                                 Wir schicken dir den Zugriff auf den Prüfungsordner <b>{info.name}</b> als Link per
@@ -117,17 +163,13 @@ export function OrdnerItem({ info, index }: { info?: NextcloudFileInformation; i
                                     <span className="hidden lg:inline">.tuwien.ac.at</span>
                                     <span className="inline lg:hidden">.tu...</span>
                                 </p>
-                                <div
-                                    className={clsx(
-                                        "ml-auto py-1 px-2 self-stretch flex text-white rounded-md transition-colors",
-                                        isSubmitting || !showForm || formError
-                                            ? "cursor-progress bg-background-emphest"
-                                            : "cursor-pointer bg-orange-600 hover:bg-orange-700",
-                                    )}
+                                <IconButton
+                                    disabled={isSubmitting || !showForm || formError}
+                                    className={clsx("mr-0 ml-auto", isSubmitting && "!cursor-progress")}
                                     onClick={handleSubmitForm}
                                 >
                                     <IoMail className="m-auto" />
-                                </div>
+                                </IconButton>
                             </div>
                             {formError && (
                                 <p className="text-sm text-red-500">Die Matrikelnummer sollte 8-stellig sein.</p>

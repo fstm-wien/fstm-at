@@ -5,7 +5,7 @@ import { MarkdownContent } from "@/components/markdown/markdown-content";
 import { PageHeading } from "@/components/page-heading";
 import { getPageBySlug } from "@/lib/strapi/api";
 
-import { SideNavigation } from "./side-navigation";
+import { SideNavigation } from "../../components/side-navigation";
 
 export const dynamic = "force-dynamic";
 export const fetchCache = "force-no-store";

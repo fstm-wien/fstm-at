@@ -1,9 +1,9 @@
-import Link from "next/link";
 import { FaClock, FaMapPin, FaUser } from "react-icons/fa";
 
 import { Event } from "@/lib/strapi/entities";
 
-import { LocalDatetime } from "./local-datetime";
+import { LocalDatetime } from "../local-datetime";
+import { LinkCard } from "../ui/card";
 
 export function EventList({ events }: { events: Event[] }) {
     return (
@@ -17,10 +17,7 @@ export function EventList({ events }: { events: Event[] }) {
 
 export function EventListItem({ event }: { event: Event }) {
     return (
-        <Link
-            href={`/events/` + event.documentId}
-            className="py-3 px-4 flex flex-col gap-1 hover:bg-background-emph transition-colors border border-background-emphest rounded-sm"
-        >
+        <LinkCard href={`/events/` + event.documentId} className="flex flex-col gap-1">
             <div className="flex flex-row items-center gap-3">
                 <span className="font-semibold">{event.name}</span>
                 {event.location && (
@@ -40,6 +37,6 @@ export function EventListItem({ event }: { event: Event }) {
                     <span>{event.host}</span>
                 </span>
             </div>
-        </Link>
+        </LinkCard>
     );
 }

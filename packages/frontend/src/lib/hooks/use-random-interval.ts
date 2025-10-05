@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef } from "react";
 
-import { randomRange } from "./random";
+import { randomRange } from "../util/random";
 
 export const useRandomInterval = (callback: () => void, minDelay: number, maxDelay: number) => {
     const timeoutId = useRef<number | null>(null);

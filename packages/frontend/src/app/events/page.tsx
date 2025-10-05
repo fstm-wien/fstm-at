@@ -1,8 +1,8 @@
 import moment from "moment";
 import { Metadata } from "next";
 
-import { EventCalendar } from "@/components/event-calendar";
-import { EventList } from "@/components/event-list";
+import { EventCalendar } from "@/components/events/event-calendar";
+import { EventList } from "@/components/events/event-list";
 import { PageHeading } from "@/components/page-heading";
 import { fetchAPICollection } from "@/lib/strapi/api";
 import { Event } from "@/lib/strapi/entities";
