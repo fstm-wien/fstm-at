@@ -2,7 +2,7 @@ import { FaClock, FaMapPin, FaUser } from "react-icons/fa";
 
 import { Event } from "@/lib/strapi/entities";
 
-import { LocalDatetime } from "../local-datetime";
+import { LocalizedDatetime } from "../localized-datetime";
 import { LinkCard } from "../ui/card";
 
 export function EventList({ events }: { events: Event[] }) {
@@ -30,7 +30,7 @@ export function EventListItem({ event }: { event: Event }) {
             <div className="text-gray-400 dark:text-gray-500 flex flex-row flex-wrap gap-x-4 text-sm">
                 <span className="inline-flex items-center gap-1">
                     <FaClock />
-                    <LocalDatetime datetime={event.start} format="LLLL" />
+                    <LocalizedDatetime datetime={event.start} format="LLLL" />
                 </span>
                 <span className="inline-flex items-center gap-1">
                     <FaUser />

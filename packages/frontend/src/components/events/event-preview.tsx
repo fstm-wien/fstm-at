@@ -1,9 +1,10 @@
+import moment from "moment";
 import Link from "next/link";
 import { FaClock, FaMapPin, FaUser } from "react-icons/fa";
 
 import { Event } from "@/lib/strapi/entities";
 
-import { LocalDatetime } from "../local-datetime";
+import { LocalizedDatetime } from "../localized-datetime";
 import { MarkdownContent } from "../markdown/markdown-content";
 import { PageHeading } from "../page-heading";
 
@@ -21,9 +22,13 @@ export function EventPreview({ event, linkTitle }: EventPreviewProps) {
             <div className="flex flex-col lg:flex-row gap-y-1 lg:gap-x-6 mb-6 lg:text-lg text-gray-600 dark:text-gray-300">
                 <p className="flex flex-row flex-wrap items-center">
                     <FaClock className="mr-1" />
-                    <LocalDatetime datetime={event.start} format="LLL" />
+
+                    <LocalizedDatetime datetime={event.start} format="LLL" />
                     <span className="mx-1">&mdash;</span>
-                    <LocalDatetime datetime={event.end} format="LLL" />
+                    <LocalizedDatetime
+                        datetime={event.end}
+                        format={moment(event.end).diff(event.start, "days") > 0 ? "LLL" : "HH:mm"}
+                    />
                 </p>
                 {event.location && (
                     <p className="flex flex-row items-center gap-1">
