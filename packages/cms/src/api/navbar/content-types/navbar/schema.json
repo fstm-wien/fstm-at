@@ -1,30 +1,30 @@
 {
-  "kind": "collectionType",
-  "collectionName": "navbars",
-  "info": {
-    "singularName": "navbar",
-    "pluralName": "navbars",
-    "displayName": "Navbar",
-    "description": ""
-  },
-  "options": {
-    "draftAndPublish": false
-  },
-  "pluginOptions": {},
-  "attributes": {
-    "location": {
-      "type": "string"
+    "kind": "collectionType",
+    "collectionName": "navbars",
+    "info": {
+        "singularName": "navbar",
+        "pluralName": "navbars",
+        "displayName": "Navbar",
+        "description": ""
     },
-    "items": {
-      "type": "component",
-      "component": "shared.navbar-item",
-      "repeatable": true
+    "options": {
+        "draftAndPublish": false
     },
-    "pages": {
-      "type": "relation",
-      "relation": "oneToMany",
-      "target": "api::seite.seite",
-      "mappedBy": "navbar"
+    "pluginOptions": {},
+    "attributes": {
+        "location": {
+            "type": "string"
+        },
+        "items": {
+            "type": "component",
+            "component": "shared.navbar-item",
+            "repeatable": true
+        },
+        "pages": {
+            "type": "relation",
+            "relation": "oneToMany",
+            "target": "api::seite.seite",
+            "mappedBy": "navbar"
+        }
     }
-  }
 }

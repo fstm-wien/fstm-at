@@ -1,7 +1,6 @@
 /**
  * pruefungsanfrage controller
  */
+import { factories } from "@strapi/strapi";
 
-import { factories } from '@strapi/strapi'
-
-export default factories.createCoreController('api::pruefungsanfrage.pruefungsanfrage');
+export default factories.createCoreController("api::pruefungsanfrage.pruefungsanfrage");

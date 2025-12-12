@@ -1,24 +1,24 @@
 {
-  "kind": "collectionType",
-  "collectionName": "pruefungsanfragen",
-  "info": {
-    "singularName": "pruefungsanfrage",
-    "pluralName": "pruefungsanfragen",
-    "displayName": "Prüfungsanfrage"
-  },
-  "options": {
-    "draftAndPublish": false
-  },
-  "pluginOptions": {},
-  "attributes": {
-    "matriculationNr": {
-      "type": "integer",
-      "required": true
+    "kind": "collectionType",
+    "collectionName": "pruefungsanfragen",
+    "info": {
+        "singularName": "pruefungsanfrage",
+        "pluralName": "pruefungsanfragen",
+        "displayName": "Prüfungsanfrage"
     },
-    "folder": {
-      "type": "string",
-      "required": true,
-      "unique": false
+    "options": {
+        "draftAndPublish": false
+    },
+    "pluginOptions": {},
+    "attributes": {
+        "matriculationNr": {
+            "type": "integer",
+            "required": true
+        },
+        "folder": {
+            "type": "string",
+            "required": true,
+            "unique": false
+        }
     }
-  }
 }

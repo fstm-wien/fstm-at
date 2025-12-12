@@ -1,34 +1,34 @@
 {
-  "kind": "collectionType",
-  "collectionName": "seiten",
-  "info": {
-    "singularName": "seite",
-    "pluralName": "seiten",
-    "displayName": "Seite",
-    "description": ""
-  },
-  "options": {
-    "draftAndPublish": true
-  },
-  "pluginOptions": {},
-  "attributes": {
-    "title": {
-      "type": "string"
+    "kind": "collectionType",
+    "collectionName": "seiten",
+    "info": {
+        "singularName": "seite",
+        "pluralName": "seiten",
+        "displayName": "Seite",
+        "description": ""
     },
-    "slug": {
-      "type": "string",
-      "required": true,
-      "unique": true
+    "options": {
+        "draftAndPublish": true
     },
-    "navbar": {
-      "type": "relation",
-      "relation": "manyToOne",
-      "target": "api::navbar.navbar",
-      "inversedBy": "pages"
-    },
-    "content": {
-      "type": "richtext",
-      "required": false
+    "pluginOptions": {},
+    "attributes": {
+        "title": {
+            "type": "string"
+        },
+        "slug": {
+            "type": "string",
+            "required": true,
+            "unique": true
+        },
+        "navbar": {
+            "type": "relation",
+            "relation": "manyToOne",
+            "target": "api::navbar.navbar",
+            "inversedBy": "pages"
+        },
+        "content": {
+            "type": "richtext",
+            "required": false
+        }
     }
-  }
 }

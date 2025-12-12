@@ -1,7 +1,6 @@
 /**
  * email router
  */
+import { factories } from "@strapi/strapi";
 
-import { factories } from '@strapi/strapi';
-
-export default factories.createCoreRouter('api::email.email');
+export default factories.createCoreRouter("api::email.email");

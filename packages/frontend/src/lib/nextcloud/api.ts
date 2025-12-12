@@ -25,6 +25,8 @@ export async function findExamFiles(): Promise<NextcloudFileInformation[]> {
 
     const result: NextcloudFileInformation[] = [];
 
+    console.log(json);
+
     for (const obj of json["d:multistatus"]["d:response"].slice(1)) {
         const href = obj["d:href"] as string;
         try {

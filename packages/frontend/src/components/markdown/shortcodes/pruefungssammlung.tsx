@@ -12,12 +12,15 @@ export function PruefungssammlungShortcode(props: ExamListProps & PropsWithChild
 }
 
 async function PruefungssammlungLoader(props: Omit<ExamListProps, "files">) {
-    const response = await fetch(clientEnv.NEXT_PUBLIC_SITE_URL + "/api/exams", {
-        method: "GET",
-    });
-    const { files }: { files: ExamData[] } = await response.json();
-
-    return <ExamList files={files} {...props} />;
+    try {
+        const response = await fetch(clientEnv.NEXT_PUBLIC_SITE_URL + "/api/exams", {
+            method: "GET",
+        });
+        const { files }: { files: ExamData[] } = await response.json();
+        return <ExamList files={files} {...props} />;
+    } catch {
+        return <p>Die Prüfungssammlung konnte nicht geladen werden.</p>;
+    }
 }
 
 function PruefungssammlungFallback() {

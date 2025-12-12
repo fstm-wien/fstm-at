@@ -1,28 +1,28 @@
 {
-  "kind": "collectionType",
-  "collectionName": "emails",
-  "info": {
-    "singularName": "email",
-    "pluralName": "emails",
-    "displayName": "Email",
-    "description": ""
-  },
-  "options": {
-    "draftAndPublish": false
-  },
-  "attributes": {
-    "subject": {
-      "type": "string",
-      "required": true
+    "kind": "collectionType",
+    "collectionName": "emails",
+    "info": {
+        "singularName": "email",
+        "pluralName": "emails",
+        "displayName": "Email",
+        "description": ""
     },
-    "content": {
-      "type": "blocks",
-      "required": true
+    "options": {
+        "draftAndPublish": false
     },
-    "key": {
-      "type": "string",
-      "required": true,
-      "unique": true
+    "attributes": {
+        "subject": {
+            "type": "string",
+            "required": true
+        },
+        "content": {
+            "type": "blocks",
+            "required": true
+        },
+        "key": {
+            "type": "string",
+            "required": true,
+            "unique": true
+        }
     }
-  }
 }
