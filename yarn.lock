@@ -5802,7 +5802,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/qs@npm:*":
+"@types/qs@npm:*, @types/qs@npm:^6":
   version: 6.14.0
   resolution: "@types/qs@npm:6.14.0"
   checksum: 10c0/5b3036df6e507483869cdb3858201b2e0b64b4793dc4974f188caa5b5732f2333ab9db45c08157975054d3b070788b35088b4bc60257ae263885016ee2131310
@@ -10564,6 +10564,7 @@ __metadata:
     "@tailwindcss/typography": "npm:^0.5.16"
     "@types/mdast": "npm:^3"
     "@types/node": "npm:^20"
+    "@types/qs": "npm:^6"
     "@types/react": "npm:^19"
     "@types/react-dom": "npm:^19"
     blocks-html-renderer: "npm:^1.0.5"
@@ -10579,6 +10580,7 @@ __metadata:
     motion: "npm:^12.23.12"
     next: "npm:15.3.8"
     next-themes: "npm:^0.4.6"
+    qs: "npm:^6.15.0"
     react: "npm:^19.0.0"
     react-dom: "npm:^19.0.0"
     react-icons: "npm:^5.5.0"
@@ -16490,7 +16492,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"qs@npm:^6.10.3, qs@npm:^6.11.0, qs@npm:^6.14.0, qs@npm:^6.5.2, qs@npm:^6.9.6":
+"qs@npm:^6.10.3, qs@npm:^6.11.0, qs@npm:^6.14.0, qs@npm:^6.15.0, qs@npm:^6.5.2, qs@npm:^6.9.6":
   version: 6.15.0
   resolution: "qs@npm:6.15.0"
   dependencies:

@@ -46,7 +46,7 @@ export async function generateMetadata(): Promise<Metadata> {
             default: "Home | FSTM",
         },
         description: metadataResponse.data?.metaDescription,
-        metadataBase: new URL(clientEnv.NEXT_PUBLIC_SITE_URL),
+        metadataBase: clientEnv.NEXT_PUBLIC_SITE_URL ? new URL(clientEnv.NEXT_PUBLIC_SITE_URL) : undefined,
         openGraph: {
             images: [
                 {

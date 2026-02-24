@@ -1,9 +1,9 @@
 import z from "zod";
 
 const envSchema = z.object({
-    NEXT_PUBLIC_SITE_URL: z.string(),
-    NEXT_PUBLIC_CMS_URL: z.string(),
-    NEXT_PUBLIC_CMS_READ_TOKEN: z.string(),
+    NEXT_PUBLIC_SITE_URL: z.string().optional(),
+    NEXT_PUBLIC_CMS_URL: z.string().optional(),
+    NEXT_PUBLIC_CMS_READ_TOKEN: z.string().optional(),
 });
 
 export const clientEnv = envSchema.parse({
