@@ -6,7 +6,6 @@ RUN apk add --no-cache libc6-compat
 RUN corepack enable
 
 COPY .yarnrc.yml package.json yarn.lock ./
-COPY .yarn/ .yarn/
 COPY packages/ packages/
 
 RUN yarn install --immutable

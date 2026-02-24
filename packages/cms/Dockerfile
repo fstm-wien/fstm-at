@@ -5,10 +5,8 @@ WORKDIR /repo
 RUN corepack enable
 
 COPY .yarnrc.yml package.json yarn.lock ./
-COPY .yarn/ .yarn/
 COPY packages/ packages/
 
-RUN ls -la
 RUN yarn install --immutable
 
 # ---- build ----
