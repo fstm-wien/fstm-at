@@ -1,8 +1,7 @@
 # ---- deps ----
 FROM node:20-alpine AS deps
-WORKDIR /repo
+WORKDIR /app
 
-RUN apk add --no-cache libc6-compat
 RUN corepack enable
 
 COPY .yarnrc.yml package.json yarn.lock ./
@@ -13,24 +12,27 @@ RUN yarn install --immutable
 
 # ---- build ----
 FROM node:20-alpine AS build
-WORKDIR /repo
-RUN apk add --no-cache libc6-compat
+WORKDIR /app
 RUN corepack enable
 
-COPY --from=deps /repo/ ./
+COPY --from=deps /app/node_modules ./node_modules
 COPY . .
+
+ENV NODE_ENV=production
 
 RUN yarn workspace frontend build
 
 # ---- runtime ----
 FROM node:20-alpine AS runner
 WORKDIR /app
-ENV NODE_ENV=production
-RUN apk add --no-cache libc6-compat
 
-COPY --from=build /repo/packages/frontend/.next/standalone ./
-COPY --from=build /repo/packages/frontend/.next/static ./.next/static
-COPY --from=build /repo/packages/frontend/public ./public
+ENV NODE_ENV=production
+
+COPY --from=build --chown=node:node /app/packages/frontend/public ./public
+COPY --from=build --chown=node:node /app/packages/frontend/.next/standalone ./
+COPY --from=build --chown=node:node /app/packages/frontend/.next/static ./.next/static
+
+USER node
 
 EXPOSE 3000
 CMD ["node", "server.js"]
