@@ -4,7 +4,6 @@ WORKDIR /app
 RUN corepack enable
 
 COPY .yarnrc.yml package.json yarn.lock ./
-COPY .yarn ./.yarn
 COPY packages/cms/package.json ./packages/cms/package.json
 COPY packages/frontend/package.json ./packages/frontend/package.json
 
