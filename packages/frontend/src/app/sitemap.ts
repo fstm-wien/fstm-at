@@ -5,9 +5,11 @@ import { serverEnv } from "@/lib/env/server";
 import { fetchAPICollection } from "@/lib/strapi/api";
 import { Seite } from "@/lib/strapi/entities";
 
+export const revalidate = 1800;
+
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     const pagesResponse = await fetchAPICollection<Seite>("/seiten");
-    const siteUrl = serverEnv.NEXT_PUBLIC_SITE_URL;
+    const siteUrl = serverEnv.NEXT_PUBLIC_SITE_URL || "";
 
     const sitemap: MetadataRoute.Sitemap = [
         {

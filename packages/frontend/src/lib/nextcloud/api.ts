@@ -8,6 +8,9 @@ export interface NextcloudFileInformation {
 }
 
 export async function findExamFiles(): Promise<NextcloudFileInformation[]> {
+    if (!serverEnv.NEXTCLOUD_LOGIN || !serverEnv.NEXTCLOUD_WEBDAV || !serverEnv.NEXTCLOUD_PRUEFUNGSSAMMLUNG) {
+        throw new Error("Nextcloud was not configured.");
+    }
     const credentials = serverEnv.NEXTCLOUD_LOGIN;
     const cloudRoot = serverEnv.NEXTCLOUD_WEBDAV;
     const pruefungssammlungPath = serverEnv.NEXTCLOUD_PRUEFUNGSSAMMLUNG;

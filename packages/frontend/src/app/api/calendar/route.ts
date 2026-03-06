@@ -5,6 +5,7 @@ import { fetchAPICollection } from "@/lib/strapi/api";
 import { Event } from "@/lib/strapi/entities";
 
 export const revalidate = 1800;
+export const dynamic = "force-dynamic";
 
 export async function GET(request: NextRequest) {
     const headers = new Headers();

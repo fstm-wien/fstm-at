@@ -9,16 +9,13 @@
         "cms:build": "yarn workspace cms build",
         "cms:start": "yarn workspace cms start",
         "maintenance:dev": "serve ./packages/frontend/static/maintenance",
-        "dev": "node ./scripts/dev.js",
-        "build": "node ./scripts/build.js",
-        "start": "node ./scripts/start.js",
         "format": "prettier --write .",
         "lint": "yarn workspace frontend lint"
     },
     "workspaces": [
         "packages/*"
     ],
-    "packageManager": "yarn@4.4.1",
+    "packageManager": "yarn@4.12.0",
     "devDependencies": {
         "@trivago/prettier-plugin-sort-imports": "^5.2.2",
         "pm2": "^6.0.8",

@@ -44,14 +44,19 @@ export async function POST(request: NextRequest) {
         return NextResponse.json({ message: "Too many requests." }, { status: 429 });
     }
 
-    const apiKey = serverEnv.SENDGRID_API_KEY;
-    if (!apiKey) {
+    if (!serverEnv.SENDGRID_EMAIL || !serverEnv.SENDGRID_API_KEY) {
         throw new Error("Sendgrid was not configured.");
     }
-    sgMail.setApiKey(apiKey);
+    const sendgridApiKey = serverEnv.SENDGRID_API_KEY;
+    const sendgridFrom = serverEnv.SENDGRID_EMAIL;
+
+    sgMail.setApiKey(sendgridApiKey);
 
     const email = `e${matriculationNr}@student.tuwien.ac.at`;
 
+    if (!serverEnv.NEXTCLOUD_LOGIN || !serverEnv.NEXTCLOUD_WEBDAV || !serverEnv.NEXTCLOUD_PRUEFUNGSSAMMLUNG) {
+        throw new Error("Nextcloud was not configured.");
+    }
     const credentials = serverEnv.NEXTCLOUD_LOGIN;
     const cloudRoot = serverEnv.NEXTCLOUD_WEBDAV;
     const pruefungssammlungPath = serverEnv.NEXTCLOUD_PRUEFUNGSSAMMLUNG;
@@ -93,7 +98,7 @@ export async function POST(request: NextRequest) {
         };
         const msg = {
             to: email,
-            from: serverEnv.SENDGRID_EMAIL,
+            from: sendgridFrom,
             subject: replaceByLookup(emailTemplate.data.subject, templatingData),
             html: replaceByLookup(renderBlock(emailTemplate.data.content ?? []), templatingData),
         };

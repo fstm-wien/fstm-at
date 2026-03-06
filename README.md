@@ -35,3 +35,10 @@ gestartet werden.
 ## Lizenz
 
 Die Website ist unter der GNU GPLv3 Lizenz veröffentlicht, siehe [LICENSE](LICENSE).
+
+## Docker
+
+```console
+docker build -t fstm-at-frontend:latest -f .\packages\frontend\Dockerfile .
+docker build -t fstm-at-cms:latest -f .\packages\cms\Dockerfile .
+```
