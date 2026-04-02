@@ -29,7 +29,7 @@ RUN corepack enable
 
 ENV NODE_ENV=production
 
-# Copy the built Strapi app
+COPY --from=deps /app/ ./
 COPY --from=build /app/packages/cms ./packages/cms
 
 WORKDIR /app/packages/cms
