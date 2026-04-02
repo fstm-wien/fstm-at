@@ -176,7 +176,6 @@ export function JournaldienstCalendar({
                                         }}
                                     >
                                         <div className="font-semibold leading-[1.1]">{jd.people}</div>
-                                        <div className="text-[10px] lg:text-xs text-gray-700 dark:text-gray-400">{`${formatTime(jd.fromHour, jd.fromMinute)} - ${formatTime(jd.toHour, jd.toMinute)}`}</div>
                                     </div>
                                 ))}
                             </div>

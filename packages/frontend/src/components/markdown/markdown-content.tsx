@@ -1,5 +1,5 @@
 import { Element } from "hast";
-import Markdown, { Components } from "react-markdown";
+import Markdown, { Components, defaultUrlTransform } from "react-markdown";
 import remarkDirective from "remark-directive";
 import remarkGfm from "remark-gfm";
 
@@ -19,6 +19,11 @@ function parsePropsFromNode(node: Element): Record<string, unknown> {
 function getShortcodeName(node: Element): string | undefined {
     const n = node.properties?.["data-shortcode"];
     return typeof n === "string" && n in shortcodes ? n : undefined;
+}
+
+function urlTransform(url: string) {
+    if (url.startsWith("tel:")) return url;
+    return defaultUrlTransform(url);
 }
 
 export interface MarkdownProps {
@@ -49,7 +54,11 @@ export function MarkdownContent({ source }: MarkdownProps) {
     };
 
     return (
-        <Markdown remarkPlugins={[remarkGfm, remarkDirective, directiveShortcodes]} components={components}>
+        <Markdown
+            remarkPlugins={[remarkGfm, remarkDirective, directiveShortcodes]}
+            urlTransform={urlTransform}
+            components={components}
+        >
             {source}
         </Markdown>
     );
