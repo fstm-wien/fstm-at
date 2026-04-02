@@ -17,8 +17,10 @@ export async function findExamFiles(): Promise<NextcloudFileInformation[]> {
 
     const response = await fetch(cloudRoot + "/remote.php/webdav" + pruefungssammlungPath, {
         method: "PROPFIND",
+        redirect: "manual",
         headers: {
             Authorization: "Basic " + Buffer.from(credentials).toString("base64"),
+            Depth: "1",
         },
     });
     const xmlString = await response.text();
@@ -28,7 +30,8 @@ export async function findExamFiles(): Promise<NextcloudFileInformation[]> {
 
     const result: NextcloudFileInformation[] = [];
 
-    console.log("Basic " + Buffer.from(credentials).toString("base64"));
+    console.log(response.headers);
+    console.log("Basic " + Buffer.from(credentials, "utf-8").toString("base64"));
     console.log(json);
 
     for (const obj of json["d:multistatus"]["d:response"].slice(1)) {
