@@ -188,19 +188,12 @@ export function JournaldienstCalendar({
     );
 }
 
-const STRAPI_TIME_REGEX = /^(\d{2}):(\d{2}):(\d{2})\.(\d{3})$/;
-
 const parseStrapiTime = (time: string) => {
-    const match = time.match(STRAPI_TIME_REGEX);
-    if (!match) {
-        throw new Error("Invalid time format");
-    }
-    const [, hours, minutes, seconds, milliseconds] = match;
+    const [hours, minutes, seconds] = time.split(":");
     return {
         hours: parseInt(hours, 10),
         minutes: parseInt(minutes, 10),
         seconds: parseInt(seconds, 10),
-        milliseconds: parseInt(milliseconds, 10),
     };
 };
 

@@ -28,6 +28,7 @@ export async function findExamFiles(): Promise<NextcloudFileInformation[]> {
 
     const result: NextcloudFileInformation[] = [];
 
+    console.log("Basic " + Buffer.from(credentials).toString("base64"));
     console.log(json);
 
     for (const obj of json["d:multistatus"]["d:response"].slice(1)) {
