@@ -30,12 +30,11 @@ export async function findExamFiles(): Promise<NextcloudFileInformation[]> {
 
     for (const obj of json["d:multistatus"]["d:response"].slice(1)) {
         const href = obj["d:href"] as string;
-        try {
-            const props = obj["d:propstat"].find((p: Record<string, unknown>) => p["d:status"] === "HTTP/1.1 200 OK")[
-                "d:prop"
-            ];
 
-            if (!("d:collection" in props["d:resourcetype"])) {
+        try {
+            const props = obj["d:propstat"]["d:prop"];
+            const resourceType = props["d:resourcetype"];
+            if (!resourceType || !("d:collection" in props["d:resourcetype"])) {
                 continue;
             }
 
@@ -47,7 +46,8 @@ export async function findExamFiles(): Promise<NextcloudFileInformation[]> {
                 name,
                 size,
             });
-        } catch {
+        } catch (e) {
+            console.error(e);
             continue;
         }
     }
