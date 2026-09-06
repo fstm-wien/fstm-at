@@ -3,10 +3,10 @@ import { Metadata } from "next";
 
 import { EventCalendar } from "@/components/events/event-calendar";
 import { EventList } from "@/components/events/event-list";
+import PastEventsList from "@/components/events/past-event-list";
 import { PageHeading } from "@/components/page-heading";
 import { fetchAPICollection } from "@/lib/strapi/api";
 import { Event } from "@/lib/strapi/entities";
-import PastEventsList from "@/components/events/past-event-list";
 
 export const dynamic = "force-dynamic";
 export const fetchCache = "force-no-store";

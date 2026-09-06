@@ -3,9 +3,7 @@ import qs from "qs";
 import { clientEnv } from "../env/client";
 import { Link, Seite, StrapiEntity } from "./entities";
 
-export type StrapiAPIResponse<T extends StrapiEntity> =
-    | StrapiAPISingleResponse<T>
-    | StrapiAPICollectionResponse<T>;
+export type StrapiAPIResponse<T extends StrapiEntity> = StrapiAPISingleResponse<T> | StrapiAPICollectionResponse<T>;
 
 export type StrapiAPISingleResponse<T extends StrapiEntity> = StrapiAPIResponseBase<T | null, StrapiSingleMeta>;
 export type StrapiAPICollectionResponse<T extends StrapiEntity> = StrapiAPIResponseBase<T[], StrapiCollectionMeta>;

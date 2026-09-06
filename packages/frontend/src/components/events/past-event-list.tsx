@@ -2,29 +2,10 @@
 
 import { useState, useTransition } from "react";
 
-import { fetchAPICollection } from "@/lib/strapi/api";
+import { loadMorePastEvents } from "@/app/events/actions";
 import { Event } from "@/lib/strapi/entities";
 
 import { EventList } from "./event-list";
-
-async function loadMorePastEvents(page: number) {
-    const pageSize = 5;
-
-    const response = await fetchAPICollection<Event>(`/events`, {
-        sort: "start:desc",
-        filters: { end: { $lt: new Date().toISOString() } },
-        pagination: { page, pageSize },
-    });
-
-    if (!Array.isArray(response.data)) {
-        throw new Error();
-    }
-
-    return {
-        events: response.data,
-        pageCount: response.meta.pagination.pageCount,
-    };
-}
 
 export default function PastEventsList({
     initialEvents,
