@@ -3,8 +3,6 @@ FROM node:20-alpine AS deps
 WORKDIR /app
 RUN corepack enable
 
-RUN echo "Listing files:" && ls -la
-
 COPY .yarnrc.yml package.json yarn.lock ./
 COPY packages/cms/package.json ./packages/cms/package.json
 COPY packages/frontend/package.json ./packages/frontend/package.json

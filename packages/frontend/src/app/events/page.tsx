@@ -6,6 +6,7 @@ import { EventList } from "@/components/events/event-list";
 import { PageHeading } from "@/components/page-heading";
 import { fetchAPICollection } from "@/lib/strapi/api";
 import { Event } from "@/lib/strapi/entities";
+import PastEventsList from "@/components/events/past-event-list";
 
 export const dynamic = "force-dynamic";
 export const fetchCache = "force-no-store";
@@ -15,17 +16,21 @@ export const metadata: Metadata = {
 };
 
 export default async function EventsPage() {
-    const response = await fetchAPICollection<Event>(`/events`, {
-        sort: "start:desc",
-    });
+    const [allResponse, pastResponse] = await Promise.all([
+        fetchAPICollection<Event>(`/events`, { sort: "start:desc" }),
+        fetchAPICollection<Event>(`/events`, {
+            sort: "start:desc",
+            filters: { end: { $lt: new Date().toISOString() } },
+            pagination: { page: 1, pageSize: 5 },
+        }),
+    ]);
 
-    if (!Array.isArray(response.data)) {
+    if (!Array.isArray(allResponse.data) || !Array.isArray(pastResponse.data)) {
         throw new Error();
     }
 
-    const events = response.data.slice().reverse();
+    const events = allResponse.data.slice().reverse();
     const nextEvents = events.filter((e) => moment(e.end).isAfter());
-    const pastEvents = events.filter((e) => moment(e.end).isBefore());
 
     return (
         <>
@@ -40,10 +45,13 @@ export default async function EventsPage() {
                         <EventList events={nextEvents} />
                     </div>
                 )}
-                {pastEvents.length > 0 && (
+                {pastResponse.data.length > 0 && (
                     <div className="opacity-50">
                         <h3 className="mb-4 text-2xl font-semibold">Vergangene Events</h3>
-                        <EventList events={pastEvents} />
+                        <PastEventsList
+                            initialEvents={pastResponse.data}
+                            initialPageCount={pastResponse.meta.pagination.pageCount}
+                        />
                     </div>
                 )}
             </div>

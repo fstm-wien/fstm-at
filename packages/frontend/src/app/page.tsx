@@ -35,7 +35,7 @@ export default async function Home() {
         <>
             <div className="lg:mt-12 mb-18 mx-auto max-w-4xl flex flex-col lg:flex-row-reverse gap-2 items-center">
                 <div className="mx-4 flex shrink-0 flex-col justify-center">
-                    <FSTMLogo size={140} className="w-[96px] lg:w-auto" />
+                    <FSTMLogo size={140} className="w-24 lg:w-auto" />
                 </div>
                 <div className="flex flex-col">
                     <div className="font-heading">
