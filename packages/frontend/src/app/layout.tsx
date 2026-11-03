@@ -2,6 +2,7 @@ import clsx from "clsx";
 import type { Metadata, Viewport } from "next";
 import { ThemeProvider } from "next-themes";
 import { Geist, Geist_Mono, PT_Sans } from "next/font/google";
+import Script from "next/script";
 import "react-loading-skeleton/dist/skeleton.css";
 
 import { AnnouncementBar } from "@/components/announcement-bar";
@@ -90,6 +91,13 @@ export default async function RootLayout({
 
                     <BackToTop />
                 </ThemeProvider>
+
+                <Script
+                    src="https://stats.fstm.at/insights.js"
+                    data-website-id="b2902ca5-9f4b-4f93-bb57-11ee7119dde1"
+                    data-domains="fstm.at"
+                    strategy="afterInteractive"
+                />
             </body>
         </html>
     );
