@@ -64,12 +64,12 @@ body {
 }
 
 .fc-daygrid-event {
-    @apply cursor-pointer hyphens-auto break-words !whitespace-normal;
+    @apply cursor-pointer hyphens-auto wrap-break-word whitespace-normal!;
     /* @apply hover:bg-orange-500; */
 }
 
 .fc-event {
-    @apply !bg-transparent !shadow-none;
+    @apply bg-transparent! shadow-none!;
 }
 
 .fc-daygrid-event-harness {
@@ -82,15 +82,15 @@ body {
 }
 
 .fc-toolbar .fc-toolbar-title {
-    @apply not-lg:!text-xl;
+    @apply not-lg:text-xl!;
 }
 
 .fc-toolbar .fc-button-group {
-    @apply not-lg:!ml-1;
+    @apply not-lg:ml-1!;
 }
 
 .fc-toolbar button {
-    @apply not-lg:!px-2 not-lg:!py-1;
+    @apply not-lg:px-2! not-lg:py-1!;
 }
 
 .gradientText {

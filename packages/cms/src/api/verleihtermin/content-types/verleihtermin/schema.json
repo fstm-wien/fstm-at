@@ -1,0 +1,33 @@
+{
+  "kind": "collectionType",
+  "collectionName": "verleihtermine",
+  "info": {
+    "singularName": "verleihtermin",
+    "pluralName": "verleihtermine",
+    "displayName": "Verleihtermin"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "object": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::verleihobjekt.verleihobjekt",
+      "inversedBy": "termine"
+    },
+    "start": {
+      "type": "datetime",
+      "required": true
+    },
+    "end": {
+      "type": "datetime",
+      "required": true
+    },
+    "borrower": {
+      "type": "string",
+      "required": true
+    }
+  }
+}

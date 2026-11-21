@@ -73,6 +73,19 @@ export enum Weekday {
     Sunday = "Sonntag",
 }
 
+export interface VerleihObjekt extends StrapiEntity {
+    name: string;
+    description: string;
+    note: string;
+}
+
+export interface VerleihTermin extends StrapiEntity {
+    start: string;
+    end: string;
+    borrower: string;
+    object: VerleihObjekt | null;
+}
+
 export interface Navbar extends StrapiEntity {
     location: string;
     items: {

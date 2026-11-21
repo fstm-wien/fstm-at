@@ -152,7 +152,7 @@ export function ExamListItem({ info, index }: { info?: NextcloudFileInformation;
                             <div className="flex flex-row gap-1 mb-3 items-center">
                                 <p className="font-mono text-gray-400 select-none">e</p>
                                 <input
-                                    className="font-mono py-1 px-2 w-24 rounded-md border-1 border-gray-400"
+                                    className="font-mono py-1 px-2 w-24 rounded-md border border-gray-400"
                                     placeholder="XXXXXXXX"
                                     value={regNr}
                                     onChange={handleRegNrChange}
@@ -165,7 +165,7 @@ export function ExamListItem({ info, index }: { info?: NextcloudFileInformation;
                                 </p>
                                 <IconButton
                                     disabled={isSubmitting || !showForm || formError}
-                                    className={clsx("mr-0 ml-auto", isSubmitting && "!cursor-progress")}
+                                    className={clsx("mr-0 ml-auto", isSubmitting && "cursor-progress!")}
                                     onClick={handleSubmitForm}
                                 >
                                     <IoMail className="m-auto" />

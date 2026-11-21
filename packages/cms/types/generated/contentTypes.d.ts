@@ -616,6 +616,58 @@ export interface ApiSeiteSeite extends Struct.CollectionTypeSchema {
     };
 }
 
+export interface ApiVerleihobjektVerleihobjekt extends Struct.CollectionTypeSchema {
+    collectionName: "verleihobjekte";
+    info: {
+        displayName: "Verleihobjekt";
+        pluralName: "verleihobjekte";
+        singularName: "verleihobjekt";
+    };
+    options: {
+        draftAndPublish: false;
+    };
+    attributes: {
+        createdAt: Schema.Attribute.DateTime;
+        createdBy: Schema.Attribute.Relation<"oneToOne", "admin::user"> & Schema.Attribute.Private;
+        description: Schema.Attribute.Text;
+        locale: Schema.Attribute.String & Schema.Attribute.Private;
+        localizations: Schema.Attribute.Relation<"oneToMany", "api::verleihobjekt.verleihobjekt"> &
+            Schema.Attribute.Private;
+        name: Schema.Attribute.String & Schema.Attribute.Required;
+        note: Schema.Attribute.Text;
+        publishedAt: Schema.Attribute.DateTime;
+        termine: Schema.Attribute.Relation<"oneToMany", "api::verleihtermin.verleihtermin">;
+        updatedAt: Schema.Attribute.DateTime;
+        updatedBy: Schema.Attribute.Relation<"oneToOne", "admin::user"> & Schema.Attribute.Private;
+    };
+}
+
+export interface ApiVerleihterminVerleihtermin extends Struct.CollectionTypeSchema {
+    collectionName: "verleihtermine";
+    info: {
+        displayName: "Verleihtermin";
+        pluralName: "verleihtermine";
+        singularName: "verleihtermin";
+    };
+    options: {
+        draftAndPublish: false;
+    };
+    attributes: {
+        borrower: Schema.Attribute.String & Schema.Attribute.Required;
+        createdAt: Schema.Attribute.DateTime;
+        createdBy: Schema.Attribute.Relation<"oneToOne", "admin::user"> & Schema.Attribute.Private;
+        end: Schema.Attribute.DateTime & Schema.Attribute.Required;
+        locale: Schema.Attribute.String & Schema.Attribute.Private;
+        localizations: Schema.Attribute.Relation<"oneToMany", "api::verleihtermin.verleihtermin"> &
+            Schema.Attribute.Private;
+        object: Schema.Attribute.Relation<"manyToOne", "api::verleihobjekt.verleihobjekt">;
+        publishedAt: Schema.Attribute.DateTime;
+        start: Schema.Attribute.DateTime & Schema.Attribute.Required;
+        updatedAt: Schema.Attribute.DateTime;
+        updatedBy: Schema.Attribute.Relation<"oneToOne", "admin::user"> & Schema.Attribute.Private;
+    };
+}
+
 export interface PluginContentReleasesRelease extends Struct.CollectionTypeSchema {
     collectionName: "strapi_releases";
     info: {
@@ -1038,6 +1090,8 @@ declare module "@strapi/strapi" {
             "api::navbar.navbar": ApiNavbarNavbar;
             "api::pruefungsanfrage.pruefungsanfrage": ApiPruefungsanfragePruefungsanfrage;
             "api::seite.seite": ApiSeiteSeite;
+            "api::verleihobjekt.verleihobjekt": ApiVerleihobjektVerleihobjekt;
+            "api::verleihtermin.verleihtermin": ApiVerleihterminVerleihtermin;
             "plugin::content-releases.release": PluginContentReleasesRelease;
             "plugin::content-releases.release-action": PluginContentReleasesReleaseAction;
             "plugin::i18n.locale": PluginI18NLocale;

@@ -1,0 +1,31 @@
+{
+  "kind": "collectionType",
+  "collectionName": "verleihobjekte",
+  "info": {
+    "singularName": "verleihobjekt",
+    "pluralName": "verleihobjekte",
+    "displayName": "Verleihobjekt"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "description": {
+      "type": "text"
+    },
+    "note": {
+      "type": "text"
+    },
+    "termine": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::verleihtermin.verleihtermin",
+      "mappedBy": "object"
+    }
+  }
+}
